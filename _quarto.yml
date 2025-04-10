@@ -1,9 +1,0 @@
-project:
-  title: "ML Intro"
-  output-dir: _output
-execute:
-  echo: true
-theme:
-  - custom.scss
-
-
