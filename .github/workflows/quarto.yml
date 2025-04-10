@@ -10,14 +10,14 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
+      uses: quarto-dev/quarto-actions/setup@v2
 
     - name: Build
-        run: |
-          quarto render --to revealjs
-          mv ./index.html ./_output/index.html
+      run: |
+        quarto render --to revealjs
+        mv ./index.html ./_output/index.html
     - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_output
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./_output
