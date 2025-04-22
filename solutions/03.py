@@ -8,7 +8,7 @@ from sklearn.metrics import classification_report
 class LogisticRegression:
   def __init__(self, n_features=1, random_state=34, confidence=0.5):
     self.rng = np.random.default_rng(seed=random_state)
-    self.weights = self.rng.standard_normal(n_features+1)
+    self.weights = self.rng.uniform(low=-1, high=1, size=n_features+1)
     self.confidence = confidence
 
   def _f(self, x_w_one):
@@ -27,7 +27,7 @@ class LogisticRegression:
     return -np.mean((x_w_one * (y*self._f(-x_w_one)+(y-1)*self._f(x_w_one))[:, np.newaxis]), axis=0)
   
   def fit(self, x, y, learning_rate=0.01, momentum=0.7, epochs=20):
-    self.weights = self.rng.standard_normal(self.weights.shape[0])
+    self.weights = self.rng.uniform(low=-1, high=1, size=self.weights.shape[0])
     for epoch in range(epochs):
       p = self.rng.permutation(x.shape[0])
       delta_w = np.zeros(self.weights.shape[0])
