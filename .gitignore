@@ -2,3 +2,5 @@
 /.venv/
 /_output/
 /.vscode/
+/chapters/*.pth
+/chapters/data/

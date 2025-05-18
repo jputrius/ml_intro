@@ -27,7 +27,7 @@ class NeuralNet:
     return x@W+b
 
   def _output(self, x):
-    return self._relu(self._A(self._relu(self._A(x, self.W1, self.b1)), self.W2, self.b2))
+    return self._A(self._relu(self._A(x, self.W1, self.b1)), self.W2, self.b2)
 
   def inference(self, x):
     y = self._output(x)
@@ -42,7 +42,7 @@ class NeuralNet:
     return (e.T/np.sum(e, axis=1)).T
   
   def _dloss(self, x, y):
-    out = self._softmax(self._output(x))
+    out = self._softmax(x)
     return np.mean(out-y, axis=0)
 
   def fit(self, x, y, learning_rate=0.01, momentum=0.7, epochs=20):
@@ -66,12 +66,12 @@ class NeuralNet:
         A1 = self._A(x1, self.W1, self.b1)
         f1 = self._relu(A1)
         A2 = self._A(f1, self.W2, self.b2)
-        f2 = self._relu(A2)
+        f2 = A2
 
         # Backwards pass
         df1 = self._drelu(A1)
-        df2 = self._drelu(A2)
-        dloss = self._dloss(x1, y1)
+        df2 = np.ones(A2.shape)
+        dloss = self._dloss(f2, y1)
 
         delta_W2 = momentum*delta_W2 - learning_rate*(f1.reshape(-1, 1)@(df2*dloss).reshape(1, -1))
         delta_b2 = (momentum*delta_b2 - learning_rate*df2*dloss).flatten()
@@ -88,5 +88,5 @@ class NeuralNet:
 model = NeuralNet(n_features=X.shape[1], n_outputs=y.shape[1])
 
 print(classification_report(np.argmax(y, axis=1), model.inference(X)))
-model.fit(X, y, learning_rate=0.002, momentum=0.3)
+model.fit(X, y, learning_rate=0.0005, momentum=0.7)
 print(classification_report(np.argmax(y, axis=1), model.inference(X)))

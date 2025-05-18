@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+  display: flex;
+  padding-top: 5rem;
+  place-content: center;
+  font-family: Roboto;
+}
+
+h1 {
+  width: 100%;
+  text-align: center;
+}
+
+.content {
+  width: 60rem;
+  font-size: larger;
+}
+
+ul {
+  list-style: none;
+}
