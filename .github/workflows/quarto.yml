@@ -20,6 +20,7 @@ jobs:
       run: |
         quarto render --to revealjs
         mv ./index.html ./_output/index.html
+        cp -r ./page ./_output/page
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v4
       with:
