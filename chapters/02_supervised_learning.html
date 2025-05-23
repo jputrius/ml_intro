@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="01_basic_concepts_files/libs/clipboard/clipboard.min.js"></script>
-<script src="01_basic_concepts_files/libs/quarto-html/tabby.min.js"></script>
-<script src="01_basic_concepts_files/libs/quarto-html/popper.min.js"></script>
-<script src="01_basic_concepts_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="01_basic_concepts_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="01_basic_concepts_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="01_basic_concepts_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="02_supervised_learning_files/libs/clipboard/clipboard.min.js"></script>
+<script src="02_supervised_learning_files/libs/quarto-html/tabby.min.js"></script>
+<script src="02_supervised_learning_files/libs/quarto-html/popper.min.js"></script>
+<script src="02_supervised_learning_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="02_supervised_learning_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="02_supervised_learning_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="02_supervised_learning_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.31">
 
-  <title>Chapter 1: Basic Concepts</title>
+  <title>Supervised Learning</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="01_basic_concepts_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="01_basic_concepts_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="02_supervised_learning_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="02_supervised_learning_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -94,11 +94,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="01_basic_concepts_files/libs/revealjs/dist/theme/quarto-37f64f33d17d36c7c7406230333751da.css">
-  <link href="01_basic_concepts_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="01_basic_concepts_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="01_basic_concepts_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="01_basic_concepts_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="02_supervised_learning_files/libs/revealjs/dist/theme/quarto-37f64f33d17d36c7c7406230333751da.css">
+  <link href="02_supervised_learning_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="02_supervised_learning_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="02_supervised_learning_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="02_supervised_learning_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -195,7 +195,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Chapter 1: Basic Concepts</h1>
+  <h1 class="title">Supervised Learning</h1>
 
 <div class="quarto-title-authors">
 </div>
@@ -203,11 +203,27 @@
 </section>
 <section id="introduction" class="slide level2">
 <h2>Introduction</h2>
-<p>In this first introductory chapter we will go over some of the main concepts of data science and machine learning (ML).</p>
+<p>In the last chapter we looked at singular value decomposition and its applications like recommender systems. This was an example of <strong>unsupervised</strong> learning. Unsupervised learning is a collection of techniques in machine learning (ML) the goal of which is to extract information from unlabelled data.</p>
+</section>
+<section id="introduction-1" class="slide level2">
+<h2>Introduction</h2>
+<p>In this chapter we look at <strong>supervised learning</strong>. The goal of supervised learning is to predict a label of a sample given some input data. The two main types of problems are:</p>
+<ol type="1">
+<li>Classification, where we try to classify the data into <span class="math inline">\(n\)</span> classes (ex. classify pictures of pets into “dog”, “cat” and “other”).</li>
+<li>Regression, where we try to predict a continuous variable (ex. predict a price of a product given its description).</li>
+</ol>
+</section>
+<section id="introduction-2" class="slide level2">
+<h2>Introduction</h2>
+<p>There is also a third paradigm called <strong>reinforcement learning</strong> where the goal is to learn from experience. It is used to train computer agents to perform various tasks.</p>
+</section>
+<section id="introduction-3" class="slide level2">
+<h2>Introduction</h2>
+<p>In this chapter we will cover the main concepts of supervised learning.</p>
 <p>To make things more interesting, we will do this by going over a possible workflow for creating a simple classification model.</p>
 </section>
-<section id="data" class="slide level2">
-<h2>Data</h2>
+<section id="introduction-4" class="slide level2">
+<h2>Introduction</h2>
 <p>We will use the <a href="https://www.kaggle.com/datasets/yasserh/titanic-dataset">Titanic dataset</a>. This dataset has info on passengers of the Titanic and whether they survived the sinking.</p>
 <div id="290ea2d9" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -339,7 +355,7 @@
 </div>
 </div>
 </section>
-<section id="data-1" class="slide level2">
+<section id="data" class="slide level2">
 <h2>Data</h2>
 <p>Explanation of some columns, others should be obvious:</p>
 <ul>
@@ -353,7 +369,6 @@
 <section id="objective" class="slide level2">
 <h2>Objective</h2>
 <p>The goal for today is to build a model that is able to predict whether a passenger survived the sinking of the Titanic.</p>
-<p>Such a task is called a <strong>classification</strong> problem. That is we are trying to classify the data into a finite number of classes.</p>
 </section>
 <section id="workflow" class="slide level2">
 <h2>Workflow</h2>
@@ -831,7 +846,7 @@ dtype: float64</code></pre>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a>df[<span class="st">"Fare"</span>].hist(bins<span class="op">=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="01_basic_concepts_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
+<img data-src="02_supervised_learning_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
 <section id="data-exploration-and-cleaning-7" class="slide level2">
 <h2>Data exploration and cleaning</h2>
 <p>There are several possible ways to deal with outlier values, for example:</p>
@@ -1974,7 +1989,7 @@ weighted avg       0.85      0.85      0.85       179
 </section>
 <section id="practice-task" class="slide level2">
 <h2>Practice task</h2>
-<p>For practice, you could try building a logistic regression model for the <code>Iris dataset</code>. This is a toy dataset that ships with <code>sklearn</code>. The goal is to predict the type of plant given some measurements.</p>
+<p>For practice, you could try building a logistic regression model for the <code>Iris dataset</code>. This dataset ships with <code>sklearn</code>. The goal is to predict the type of plant given some measurements.</p>
 <p>Here is how to load the dataset:</p>
 <div id="d5c01ffa" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
@@ -2041,6 +2056,10 @@ weighted avg       0.85      0.85      0.85       179
 </div>
 </div>
 </div>
+</section>
+<section id="practice-task-1" class="slide level2">
+<h2>Practice task</h2>
+<p>This is a very simple dataset so it should not be difficult to get good results. Afterwards, try improving the model for the Titanic dataset. You can find it <a href="https://github.com/jputrius/ml_intro/tree/main/data/titanic">here</a>.</p>
 
 </section>
     </div>
@@ -2051,19 +2070,19 @@ weighted avg       0.85      0.85      0.85       179
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="01_basic_concepts_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="02_supervised_learning_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="01_basic_concepts_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="01_basic_concepts_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="01_basic_concepts_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="01_basic_concepts_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="01_basic_concepts_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="02_supervised_learning_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="02_supervised_learning_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="02_supervised_learning_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="02_supervised_learning_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="02_supervised_learning_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="01_basic_concepts_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="01_basic_concepts_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="01_basic_concepts_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="01_basic_concepts_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="02_supervised_learning_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="02_supervised_learning_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="02_supervised_learning_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="02_supervised_learning_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

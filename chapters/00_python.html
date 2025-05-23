@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="00_python_files/libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="00_python_files/libs/clipboard/clipboard.min.js"></script>
 <script src="00_python_files/libs/quarto-html/tabby.min.js"></script>
 <script src="00_python_files/libs/quarto-html/popper.min.js"></script>
 <script src="00_python_files/libs/quarto-html/tippy.umd.min.js"></script>
@@ -9,7 +9,7 @@
 <link href="00_python_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.31">
 
-  <title>Chapter 0.5: Intro To Python</title>
+  <title>Intro To Python</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -186,13 +186,16 @@
       margin-right: 0; 
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Chapter 0.5: Intro To Python</h1>
+  <h1 class="title">Intro To Python</h1>
 
 <div class="quarto-title-authors">
 </div>
@@ -515,22 +518,314 @@ Cell <span class="ansi-green-fg">In[11], line 13</span>
 ----------------
 [-0.37228132  5.37228132]</code></pre>
 </div>
-</div></section><section id="practice-task" class="slide level2">
-<h2>Practice Task</h2>
-<p>We will use <code>numpy</code> quite heavily in the first few chapters.</p>
+</div></section><section id="pandas" class="slide level2">
+<h2>Pandas</h2>
+<p><code>Pandas</code> is a Python package implementing dataframes. Dataframe is a type for tabular data.</p>
+<div id="af4d76d8" class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb25-2"><a href=""></a></span>
+<span id="cb25-3"><a href=""></a>df <span class="op">=</span> pd.read_csv(<span class="st">"../data/titanic/titanic.csv"</span>) <span class="co"># Read from csv</span></span>
+<span id="cb25-4"><a href=""></a>df.head(<span class="dv">3</span>) <span class="co"># Return first three rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">PassengerId</th>
+<th data-quarto-table-cell-role="th">Survived</th>
+<th data-quarto-table-cell-role="th">Pclass</th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">SibSp</th>
+<th data-quarto-table-cell-role="th">Parch</th>
+<th data-quarto-table-cell-role="th">Ticket</th>
+<th data-quarto-table-cell-role="th">Fare</th>
+<th data-quarto-table-cell-role="th">Cabin</th>
+<th data-quarto-table-cell-role="th">Embarked</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>0</td>
+<td>3</td>
+<td>Braund, Mr. Owen Harris</td>
+<td>male</td>
+<td>22.0</td>
+<td>1</td>
+<td>0</td>
+<td>A/5 21171</td>
+<td>7.2500</td>
+<td>NaN</td>
+<td>S</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+<td>female</td>
+<td>38.0</td>
+<td>1</td>
+<td>0</td>
+<td>PC 17599</td>
+<td>71.2833</td>
+<td>C85</td>
+<td>C</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td>Heikkinen, Miss. Laina</td>
+<td>female</td>
+<td>26.0</td>
+<td>0</td>
+<td>0</td>
+<td>STON/O2. 3101282</td>
+<td>7.9250</td>
+<td>NaN</td>
+<td>S</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="pandas-1" class="slide level2">
+<h2>Pandas</h2>
+<p>Here is how to filter by column values.</p>
+<div id="8c893243" class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href=""></a>df[df[<span class="st">"Name"</span>] <span class="op">==</span> <span class="st">"Montvila, Rev. Juozas"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">PassengerId</th>
+<th data-quarto-table-cell-role="th">Survived</th>
+<th data-quarto-table-cell-role="th">Pclass</th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">SibSp</th>
+<th data-quarto-table-cell-role="th">Parch</th>
+<th data-quarto-table-cell-role="th">Ticket</th>
+<th data-quarto-table-cell-role="th">Fare</th>
+<th data-quarto-table-cell-role="th">Cabin</th>
+<th data-quarto-table-cell-role="th">Embarked</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">886</td>
+<td>887</td>
+<td>0</td>
+<td>2</td>
+<td>Montvila, Rev. Juozas</td>
+<td>male</td>
+<td>27.0</td>
+<td>0</td>
+<td>0</td>
+<td>211536</td>
+<td>13.0</td>
+<td>NaN</td>
+<td>S</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="pandas-2" class="slide level2">
+<h2>Pandas</h2>
+<p>Here is how to compute averages of dataframe’s columns. You can also do <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html#pandas.DataFrame.merge">joins</a>, <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby">grouping</a> and all other operations you could do using SQL.</p>
+<div id="6d69253a" class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href=""></a>df[<span class="st">"Fare"</span>].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>np.float64(32.204207968574636)</code></pre>
+</div>
+</div>
+</section>
+<section id="pandas-3" class="slide level2">
+<h2>Pandas</h2>
+<p>Each dataframe has an index for its rows.</p>
+<div id="3bc51434" class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href=""></a>df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb29-2"><a href=""></a>  [[<span class="st">"orange"</span>, <span class="dv">4</span>], [<span class="st">"brown"</span>, <span class="dv">4</span>], [<span class="st">"green"</span>, <span class="dv">2</span>]],</span>
+<span id="cb29-3"><a href=""></a>  index<span class="op">=</span>[<span class="st">'cat'</span>, <span class="st">'dog'</span>, <span class="st">'parrot'</span>],</span>
+<span id="cb29-4"><a href=""></a>  columns<span class="op">=</span>[<span class="st">'color'</span>, <span class="st">'leg_count'</span>]</span>
+<span id="cb29-5"><a href=""></a>)</span>
+<span id="cb29-6"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">color</th>
+<th data-quarto-table-cell-role="th">leg_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">cat</td>
+<td>orange</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">dog</td>
+<td>brown</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">parrot</td>
+<td>green</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="pandas-4" class="slide level2">
+<h2>Pandas</h2>
+<div id="22eafcf1" class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href=""></a>df[<span class="st">"color"</span>] <span class="co"># Getting columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>cat       orange
+dog        brown
+parrot     green
+Name: color, dtype: object</code></pre>
+</div>
+</div>
+<div id="a05de263" class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href=""></a>df.loc[<span class="st">"dog"</span>] <span class="co"># Getting row by index</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>color        brown
+leg_count        4
+Name: dog, dtype: object</code></pre>
+</div>
+</div>
+<div id="982fbc2a" class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href=""></a>df.loc[<span class="st">"dog"</span>, <span class="st">"leg_count"</span>] <span class="co"># Getting specific column of row by index</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>np.int64(4)</code></pre>
+</div>
+</div>
+<div id="3f191b7d" class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href=""></a>df.iloc[<span class="dv">0</span>:<span class="dv">2</span>] <span class="co"># Getting rows by row number (counting from 0)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">color</th>
+<th data-quarto-table-cell-role="th">leg_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">cat</td>
+<td>orange</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">dog</td>
+<td>brown</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="numpy-practice-task" class="slide level2">
+<h2>Numpy Practice Task</h2>
 <p>The best way to learn a new programming language / package is to implement something in it.</p>
 <p>You can try implementing Newton’s algorithm for finding a solution to the nonlinear equation <span class="math display">\[
   F(x) = 0,
 \]</span> where <span class="math inline">\(F: \mathbb{R}^{n} \rightarrow \mathbb{R}^n\)</span> is a differentiable function.</p>
 </section>
-<section id="practice-task-1" class="slide level2">
-<h2>Practice Task</h2>
+<section id="numpy-practice-task-1" class="slide level2">
+<h2>Numpy Practice Task</h2>
 <p>Using Newton’s method you approximate the solution by starting from initial guess <span class="math inline">\(x_0\)</span> and iterating by using the formula <span class="math display">\[
   DF(x_n)(x_{n+1}-x_n) = -F(x_n),
 \]</span> where <span class="math inline">\(DF\)</span> is the <a href="https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant">Jacobian</a> of <span class="math inline">\(F\)</span>. Note that this is a system of linear equations.</p>
 </section>
-<section id="practice-task-2" class="slide level2">
-<h2>Practice Task</h2>
+<section id="numpy-practice-task-2" class="slide level2">
+<h2>Numpy Practice Task</h2>
 <p>Tips:</p>
 <ol type="1">
 <li>You can approximately compute derivatives using the formula <span class="math display">\[
@@ -539,13 +834,28 @@ Cell <span class="ansi-green-fg">In[11], line 13</span>
 <li>When computing a new approximation you will need to solve a system of linear equations. You can do so using <code>numpy</code>. Have a look through its <a href="https://numpy.org/doc/stable/reference/routines.html">documentation</a>.</li>
 </ol>
 </section>
-<section id="practice-task-3" class="slide level2">
-<h2>Practice Task</h2>
+<section id="numpy-practice-task-3" class="slide level2">
+<h2>Numpy Practice Task</h2>
 <ol start="3" type="1">
 <li>You can try <span class="math display">\[
   F(x, y) = (\cos(x)-\sin(y), \cos(x)).
 \]</span></li>
 </ol>
+</section>
+<section id="pandas-practice-task" class="slide level2">
+<h2>Pandas Practice Task</h2>
+<p>Load the two csv files found <a href="https://github.com/jputrius/ml_intro/tree/main/data/movielens">here</a> into a <code>pandas</code> dataframe. One file contains ratings of movies given by users and the other file contains information on said movies.</p>
+<p>Answer the following questions:</p>
+<ol type="1">
+<li>What are the top 10 movies by rating count?</li>
+<li>What are the top 10 movies by average rating?</li>
+<li>What are the top 10 action movies by rating count?</li>
+<li>What are the top 10 action movies by average rating?</li>
+</ol>
+</section>
+<section id="pandas-practice-task-1" class="slide level2">
+<h2>Pandas Practice Task</h2>
+<p>Truncate the dataset to contain only top 1000 movies by rating count. Produce a pivot table where rows are users, columns are movies and values are ratings (NA if a user has not rated a movie). <a href="https://pandas.pydata.org/docs/reference/api/pandas.pivot_table.html#pandas.pivot_table">Pivot tables</a> are built into <code>pandas</code>.</p>
 
 </section>
     </div>
