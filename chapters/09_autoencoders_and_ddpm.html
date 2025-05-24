@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="09_unsupervised_learning_and_ddpm_files/libs/clipboard/clipboard.min.js"></script>
-<script src="09_unsupervised_learning_and_ddpm_files/libs/quarto-html/tabby.min.js"></script>
-<script src="09_unsupervised_learning_and_ddpm_files/libs/quarto-html/popper.min.js"></script>
-<script src="09_unsupervised_learning_and_ddpm_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="09_unsupervised_learning_and_ddpm_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="09_unsupervised_learning_and_ddpm_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="09_unsupervised_learning_and_ddpm_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="09_autoencoders_and_ddpm_files/libs/clipboard/clipboard.min.js"></script>
+<script src="09_autoencoders_and_ddpm_files/libs/quarto-html/tabby.min.js"></script>
+<script src="09_autoencoders_and_ddpm_files/libs/quarto-html/popper.min.js"></script>
+<script src="09_autoencoders_and_ddpm_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="09_autoencoders_and_ddpm_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="09_autoencoders_and_ddpm_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="09_autoencoders_and_ddpm_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.31">
 
-  <title>Chapter 9: Unsupervised learning and DDPM</title>
+  <title>Autoencoders and DDPM</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="09_unsupervised_learning_and_ddpm_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="09_unsupervised_learning_and_ddpm_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="09_autoencoders_and_ddpm_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="09_autoencoders_and_ddpm_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -94,11 +94,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="09_unsupervised_learning_and_ddpm_files/libs/revealjs/dist/theme/quarto-37f64f33d17d36c7c7406230333751da.css">
-  <link href="09_unsupervised_learning_and_ddpm_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="09_unsupervised_learning_and_ddpm_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="09_unsupervised_learning_and_ddpm_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="09_unsupervised_learning_and_ddpm_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="09_autoencoders_and_ddpm_files/libs/revealjs/dist/theme/quarto-37f64f33d17d36c7c7406230333751da.css">
+  <link href="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -196,7 +196,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Chapter 9: Unsupervised learning and DDPM</h1>
+  <h1 class="title">Autoencoders and DDPM</h1>
 
 <div class="quarto-title-authors">
 </div>
@@ -204,13 +204,8 @@
 </section>
 <section id="introduction" class="slide level2">
 <h2>Introduction</h2>
-<p>Up to now we’ve been mostly covering <strong>supervised learning</strong>. These are data science problems where you have a labelled dataset and your goal is to predict the label.</p>
-<p><strong>Unsupervised learning</strong> is a collection of problems and techniques where you try to get useful information out of unlabelled data.</p>
-</section>
-<section id="introduction-1" class="slide level2">
-<h2>Introduction</h2>
-<p>One of the main techniques of unsupervised learning is data compression. Compression removes noise from data and allows you to extract the signal.</p>
-<p>The classical algorithm for data compression (in fancy language called <strong>dimensionality reduction</strong>) is <a href="https://en.wikipedia.org/wiki/Principal_component_analysis">principal component analysis</a>. Instead of covering it we are going to jump straight into one of the possible machine learning approaches to dimensionality reduction called autoencoders.</p>
+<p>Up to now we’ve been mostly discussing how to use neural networks in supervised learning. They can also be used in unsupervised learning tasks.</p>
+<p>In this chapter we cover two ideas: autoencoders and denoising diffusion probabilistic models (DDPM).</p>
 </section>
 <section id="autoencoders" class="slide level2">
 <h2>Autoencoders</h2>
@@ -239,133 +234,7 @@
 </section>
 <section id="anomaly-detection-2" class="slide level2">
 <h2>Anomaly Detection</h2>
-<div id="65f9b961" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="9741862f-bdb5-4e75-fa39-68006a96dcd6" data-execution_count="1">
-<div class="cell-output cell-output-stdout">
-<div class="ansi-escaped-output">
-<pre>Requirement already satisfied: datasets in /usr/local/lib/python3.11/dist-packages (2.14.4)
-
-Collecting datasets
-
-  Downloading datasets-3.6.0-py3-none-any.whl.metadata (19 kB)
-
-Requirement already satisfied: filelock in /usr/local/lib/python3.11/dist-packages (from datasets) (3.18.0)
-
-Requirement already satisfied: numpy&gt;=1.17 in /usr/local/lib/python3.11/dist-packages (from datasets) (2.0.2)
-
-Requirement already satisfied: pyarrow&gt;=15.0.0 in /usr/local/lib/python3.11/dist-packages (from datasets) (18.1.0)
-
-Requirement already satisfied: dill&lt;0.3.9,&gt;=0.3.0 in /usr/local/lib/python3.11/dist-packages (from datasets) (0.3.7)
-
-Requirement already satisfied: pandas in /usr/local/lib/python3.11/dist-packages (from datasets) (2.2.2)
-
-Requirement already satisfied: requests&gt;=2.32.2 in /usr/local/lib/python3.11/dist-packages (from datasets) (2.32.3)
-
-Requirement already satisfied: tqdm&gt;=4.66.3 in /usr/local/lib/python3.11/dist-packages (from datasets) (4.67.1)
-
-Requirement already satisfied: xxhash in /usr/local/lib/python3.11/dist-packages (from datasets) (3.5.0)
-
-Requirement already satisfied: multiprocess&lt;0.70.17 in /usr/local/lib/python3.11/dist-packages (from datasets) (0.70.15)
-
-Collecting fsspec&lt;=2025.3.0,&gt;=2023.1.0 (from fsspec[http]&lt;=2025.3.0,&gt;=2023.1.0-&gt;datasets)
-
-  Downloading fsspec-2025.3.0-py3-none-any.whl.metadata (11 kB)
-
-Requirement already satisfied: huggingface-hub&gt;=0.24.0 in /usr/local/lib/python3.11/dist-packages (from datasets) (0.31.2)
-
-Requirement already satisfied: packaging in /usr/local/lib/python3.11/dist-packages (from datasets) (24.2)
-
-Requirement already satisfied: pyyaml&gt;=5.1 in /usr/local/lib/python3.11/dist-packages (from datasets) (6.0.2)
-
-Requirement already satisfied: aiohttp!=4.0.0a0,!=4.0.0a1 in /usr/local/lib/python3.11/dist-packages (from fsspec[http]&lt;=2025.3.0,&gt;=2023.1.0-&gt;datasets) (3.11.15)
-
-Requirement already satisfied: typing-extensions&gt;=3.7.4.3 in /usr/local/lib/python3.11/dist-packages (from huggingface-hub&gt;=0.24.0-&gt;datasets) (4.13.2)
-
-Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in /usr/local/lib/python3.11/dist-packages (from requests&gt;=2.32.2-&gt;datasets) (3.4.2)
-
-Requirement already satisfied: idna&lt;4,&gt;=2.5 in /usr/local/lib/python3.11/dist-packages (from requests&gt;=2.32.2-&gt;datasets) (3.10)
-
-Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /usr/local/lib/python3.11/dist-packages (from requests&gt;=2.32.2-&gt;datasets) (2.4.0)
-
-Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.11/dist-packages (from requests&gt;=2.32.2-&gt;datasets) (2025.4.26)
-
-Requirement already satisfied: python-dateutil&gt;=2.8.2 in /usr/local/lib/python3.11/dist-packages (from pandas-&gt;datasets) (2.9.0.post0)
-
-Requirement already satisfied: pytz&gt;=2020.1 in /usr/local/lib/python3.11/dist-packages (from pandas-&gt;datasets) (2025.2)
-
-Requirement already satisfied: tzdata&gt;=2022.7 in /usr/local/lib/python3.11/dist-packages (from pandas-&gt;datasets) (2025.2)
-
-Requirement already satisfied: aiohappyeyeballs&gt;=2.3.0 in /usr/local/lib/python3.11/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1-&gt;fsspec[http]&lt;=2025.3.0,&gt;=2023.1.0-&gt;datasets) (2.6.1)
-
-Requirement already satisfied: aiosignal&gt;=1.1.2 in /usr/local/lib/python3.11/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1-&gt;fsspec[http]&lt;=2025.3.0,&gt;=2023.1.0-&gt;datasets) (1.3.2)
-
-Requirement already satisfied: attrs&gt;=17.3.0 in /usr/local/lib/python3.11/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1-&gt;fsspec[http]&lt;=2025.3.0,&gt;=2023.1.0-&gt;datasets) (25.3.0)
-
-Requirement already satisfied: frozenlist&gt;=1.1.1 in /usr/local/lib/python3.11/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1-&gt;fsspec[http]&lt;=2025.3.0,&gt;=2023.1.0-&gt;datasets) (1.6.0)
-
-Requirement already satisfied: multidict&lt;7.0,&gt;=4.5 in /usr/local/lib/python3.11/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1-&gt;fsspec[http]&lt;=2025.3.0,&gt;=2023.1.0-&gt;datasets) (6.4.3)
-
-Requirement already satisfied: propcache&gt;=0.2.0 in /usr/local/lib/python3.11/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1-&gt;fsspec[http]&lt;=2025.3.0,&gt;=2023.1.0-&gt;datasets) (0.3.1)
-
-Requirement already satisfied: yarl&lt;2.0,&gt;=1.17.0 in /usr/local/lib/python3.11/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1-&gt;fsspec[http]&lt;=2025.3.0,&gt;=2023.1.0-&gt;datasets) (1.20.0)
-
-Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.11/dist-packages (from python-dateutil&gt;=2.8.2-&gt;pandas-&gt;datasets) (1.17.0)
-
-Downloading datasets-3.6.0-py3-none-any.whl (491 kB)
-
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">491.5/491.5 kB</span> <span class="ansi-red-fg">15.2 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
-
-Downloading fsspec-2025.3.0-py3-none-any.whl (193 kB)
-
-   <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">193.6/193.6 kB</span> <span class="ansi-red-fg">9.3 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
-
-Installing collected packages: fsspec, datasets
-
-  Attempting uninstall: fsspec
-
-    Found existing installation: fsspec 2025.3.2
-
-    Uninstalling fsspec-2025.3.2:
-
-      Successfully uninstalled fsspec-2025.3.2
-
-  Attempting uninstall: datasets
-
-    Found existing installation: datasets 2.14.4
-
-    Uninstalling datasets-2.14.4:
-
-      Successfully uninstalled datasets-2.14.4
-
-<span class="ansi-red-fg">ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
-
-gcsfs 2025.3.2 requires fsspec==2025.3.2, but you have fsspec 2025.3.0 which is incompatible.
-
-torch 2.6.0+cu124 requires nvidia-cublas-cu12==12.4.5.8; platform_system == "Linux" and platform_machine == "x86_64", but you have nvidia-cublas-cu12 12.5.3.2 which is incompatible.
-
-torch 2.6.0+cu124 requires nvidia-cuda-cupti-cu12==12.4.127; platform_system == "Linux" and platform_machine == "x86_64", but you have nvidia-cuda-cupti-cu12 12.5.82 which is incompatible.
-
-torch 2.6.0+cu124 requires nvidia-cuda-nvrtc-cu12==12.4.127; platform_system == "Linux" and platform_machine == "x86_64", but you have nvidia-cuda-nvrtc-cu12 12.5.82 which is incompatible.
-
-torch 2.6.0+cu124 requires nvidia-cuda-runtime-cu12==12.4.127; platform_system == "Linux" and platform_machine == "x86_64", but you have nvidia-cuda-runtime-cu12 12.5.82 which is incompatible.
-
-torch 2.6.0+cu124 requires nvidia-cudnn-cu12==9.1.0.70; platform_system == "Linux" and platform_machine == "x86_64", but you have nvidia-cudnn-cu12 9.3.0.75 which is incompatible.
-
-torch 2.6.0+cu124 requires nvidia-cufft-cu12==11.2.1.3; platform_system == "Linux" and platform_machine == "x86_64", but you have nvidia-cufft-cu12 11.2.3.61 which is incompatible.
-
-torch 2.6.0+cu124 requires nvidia-curand-cu12==10.3.5.147; platform_system == "Linux" and platform_machine == "x86_64", but you have nvidia-curand-cu12 10.3.6.82 which is incompatible.
-
-torch 2.6.0+cu124 requires nvidia-cusolver-cu12==11.6.1.9; platform_system == "Linux" and platform_machine == "x86_64", but you have nvidia-cusolver-cu12 11.6.3.83 which is incompatible.
-
-torch 2.6.0+cu124 requires nvidia-cusparse-cu12==12.3.1.170; platform_system == "Linux" and platform_machine == "x86_64", but you have nvidia-cusparse-cu12 12.5.1.3 which is incompatible.
-
-torch 2.6.0+cu124 requires nvidia-nvjitlink-cu12==12.4.127; platform_system == "Linux" and platform_machine == "x86_64", but you have nvidia-nvjitlink-cu12 12.5.82 which is incompatible.</span><span class="ansi-red-fg">
-
-</span>Successfully installed datasets-3.6.0 fsspec-2025.3.0
-</pre>
-</div>
-</div>
-</div>
-<div id="35642459" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:371,&quot;referenced_widgets&quot;:[&quot;91cb262120b640dcb4d49951a9775c2f&quot;,&quot;e9675b56c3d24485969179a7b06e97f7&quot;,&quot;106f29fde12e48e7911e9ad8daa74238&quot;,&quot;a7142a68a35e43f494cbc222cd534a34&quot;,&quot;f8c27f75a68c46458e581c6e4ec4113d&quot;,&quot;33d07c3d29634cd6aa66c3db6d3f4f4c&quot;,&quot;d0996340ffbc4769b63e010d496789c8&quot;,&quot;25783082924e4188b902445981044f8d&quot;,&quot;108223a3c79743a7ae17240aab40783b&quot;,&quot;5992713f602948609997c9748c67b939&quot;,&quot;0e8f102d4da04732a6cb0d6e8cd018cf&quot;,&quot;c4b51bc3470d43d5bca24f6db1802562&quot;,&quot;b08c20567474405dbc10ebe9ebb193a8&quot;,&quot;1aafd93544dd4219bb99d584bd38cfc7&quot;,&quot;07cdc93c94d448c08c606c8c33ed27b7&quot;,&quot;9ea5dc7507fa47d2b9ddfba9dbe0db4e&quot;,&quot;6acba2eb6a664908b9067756aa49c726&quot;,&quot;50cfb97d824649cf81c3b7f0e7f8c902&quot;,&quot;60cc18fbc15d42309dfc74078b6b264b&quot;,&quot;6b839594b37b4d68abe14a4ac22e2857&quot;,&quot;b39a1e25388346889e4a1733fa190baf&quot;,&quot;87eb7e656ffd4e0e905b9e76db367094&quot;,&quot;4a15a69d1fb34b4abe33759660b09180&quot;,&quot;0e671043af2b4ccfa8152572b9f4140b&quot;,&quot;c65eb186a4cc4a728a9690c7cb496961&quot;,&quot;c7fbbdfe780a440baab343b5a16c38fc&quot;,&quot;534133cd68e2438c91a99ca1e4477b43&quot;,&quot;f914cbb644d94022ab6585833daf1f4d&quot;,&quot;5e0eda7ba5324940981132fa14658930&quot;,&quot;633402731d634696b18621ef8b9f57d1&quot;,&quot;a268b3608ee44cf79637f6e63bacdb1c&quot;,&quot;0745d7d97705471285713c5364bd3187&quot;,&quot;e3ffaa9ab91c44d694f3b6c8bce94635&quot;,&quot;191ced0f72fb47bf82214ae43de50efd&quot;,&quot;28841f6a14694a03b60e6f6eb1315069&quot;,&quot;e3d3f3a88911479da761b4c1993e48a6&quot;,&quot;444fd73ba9c04121acf9863ec0e4e88f&quot;,&quot;91063bf662c34852904d023b8f803906&quot;,&quot;7961a39842cd43eaa50f58c88de5f4c0&quot;,&quot;59a4732e21434df6b34ae602659d89a3&quot;,&quot;d95ba8d5b37e405a9dd81fee36e03575&quot;,&quot;6f711cbecdec4abbbe0c3325adcd4a0e&quot;,&quot;b2614db6bc794e228962031519450743&quot;,&quot;c23e403cc1764b9dac22ebc1b18beee0&quot;,&quot;366f579514ff49eeb76b69572c66ccad&quot;,&quot;449a6baa200640a088f8e7a1bea834b4&quot;,&quot;22954eee33294aea858990dda18e73b9&quot;,&quot;07d988be9a0a4924bf122328a44c4b30&quot;,&quot;8aafad5aea9c4815b4639d9599b70ad2&quot;,&quot;92f19c551b904aa0b925333d3eda73a4&quot;,&quot;626e13c7143b43128f65a8d3eea0de8d&quot;,&quot;f6b4da9135a848a0a39d5ff2eddab083&quot;,&quot;4d88c269b70e4a958f7a87175e4db8c5&quot;,&quot;a1ce0d32261a4e1698d32a5907f5ebac&quot;,&quot;26cda09f2cfe49a08bcd18f33d98a6d7&quot;,&quot;8dcf0d0dbe6e4516bc3df3b4d355b626&quot;,&quot;b5f75b64c00f441fa82f68ab5a5de810&quot;,&quot;1bbdb985a59b45c289c1461f1ba1a498&quot;,&quot;68bb1ceb4e9947cd9671521de88bc437&quot;,&quot;d6257bf0734e4b7680326dda4465074f&quot;,&quot;24ad1ff1c43442f9a9b3c6fcef7fa8a7&quot;,&quot;5ffb22156c164381a40c4f3a80c51f87&quot;,&quot;e3bd102d6c714a9ab52455e2ecde6efb&quot;,&quot;661e7cf364bd4ea9ac1ca520bebeb794&quot;,&quot;56660a0225304f6bbdbb84021eadaee3&quot;,&quot;2ec0b03df38244e9a83ac077923f898d&quot;,&quot;2335e2c516414e0495ca978f8ee4ac7b&quot;,&quot;a1316c00ef7b413395281bff7969e441&quot;,&quot;7528e51a7af246a5852f6b07bcb2c99a&quot;,&quot;728f5ac143fd4e2b8901b8ee73e27ee3&quot;,&quot;76b3721eb4a34cc1b05ac893686ed6d7&quot;,&quot;b992246ea0c0461a9195d62af9ee0d67&quot;,&quot;b1ffb9b1f43a47fa9a7c1643e9d9d8aa&quot;,&quot;34325a29bf934bb589d832ee4d8a8d53&quot;,&quot;8002df47b0b04537ab268ef04f7d2907&quot;,&quot;c3029c9065e44e20981a44fc9eca6bd9&quot;,&quot;ff4d1e9b2c3c48ea9c34fd4cb52f3d94&quot;]}}" data-outputid="d04081dd-e64c-4565-b65b-0e9f044fe1c8" data-execution_count="2">
+<div id="35642459" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:371,&quot;referenced_widgets&quot;:[&quot;91cb262120b640dcb4d49951a9775c2f&quot;,&quot;e9675b56c3d24485969179a7b06e97f7&quot;,&quot;106f29fde12e48e7911e9ad8daa74238&quot;,&quot;a7142a68a35e43f494cbc222cd534a34&quot;,&quot;f8c27f75a68c46458e581c6e4ec4113d&quot;,&quot;33d07c3d29634cd6aa66c3db6d3f4f4c&quot;,&quot;d0996340ffbc4769b63e010d496789c8&quot;,&quot;25783082924e4188b902445981044f8d&quot;,&quot;108223a3c79743a7ae17240aab40783b&quot;,&quot;5992713f602948609997c9748c67b939&quot;,&quot;0e8f102d4da04732a6cb0d6e8cd018cf&quot;,&quot;c4b51bc3470d43d5bca24f6db1802562&quot;,&quot;b08c20567474405dbc10ebe9ebb193a8&quot;,&quot;1aafd93544dd4219bb99d584bd38cfc7&quot;,&quot;07cdc93c94d448c08c606c8c33ed27b7&quot;,&quot;9ea5dc7507fa47d2b9ddfba9dbe0db4e&quot;,&quot;6acba2eb6a664908b9067756aa49c726&quot;,&quot;50cfb97d824649cf81c3b7f0e7f8c902&quot;,&quot;60cc18fbc15d42309dfc74078b6b264b&quot;,&quot;6b839594b37b4d68abe14a4ac22e2857&quot;,&quot;b39a1e25388346889e4a1733fa190baf&quot;,&quot;87eb7e656ffd4e0e905b9e76db367094&quot;,&quot;4a15a69d1fb34b4abe33759660b09180&quot;,&quot;0e671043af2b4ccfa8152572b9f4140b&quot;,&quot;c65eb186a4cc4a728a9690c7cb496961&quot;,&quot;c7fbbdfe780a440baab343b5a16c38fc&quot;,&quot;534133cd68e2438c91a99ca1e4477b43&quot;,&quot;f914cbb644d94022ab6585833daf1f4d&quot;,&quot;5e0eda7ba5324940981132fa14658930&quot;,&quot;633402731d634696b18621ef8b9f57d1&quot;,&quot;a268b3608ee44cf79637f6e63bacdb1c&quot;,&quot;0745d7d97705471285713c5364bd3187&quot;,&quot;e3ffaa9ab91c44d694f3b6c8bce94635&quot;,&quot;191ced0f72fb47bf82214ae43de50efd&quot;,&quot;28841f6a14694a03b60e6f6eb1315069&quot;,&quot;e3d3f3a88911479da761b4c1993e48a6&quot;,&quot;444fd73ba9c04121acf9863ec0e4e88f&quot;,&quot;91063bf662c34852904d023b8f803906&quot;,&quot;7961a39842cd43eaa50f58c88de5f4c0&quot;,&quot;59a4732e21434df6b34ae602659d89a3&quot;,&quot;d95ba8d5b37e405a9dd81fee36e03575&quot;,&quot;6f711cbecdec4abbbe0c3325adcd4a0e&quot;,&quot;b2614db6bc794e228962031519450743&quot;,&quot;c23e403cc1764b9dac22ebc1b18beee0&quot;,&quot;366f579514ff49eeb76b69572c66ccad&quot;,&quot;449a6baa200640a088f8e7a1bea834b4&quot;,&quot;22954eee33294aea858990dda18e73b9&quot;,&quot;07d988be9a0a4924bf122328a44c4b30&quot;,&quot;8aafad5aea9c4815b4639d9599b70ad2&quot;,&quot;92f19c551b904aa0b925333d3eda73a4&quot;,&quot;626e13c7143b43128f65a8d3eea0de8d&quot;,&quot;f6b4da9135a848a0a39d5ff2eddab083&quot;,&quot;4d88c269b70e4a958f7a87175e4db8c5&quot;,&quot;a1ce0d32261a4e1698d32a5907f5ebac&quot;,&quot;26cda09f2cfe49a08bcd18f33d98a6d7&quot;,&quot;8dcf0d0dbe6e4516bc3df3b4d355b626&quot;,&quot;b5f75b64c00f441fa82f68ab5a5de810&quot;,&quot;1bbdb985a59b45c289c1461f1ba1a498&quot;,&quot;68bb1ceb4e9947cd9671521de88bc437&quot;,&quot;d6257bf0734e4b7680326dda4465074f&quot;,&quot;24ad1ff1c43442f9a9b3c6fcef7fa8a7&quot;,&quot;5ffb22156c164381a40c4f3a80c51f87&quot;,&quot;e3bd102d6c714a9ab52455e2ecde6efb&quot;,&quot;661e7cf364bd4ea9ac1ca520bebeb794&quot;,&quot;56660a0225304f6bbdbb84021eadaee3&quot;,&quot;2ec0b03df38244e9a83ac077923f898d&quot;,&quot;2335e2c516414e0495ca978f8ee4ac7b&quot;,&quot;a1316c00ef7b413395281bff7969e441&quot;,&quot;7528e51a7af246a5852f6b07bcb2c99a&quot;,&quot;728f5ac143fd4e2b8901b8ee73e27ee3&quot;,&quot;76b3721eb4a34cc1b05ac893686ed6d7&quot;,&quot;b992246ea0c0461a9195d62af9ee0d67&quot;,&quot;b1ffb9b1f43a47fa9a7c1643e9d9d8aa&quot;,&quot;34325a29bf934bb589d832ee4d8a8d53&quot;,&quot;8002df47b0b04537ab268ef04f7d2907&quot;,&quot;c3029c9065e44e20981a44fc9eca6bd9&quot;,&quot;ff4d1e9b2c3c48ea9c34fd4cb52f3d94&quot;]}}" data-outputid="d04081dd-e64c-4565-b65b-0e9f044fe1c8">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset</span>
 <span id="cb1-3"><a href=""></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
@@ -607,6 +476,9 @@ Reconstruction error of typical data: 0.0034905648790299892</code></pre>
 <section id="anomaly-detection-6" class="slide level2">
 <h2>Anomaly Detection</h2>
 <p>As you can see the reconstruction error of typical data is much smaller. We can also visualize some reconstructions.</p>
+</section>
+<section id="anomaly-detection-7" class="slide level2">
+<h2>Anomaly Detection</h2>
 <div id="87d31203" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:86}}" data-outputid="50c57af9-bab9-4bb3-aae8-d8e2cfebe308" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb8-2"><a href=""></a></span>
@@ -627,7 +499,7 @@ Reconstruction error of typical data: 0.0034905648790299892</code></pre>
 <span id="cb8-17"><a href=""></a>show(torch.concat([X, reconstructed], axis<span class="op">=</span><span class="dv">2</span>).transpose(<span class="dv">2</span>, <span class="dv">3</span>).reshape(<span class="dv">1</span>, <span class="dv">20</span><span class="op">*</span><span class="dv">28</span>, <span class="dv">2</span><span class="op">*</span><span class="dv">28</span>).transpose(<span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="09_unsupervised_learning_and_ddpm_files/figure-revealjs/cell-7-output-1.png" class="r-stretch"></section>
+<img data-src="09_autoencoders_and_ddpm_files/figure-revealjs/cell-7-output-1.png" class="r-stretch"></section>
 <section id="denoising-images" class="slide level2">
 <h2>Denoising Images</h2>
 <p>You can also use autoencoders to denoise images. You do this by adding some noise to your training images and then ask the autoencoder to predict the image without noise.</p>
@@ -862,7 +734,7 @@ Done!</code></pre>
 <span id="cb12-9"><a href=""></a>show(torch.concat([X, pred, y], axis<span class="op">=</span><span class="dv">2</span>).transpose(<span class="dv">2</span>, <span class="dv">3</span>).reshape(<span class="dv">1</span>, <span class="dv">20</span><span class="op">*</span><span class="dv">28</span>, <span class="dv">3</span><span class="op">*</span><span class="dv">28</span>).transpose(<span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="09_unsupervised_learning_and_ddpm_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
+<img data-src="09_autoencoders_and_ddpm_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
 <section id="ddpm" class="slide level2">
 <h2>DDPM</h2>
 <p>We can take this denoising idea much further and generate images from random noise.</p>
@@ -983,8 +855,8 @@ Done!</code></pre>
 </section>
 <section id="ddpm-7" class="slide level2">
 <h2>DDPM</h2>
-<p>Now we need some sort of model to predict the added noise. The only hard requirement is that the input shape would be the same as the output shape. Typical choices are transformers and U-Nets.</p>
-<p>Let’s use a U-Net. They are convolutional neural networks that look like this:</p>
+<p>Now we need some sort of model to predict the added noise. The only hard requirement is that the input shape would be the same as the output shape.</p>
+<p>The original paper used a U-Net, so let’s use it as well. U-Nets are convolutional neural networks that look like this:</p>
 
 <img data-src="../images/unet.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="ddpm-8" class="slide level2">
@@ -1352,7 +1224,7 @@ Done!</code></pre>
 </div></section><section id="ddpm-10" class="slide level2">
 <h2>DDPM</h2>
 <p>We can now train the model.</p>
-<div id="cd29841a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="5ebaad75-3abe-46d0-d1eb-71524c3d5b4f" data-execution_count="20">
+<div id="cd29841a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="5ebaad75-3abe-46d0-d1eb-71524c3d5b4f">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
 <span id="cb17-2"><a href=""></a></span>
 <span id="cb17-3"><a href=""></a><span class="co"># Hyperparameters</span></span>
@@ -1364,62 +1236,61 @@ Done!</code></pre>
 <span id="cb17-9"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
 <span id="cb17-10"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
 <span id="cb17-11"><a href=""></a></span>
-<span id="cb17-12"><a href=""></a><span class="co">#model = UNet(n_steps=no_steps).to(device)</span></span>
-<span id="cb17-13"><a href=""></a>model <span class="op">=</span> UNet(n_steps<span class="op">=</span>no_steps).to(device)</span>
-<span id="cb17-14"><a href=""></a>ddpm <span class="op">=</span> DDPM(</span>
-<span id="cb17-15"><a href=""></a>  model <span class="op">=</span> model,</span>
-<span id="cb17-16"><a href=""></a>  image_dim <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">28</span>, <span class="dv">28</span>),</span>
-<span id="cb17-17"><a href=""></a>  device <span class="op">=</span> device,</span>
-<span id="cb17-18"><a href=""></a>  no_steps <span class="op">=</span> no_steps</span>
-<span id="cb17-19"><a href=""></a>)</span>
-<span id="cb17-20"><a href=""></a></span>
-<span id="cb17-21"><a href=""></a>dataloader <span class="op">=</span> DataLoader(</span>
-<span id="cb17-22"><a href=""></a>  data,</span>
-<span id="cb17-23"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
-<span id="cb17-24"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span></span>
-<span id="cb17-25"><a href=""></a>)</span>
-<span id="cb17-26"><a href=""></a></span>
-<span id="cb17-27"><a href=""></a>loss_fn <span class="op">=</span> nn.MSELoss().to(device)</span>
-<span id="cb17-28"><a href=""></a>optimizer <span class="op">=</span> torch.optim.Adam(params<span class="op">=</span>model.parameters(), lr<span class="op">=</span>learning_rate)</span>
-<span id="cb17-29"><a href=""></a></span>
-<span id="cb17-30"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
-<span id="cb17-31"><a href=""></a>  size <span class="op">=</span> <span class="bu">len</span>(dataloader.dataset)</span>
-<span id="cb17-32"><a href=""></a></span>
-<span id="cb17-33"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
-<span id="cb17-34"><a href=""></a></span>
-<span id="cb17-35"><a href=""></a>  <span class="cf">for</span> batch, X <span class="kw">in</span> <span class="bu">enumerate</span>(dataloader):</span>
-<span id="cb17-36"><a href=""></a>    X <span class="op">=</span> X.to(device)</span>
-<span id="cb17-37"><a href=""></a></span>
-<span id="cb17-38"><a href=""></a>    noise <span class="op">=</span> torch.randn(X.shape).to(device)</span>
-<span id="cb17-39"><a href=""></a>    t <span class="op">=</span> torch.randint(<span class="dv">0</span>, no_steps, (<span class="bu">len</span>(X),)).to(device)</span>
-<span id="cb17-40"><a href=""></a></span>
-<span id="cb17-41"><a href=""></a>    <span class="co"># Forward pass</span></span>
-<span id="cb17-42"><a href=""></a>    image_w_noise <span class="op">=</span> ddpm.add_noise(X, t, noise)</span>
-<span id="cb17-43"><a href=""></a>    predicted_noise <span class="op">=</span> ddpm.predict_noise(image_w_noise, t)</span>
-<span id="cb17-44"><a href=""></a>    loss <span class="op">=</span> loss_fn(predicted_noise, noise)</span>
-<span id="cb17-45"><a href=""></a></span>
-<span id="cb17-46"><a href=""></a>    <span class="co"># Backward pass</span></span>
-<span id="cb17-47"><a href=""></a>    loss.backward()</span>
-<span id="cb17-48"><a href=""></a>    optimizer.step()</span>
-<span id="cb17-49"><a href=""></a></span>
-<span id="cb17-50"><a href=""></a>    <span class="co"># Reset the computed gradients back to zero</span></span>
-<span id="cb17-51"><a href=""></a>    optimizer.zero_grad()</span>
-<span id="cb17-52"><a href=""></a></span>
-<span id="cb17-53"><a href=""></a>    <span class="cf">if</span> batch <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb17-54"><a href=""></a>      loss, current <span class="op">=</span> loss.item(), batch <span class="op">*</span> batch_size <span class="op">+</span> <span class="bu">len</span>(X)</span>
-<span id="cb17-55"><a href=""></a>      <span class="bu">print</span>(<span class="ss">f"loss: </span><span class="sc">{</span>loss<span class="sc">:&gt;7f}</span><span class="ss">  [</span><span class="sc">{</span>current<span class="sc">:&gt;5d}</span><span class="ss">/</span><span class="sc">{</span>size<span class="sc">:&gt;5d}</span><span class="ss">]"</span>)</span>
-<span id="cb17-56"><a href=""></a></span>
-<span id="cb17-57"><a href=""></a><span class="co"># Organize the training loop</span></span>
-<span id="cb17-58"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
-<span id="cb17-59"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
-<span id="cb17-60"><a href=""></a>  train_epoch(dataloader, model, loss_fn, optimizer)</span>
-<span id="cb17-61"><a href=""></a></span>
-<span id="cb17-62"><a href=""></a>torch.save(model, <span class="st">'ddpm_unet.pth'</span>)</span>
-<span id="cb17-63"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-12"><a href=""></a>model <span class="op">=</span> UNet(n_steps<span class="op">=</span>no_steps).to(device)</span>
+<span id="cb17-13"><a href=""></a>ddpm <span class="op">=</span> DDPM(</span>
+<span id="cb17-14"><a href=""></a>  model <span class="op">=</span> model,</span>
+<span id="cb17-15"><a href=""></a>  image_dim <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">28</span>, <span class="dv">28</span>),</span>
+<span id="cb17-16"><a href=""></a>  device <span class="op">=</span> device,</span>
+<span id="cb17-17"><a href=""></a>  no_steps <span class="op">=</span> no_steps</span>
+<span id="cb17-18"><a href=""></a>)</span>
+<span id="cb17-19"><a href=""></a></span>
+<span id="cb17-20"><a href=""></a>dataloader <span class="op">=</span> DataLoader(</span>
+<span id="cb17-21"><a href=""></a>  data,</span>
+<span id="cb17-22"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
+<span id="cb17-23"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span></span>
+<span id="cb17-24"><a href=""></a>)</span>
+<span id="cb17-25"><a href=""></a></span>
+<span id="cb17-26"><a href=""></a>loss_fn <span class="op">=</span> nn.MSELoss().to(device)</span>
+<span id="cb17-27"><a href=""></a>optimizer <span class="op">=</span> torch.optim.Adam(params<span class="op">=</span>model.parameters(), lr<span class="op">=</span>learning_rate)</span>
+<span id="cb17-28"><a href=""></a></span>
+<span id="cb17-29"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
+<span id="cb17-30"><a href=""></a>  size <span class="op">=</span> <span class="bu">len</span>(dataloader.dataset)</span>
+<span id="cb17-31"><a href=""></a></span>
+<span id="cb17-32"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
+<span id="cb17-33"><a href=""></a></span>
+<span id="cb17-34"><a href=""></a>  <span class="cf">for</span> batch, X <span class="kw">in</span> <span class="bu">enumerate</span>(dataloader):</span>
+<span id="cb17-35"><a href=""></a>    X <span class="op">=</span> X.to(device)</span>
+<span id="cb17-36"><a href=""></a></span>
+<span id="cb17-37"><a href=""></a>    noise <span class="op">=</span> torch.randn(X.shape).to(device)</span>
+<span id="cb17-38"><a href=""></a>    t <span class="op">=</span> torch.randint(<span class="dv">0</span>, no_steps, (<span class="bu">len</span>(X),)).to(device)</span>
+<span id="cb17-39"><a href=""></a></span>
+<span id="cb17-40"><a href=""></a>    <span class="co"># Forward pass</span></span>
+<span id="cb17-41"><a href=""></a>    image_w_noise <span class="op">=</span> ddpm.add_noise(X, t, noise)</span>
+<span id="cb17-42"><a href=""></a>    predicted_noise <span class="op">=</span> ddpm.predict_noise(image_w_noise, t)</span>
+<span id="cb17-43"><a href=""></a>    loss <span class="op">=</span> loss_fn(predicted_noise, noise)</span>
+<span id="cb17-44"><a href=""></a></span>
+<span id="cb17-45"><a href=""></a>    <span class="co"># Backward pass</span></span>
+<span id="cb17-46"><a href=""></a>    loss.backward()</span>
+<span id="cb17-47"><a href=""></a>    optimizer.step()</span>
+<span id="cb17-48"><a href=""></a></span>
+<span id="cb17-49"><a href=""></a>    <span class="co"># Reset the computed gradients back to zero</span></span>
+<span id="cb17-50"><a href=""></a>    optimizer.zero_grad()</span>
+<span id="cb17-51"><a href=""></a></span>
+<span id="cb17-52"><a href=""></a>    <span class="cf">if</span> batch <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb17-53"><a href=""></a>      loss, current <span class="op">=</span> loss.item(), batch <span class="op">*</span> batch_size <span class="op">+</span> <span class="bu">len</span>(X)</span>
+<span id="cb17-54"><a href=""></a>      <span class="bu">print</span>(<span class="ss">f"loss: </span><span class="sc">{</span>loss<span class="sc">:&gt;7f}</span><span class="ss">  [</span><span class="sc">{</span>current<span class="sc">:&gt;5d}</span><span class="ss">/</span><span class="sc">{</span>size<span class="sc">:&gt;5d}</span><span class="ss">]"</span>)</span>
+<span id="cb17-55"><a href=""></a></span>
+<span id="cb17-56"><a href=""></a><span class="co"># Organize the training loop</span></span>
+<span id="cb17-57"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb17-58"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
+<span id="cb17-59"><a href=""></a>  train_epoch(dataloader, model, loss_fn, optimizer)</span>
+<span id="cb17-60"><a href=""></a></span>
+<span id="cb17-61"><a href=""></a>torch.save(model, <span class="st">'ddpm_unet.pth'</span>)</span>
+<span id="cb17-62"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
-<section id="ddpm-10-output" class="slide level2 output-location-slide"><h2>DDPM</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="5ebaad75-3abe-46d0-d1eb-71524c3d5b4f" data-execution_count="20">
+<section id="ddpm-10-output" class="slide level2 output-location-slide"><h2>DDPM</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="5ebaad75-3abe-46d0-d1eb-71524c3d5b4f">
 <div class="cell-output cell-output-stdout">
 <pre><code>Using cuda device
 Epoch 1
@@ -1599,7 +1470,7 @@ Done!</code></pre>
 <span id="cb19-9"><a href=""></a>show(ddpm.sample(n_samples<span class="op">=</span><span class="dv">10</span>).transpose(<span class="dv">2</span>, <span class="dv">3</span>).reshape(<span class="dv">1</span>, <span class="dv">10</span><span class="op">*</span><span class="dv">28</span>, <span class="dv">28</span>).transpose(<span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="09_unsupervised_learning_and_ddpm_files/figure-revealjs/cell-15-output-1.png" class="r-stretch"></section>
+<img data-src="09_autoencoders_and_ddpm_files/figure-revealjs/cell-15-output-1.png" class="r-stretch"></section>
 <section id="practice-task" class="slide level2">
 <h2>Practice task</h2>
 <p>Try to augment the sampling procedure such that you would be able to specify the digit that you want to sample.</p>
@@ -1615,19 +1486,19 @@ Done!</code></pre>
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="09_unsupervised_learning_and_ddpm_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="09_autoencoders_and_ddpm_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="09_unsupervised_learning_and_ddpm_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="09_unsupervised_learning_and_ddpm_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="09_unsupervised_learning_and_ddpm_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="09_unsupervised_learning_and_ddpm_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="09_unsupervised_learning_and_ddpm_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="09_unsupervised_learning_and_ddpm_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="09_unsupervised_learning_and_ddpm_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="09_unsupervised_learning_and_ddpm_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="09_unsupervised_learning_and_ddpm_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

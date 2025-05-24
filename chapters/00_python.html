@@ -432,22 +432,40 @@ None
 [0]
 --------------</code></pre>
 </div>
-</div></section><section id="dictionaries" class="slide level2">
+</div></section><section id="functions-3" class="slide level2">
+<h2>Functions</h2>
+<p>Python has anonymous functions. They are quite restrictive. For example, you can only have only one line of code in them.</p>
+<div id="d8a82d88" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href=""></a><span class="kw">def</span> <span class="bu">eval</span>(f, x):</span>
+<span id="cb21-2"><a href=""></a>  <span class="cf">return</span> f(x)</span>
+<span id="cb21-3"><a href=""></a></span>
+<span id="cb21-4"><a href=""></a><span class="bu">print</span>(</span>
+<span id="cb21-5"><a href=""></a>  <span class="bu">eval</span>(</span>
+<span id="cb21-6"><a href=""></a>    <span class="kw">lambda</span> x: x<span class="op">**</span><span class="dv">2</span>, <span class="co"># Anonymous function</span></span>
+<span id="cb21-7"><a href=""></a>    <span class="dv">2</span></span>
+<span id="cb21-8"><a href=""></a>  )</span>
+<span id="cb21-9"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>4</code></pre>
+</div>
+</div>
+</section>
+<section id="dictionaries" class="slide level2">
 <h2>Dictionaries</h2>
 <p>Dictionaries store key value pairs</p>
 <div id="7f4bdf31" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href=""></a>positions <span class="op">=</span> {<span class="st">"First"</span>: <span class="dv">1</span>} <span class="co"># Dictionary literal</span></span>
-<span id="cb21-2"><a href=""></a>positions[<span class="st">"Second"</span>] <span class="op">=</span> <span class="dv">2</span> <span class="co"># Adding new key value pair</span></span>
-<span id="cb21-3"><a href=""></a>positions <span class="op">=</span> {<span class="op">**</span>positions, <span class="st">"Third"</span>: <span class="dv">3</span>} <span class="co"># You can use ** to spread dictionaries</span></span>
-<span id="cb21-4"><a href=""></a></span>
-<span id="cb21-5"><a href=""></a><span class="cf">for</span> key <span class="kw">in</span> positions: <span class="co"># Looping over keys</span></span>
-<span id="cb21-6"><a href=""></a>  <span class="bu">print</span>(key)</span>
-<span id="cb21-7"><a href=""></a><span class="bu">print</span>(<span class="st">"-----------"</span>)</span>
-<span id="cb21-8"><a href=""></a></span>
-<span id="cb21-9"><a href=""></a><span class="cf">for</span> key, value <span class="kw">in</span> positions.items():</span>
-<span id="cb21-10"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">:</span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb21-11"><a href=""></a></span>
-<span id="cb21-12"><a href=""></a>positions[<span class="st">"Fourth"</span>] <span class="co"># Trying to access value that does not exist throws a KeyError</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href=""></a>positions <span class="op">=</span> {<span class="st">"First"</span>: <span class="dv">1</span>} <span class="co"># Dictionary literal</span></span>
+<span id="cb23-2"><a href=""></a>positions[<span class="st">"Second"</span>] <span class="op">=</span> <span class="dv">2</span> <span class="co"># Adding new key value pair</span></span>
+<span id="cb23-3"><a href=""></a>positions <span class="op">=</span> {<span class="op">**</span>positions, <span class="st">"Third"</span>: <span class="dv">3</span>} <span class="co"># You can use ** to spread dictionaries</span></span>
+<span id="cb23-4"><a href=""></a></span>
+<span id="cb23-5"><a href=""></a><span class="cf">for</span> key <span class="kw">in</span> positions: <span class="co"># Looping over keys</span></span>
+<span id="cb23-6"><a href=""></a>  <span class="bu">print</span>(key)</span>
+<span id="cb23-7"><a href=""></a><span class="bu">print</span>(<span class="st">"-----------"</span>)</span>
+<span id="cb23-8"><a href=""></a></span>
+<span id="cb23-9"><a href=""></a><span class="cf">for</span> key, value <span class="kw">in</span> positions.items():</span>
+<span id="cb23-10"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">:</span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb23-11"><a href=""></a></span>
+<span id="cb23-12"><a href=""></a>positions[<span class="st">"Fourth"</span>] <span class="co"># Trying to access value that does not exist throws a KeyError</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
@@ -473,7 +491,118 @@ Cell <span class="ansi-green-fg">In[11], line 13</span>
 <span class="ansi-red-fg">KeyError</span>: 'Fourth'</pre>
 </div>
 </div>
-</div></section><section id="numpy" class="slide level2">
+</div></section><section id="classes-and-objects" class="slide level2">
+<h2>Classes and Objects</h2>
+<p>Python is an object oriented language. Actually, under the hood, everything in Python is an object.</p>
+<p>Here is how to define classes:</p>
+<div id="012a8a7a" class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href=""></a><span class="kw">class</span> Vect2:</span>
+<span id="cb25-2"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, x, y): <span class="co"># Constructor</span></span>
+<span id="cb25-3"><a href=""></a>    <span class="va">self</span>.x <span class="op">=</span> x</span>
+<span id="cb25-4"><a href=""></a>    <span class="va">self</span>.y <span class="op">=</span> y</span>
+<span id="cb25-5"><a href=""></a></span>
+<span id="cb25-6"><a href=""></a>  <span class="kw">def</span> norm(<span class="va">self</span>):</span>
+<span id="cb25-7"><a href=""></a>    <span class="cf">return</span> (<span class="va">self</span>.x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="va">self</span>.y<span class="op">**</span><span class="dv">2</span>)<span class="op">**</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb25-8"><a href=""></a></span>
+<span id="cb25-9"><a href=""></a>vector <span class="op">=</span> Vect2(<span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb25-10"><a href=""></a><span class="bu">print</span>(vector.norm())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5.0</code></pre>
+</div>
+</div>
+</section>
+<section id="classes-and-objects-1" class="slide level2">
+<h2>Classes and Objects</h2>
+<p>The first argument in a class method is always the object the method was called on. By convention this variable is called <code>self</code> (in other languages the same thing is achieved using the keyword <code>this</code>). If you forget about <code>self</code> you will get cryptic errors!</p>
+</section>
+<section id="classes-and-objects-2" class="slide level2">
+<h2>Classes and Objects</h2>
+<p>The method <code>__init__</code> is called the constructor. It gets run when an instance of an object is created.</p>
+<p>The methods that begin and end in double underscore are built in methods used to implement operator overloading and some other things. They are called magic or dunder methods. The full list can be found <a href="https://docs.python.org/3/reference/datamodel.html#special-method-names">here</a>.</p>
+</section>
+<section id="classes-and-objects-3" class="slide level2">
+<h2>Classes and Objects</h2>
+<div id="58bb6e94" class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href=""></a><span class="kw">class</span> Vect2:</span>
+<span id="cb27-2"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, x, y): <span class="co"># Constructor</span></span>
+<span id="cb27-3"><a href=""></a>    <span class="va">self</span>.x <span class="op">=</span> x</span>
+<span id="cb27-4"><a href=""></a>    <span class="va">self</span>.y <span class="op">=</span> y</span>
+<span id="cb27-5"><a href=""></a></span>
+<span id="cb27-6"><a href=""></a>  <span class="kw">def</span> <span class="fu">__add__</span>(<span class="va">self</span>, other): <span class="co"># Implements the "+" operation on Vect2</span></span>
+<span id="cb27-7"><a href=""></a>    <span class="cf">return</span> Vect2(<span class="va">self</span>.x<span class="op">+</span>other.x, <span class="va">self</span>.y<span class="op">+</span>other.y)</span>
+<span id="cb27-8"><a href=""></a></span>
+<span id="cb27-9"><a href=""></a>  <span class="kw">def</span> <span class="fu">__str__</span>(<span class="va">self</span>): <span class="co"># This method gets called when you do str(object), for example when trying to print the object</span></span>
+<span id="cb27-10"><a href=""></a>    <span class="cf">return</span> <span class="ss">f"Vect2(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>x<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>y<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="cb27-11"><a href=""></a></span>
+<span id="cb27-12"><a href=""></a>  <span class="kw">def</span> norm(<span class="va">self</span>):</span>
+<span id="cb27-13"><a href=""></a>    <span class="cf">return</span> (<span class="va">self</span>.x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="va">self</span>.y<span class="op">**</span><span class="dv">2</span>)<span class="op">**</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb27-14"><a href=""></a></span>
+<span id="cb27-15"><a href=""></a>vector1 <span class="op">=</span> Vect2(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb27-16"><a href=""></a>vector2 <span class="op">=</span> Vect2(<span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb27-17"><a href=""></a><span class="bu">print</span>(vector1 <span class="op">+</span> vector2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Vect2(4, 6)</code></pre>
+</div>
+</div>
+</section>
+<section id="classes-and-objects-4" class="slide level2">
+<h2>Classes and Objects</h2>
+<p>There is inheritence. It is done as follows:</p>
+<div id="26cc80f1" class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href=""></a><span class="kw">class</span> Animal:</span>
+<span id="cb29-2"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, no_legs):</span>
+<span id="cb29-3"><a href=""></a>    <span class="va">self</span>.no_legs <span class="op">=</span> no_legs</span>
+<span id="cb29-4"><a href=""></a></span>
+<span id="cb29-5"><a href=""></a><span class="kw">class</span> Dog(Animal):</span>
+<span id="cb29-6"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb29-7"><a href=""></a>    <span class="bu">super</span>().<span class="fu">__init__</span>(<span class="dv">4</span>) <span class="co"># super() refers to the object that is inherited from</span></span>
+<span id="cb29-8"><a href=""></a></span>
+<span id="cb29-9"><a href=""></a>  <span class="kw">def</span> speak(<span class="va">self</span>):</span>
+<span id="cb29-10"><a href=""></a>    <span class="cf">return</span> <span class="st">"Woof!"</span></span>
+<span id="cb29-11"><a href=""></a></span>
+<span id="cb29-12"><a href=""></a>dog <span class="op">=</span> Dog()</span>
+<span id="cb29-13"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Dog has </span><span class="sc">{</span>dog<span class="sc">.</span>no_legs<span class="sc">}</span><span class="ss"> legs and says '</span><span class="sc">{</span>dog<span class="sc">.</span>speak()<span class="sc">}</span><span class="ss">'."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dog has 4 legs and says 'Woof!'.</code></pre>
+</div>
+</div>
+</section>
+<section id="classes-and-objects-5" class="slide level2">
+<h2>Classes and Objects</h2>
+<p>In Python all class fields and methods are public. By convention, if a field or method name starts with an underscore it means that you probably don’t want to use it, if it starts with double underscore then you really shouldn’t use it.</p>
+<div id="ed244f2f" class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href=""></a><span class="kw">class</span> SecretContainer():</span>
+<span id="cb31-2"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb31-3"><a href=""></a>    <span class="va">self</span>._secret <span class="op">=</span> <span class="st">"This is sorta private"</span></span>
+<span id="cb31-4"><a href=""></a>    <span class="va">self</span>.__super_secret <span class="op">=</span> <span class="st">"This is really private!"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="classes-and-objects-6" class="slide level2">
+<h2>Classes and Objects</h2>
+<p>Python has a garbage collector. Memory is freed if there are no references to it. If you want to free an object manually use the <code>del</code> keyword.</p>
+<div id="5dc2302a" class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href=""></a>vector <span class="op">=</span> Vect2(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb32-2"><a href=""></a><span class="bu">print</span>(vector)</span>
+<span id="cb32-3"><a href=""></a><span class="kw">del</span> vector</span>
+<span id="cb32-4"><a href=""></a><span class="bu">print</span>(vector) <span class="co"># Will get an error because vector does not exist anymore</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Vect2(1, 2)</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[12], line 4</span>
+<span class="ansi-green-fg ansi-bold">      2</span> <span style="color:rgb(0,135,0)">print</span>(vector)
+<span class="ansi-green-fg ansi-bold">      3</span> <span style="font-weight:bold;color:rgb(0,135,0)">del</span> vector
+<span class="ansi-green-fg">----&gt; 4</span> <span style="color:rgb(0,135,0)">print</span>(<span class="ansi-yellow-bg">vector</span>) <span style="font-style:italic;color:rgb(95,135,135)"># Will get an error because vector does not exist anymore</span>
+
+<span class="ansi-red-fg">NameError</span>: name 'vector' is not defined</pre>
+</div>
+</div>
+</div>
+</section>
+<section id="numpy" class="slide level2">
 <h2>Numpy</h2>
 <p><code>Numpy</code> is a Python package for scientific computing. The main feature of <code>numpy</code> are fixed size, fixed type multidimensional arrays. <code>Numpy</code> also implements a lot of operations on these arrays. Under the hood <code>numpy</code> is implemented in C, so performing operations on <code>numpy</code> arrays is very quick.</p>
 <p>Here are some examples:</p>
@@ -481,27 +610,27 @@ Cell <span class="ansi-green-fg">In[11], line 13</span>
 <section id="numpy-1" class="slide level2">
 <h2>Numpy</h2>
 <div id="b5654408" class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb23-2"><a href=""></a></span>
-<span id="cb23-3"><a href=""></a>array1 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
-<span id="cb23-4"><a href=""></a>array2 <span class="op">=</span> np.array([<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>])</span>
-<span id="cb23-5"><a href=""></a><span class="bu">print</span>(array1 <span class="op">+</span> array2) <span class="co"># Sums componentwise</span></span>
-<span id="cb23-6"><a href=""></a><span class="bu">print</span>(array1 <span class="op">*</span> array2) <span class="co"># Multiplies componentwise</span></span>
-<span id="cb23-7"><a href=""></a><span class="bu">print</span>(<span class="st">"----------------"</span>)</span>
-<span id="cb23-8"><a href=""></a></span>
-<span id="cb23-9"><a href=""></a>matrix1 <span class="op">=</span> np.array([</span>
-<span id="cb23-10"><a href=""></a>  [<span class="dv">1</span>, <span class="dv">2</span>],</span>
-<span id="cb23-11"><a href=""></a>  [<span class="dv">3</span>, <span class="dv">4</span>]</span>
-<span id="cb23-12"><a href=""></a>])</span>
-<span id="cb23-13"><a href=""></a>matrix2 <span class="op">=</span> np.array([</span>
-<span id="cb23-14"><a href=""></a>  [<span class="dv">5</span>, <span class="dv">6</span>],</span>
-<span id="cb23-15"><a href=""></a>  [<span class="dv">7</span>, <span class="dv">8</span>]</span>
-<span id="cb23-16"><a href=""></a>])</span>
-<span id="cb23-17"><a href=""></a><span class="bu">print</span>(matrix1 <span class="op">*</span> matrix2) <span class="co"># Multiplies componentwise</span></span>
-<span id="cb23-18"><a href=""></a><span class="bu">print</span>(<span class="st">"----------------"</span>)</span>
-<span id="cb23-19"><a href=""></a><span class="bu">print</span>(matrix1 <span class="op">@</span> matrix2) <span class="co"># Matrix multiplication, as defined in a linear algebra course</span></span>
-<span id="cb23-20"><a href=""></a><span class="bu">print</span>(<span class="st">"----------------"</span>)</span>
-<span id="cb23-21"><a href=""></a><span class="bu">print</span>(np.linalg.eigvals(matrix1)) <span class="co"># Computes eigenvalues of matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb34-2"><a href=""></a></span>
+<span id="cb34-3"><a href=""></a>array1 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
+<span id="cb34-4"><a href=""></a>array2 <span class="op">=</span> np.array([<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>])</span>
+<span id="cb34-5"><a href=""></a><span class="bu">print</span>(array1 <span class="op">+</span> array2) <span class="co"># Sums componentwise</span></span>
+<span id="cb34-6"><a href=""></a><span class="bu">print</span>(array1 <span class="op">*</span> array2) <span class="co"># Multiplies componentwise</span></span>
+<span id="cb34-7"><a href=""></a><span class="bu">print</span>(<span class="st">"----------------"</span>)</span>
+<span id="cb34-8"><a href=""></a></span>
+<span id="cb34-9"><a href=""></a>matrix1 <span class="op">=</span> np.array([</span>
+<span id="cb34-10"><a href=""></a>  [<span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb34-11"><a href=""></a>  [<span class="dv">3</span>, <span class="dv">4</span>]</span>
+<span id="cb34-12"><a href=""></a>])</span>
+<span id="cb34-13"><a href=""></a>matrix2 <span class="op">=</span> np.array([</span>
+<span id="cb34-14"><a href=""></a>  [<span class="dv">5</span>, <span class="dv">6</span>],</span>
+<span id="cb34-15"><a href=""></a>  [<span class="dv">7</span>, <span class="dv">8</span>]</span>
+<span id="cb34-16"><a href=""></a>])</span>
+<span id="cb34-17"><a href=""></a><span class="bu">print</span>(matrix1 <span class="op">*</span> matrix2) <span class="co"># Multiplies componentwise</span></span>
+<span id="cb34-18"><a href=""></a><span class="bu">print</span>(<span class="st">"----------------"</span>)</span>
+<span id="cb34-19"><a href=""></a><span class="bu">print</span>(matrix1 <span class="op">@</span> matrix2) <span class="co"># Matrix multiplication, as defined in a linear algebra course</span></span>
+<span id="cb34-20"><a href=""></a><span class="bu">print</span>(<span class="st">"----------------"</span>)</span>
+<span id="cb34-21"><a href=""></a><span class="bu">print</span>(np.linalg.eigvals(matrix1)) <span class="co"># Computes eigenvalues of matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
@@ -522,10 +651,10 @@ Cell <span class="ansi-green-fg">In[11], line 13</span>
 <h2>Pandas</h2>
 <p><code>Pandas</code> is a Python package implementing dataframes. Dataframe is a type for tabular data.</p>
 <div id="af4d76d8" class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb25-2"><a href=""></a></span>
-<span id="cb25-3"><a href=""></a>df <span class="op">=</span> pd.read_csv(<span class="st">"../data/titanic/titanic.csv"</span>) <span class="co"># Read from csv</span></span>
-<span id="cb25-4"><a href=""></a>df.head(<span class="dv">3</span>) <span class="co"># Return first three rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb36-2"><a href=""></a></span>
+<span id="cb36-3"><a href=""></a>df <span class="op">=</span> pd.read_csv(<span class="st">"../data/titanic/titanic.csv"</span>) <span class="co"># Read from csv</span></span>
+<span id="cb36-4"><a href=""></a>df.head(<span class="dv">3</span>) <span class="co"># Return first three rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <div>
 <style scoped="">
@@ -617,7 +746,7 @@ Cell <span class="ansi-green-fg">In[11], line 13</span>
 <h2>Pandas</h2>
 <p>Here is how to filter by column values.</p>
 <div id="8c893243" class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href=""></a>df[df[<span class="st">"Name"</span>] <span class="op">==</span> <span class="st">"Montvila, Rev. Juozas"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href=""></a>df[df[<span class="st">"Name"</span>] <span class="op">==</span> <span class="st">"Montvila, Rev. Juozas"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 <style scoped="">
@@ -679,7 +808,7 @@ Cell <span class="ansi-green-fg">In[11], line 13</span>
 <h2>Pandas</h2>
 <p>Here is how to compute averages of dataframe’s columns. You can also do <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html#pandas.DataFrame.merge">joins</a>, <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby">grouping</a> and all other operations you could do using SQL.</p>
 <div id="6d69253a" class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href=""></a>df[<span class="st">"Fare"</span>].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href=""></a>df[<span class="st">"Fare"</span>].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>np.float64(32.204207968574636)</code></pre>
 </div>
@@ -689,12 +818,12 @@ Cell <span class="ansi-green-fg">In[11], line 13</span>
 <h2>Pandas</h2>
 <p>Each dataframe has an index for its rows.</p>
 <div id="3bc51434" class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href=""></a>df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb29-2"><a href=""></a>  [[<span class="st">"orange"</span>, <span class="dv">4</span>], [<span class="st">"brown"</span>, <span class="dv">4</span>], [<span class="st">"green"</span>, <span class="dv">2</span>]],</span>
-<span id="cb29-3"><a href=""></a>  index<span class="op">=</span>[<span class="st">'cat'</span>, <span class="st">'dog'</span>, <span class="st">'parrot'</span>],</span>
-<span id="cb29-4"><a href=""></a>  columns<span class="op">=</span>[<span class="st">'color'</span>, <span class="st">'leg_count'</span>]</span>
-<span id="cb29-5"><a href=""></a>)</span>
-<span id="cb29-6"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href=""></a>df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb40-2"><a href=""></a>  [[<span class="st">"orange"</span>, <span class="dv">4</span>], [<span class="st">"brown"</span>, <span class="dv">4</span>], [<span class="st">"green"</span>, <span class="dv">2</span>]],</span>
+<span id="cb40-3"><a href=""></a>  index<span class="op">=</span>[<span class="st">'cat'</span>, <span class="st">'dog'</span>, <span class="st">'parrot'</span>],</span>
+<span id="cb40-4"><a href=""></a>  columns<span class="op">=</span>[<span class="st">'color'</span>, <span class="st">'leg_count'</span>]</span>
+<span id="cb40-5"><a href=""></a>)</span>
+<span id="cb40-6"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 <style scoped="">
@@ -745,7 +874,7 @@ Cell <span class="ansi-green-fg">In[11], line 13</span>
 <section id="pandas-4" class="slide level2">
 <h2>Pandas</h2>
 <div id="22eafcf1" class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href=""></a>df[<span class="st">"color"</span>] <span class="co"># Getting columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href=""></a>df[<span class="st">"color"</span>] <span class="co"># Getting columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>cat       orange
 dog        brown
@@ -754,7 +883,7 @@ Name: color, dtype: object</code></pre>
 </div>
 </div>
 <div id="a05de263" class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href=""></a>df.loc[<span class="st">"dog"</span>] <span class="co"># Getting row by index</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href=""></a>df.loc[<span class="st">"dog"</span>] <span class="co"># Getting row by index</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>color        brown
 leg_count        4
@@ -762,13 +891,13 @@ Name: dog, dtype: object</code></pre>
 </div>
 </div>
 <div id="982fbc2a" class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href=""></a>df.loc[<span class="st">"dog"</span>, <span class="st">"leg_count"</span>] <span class="co"># Getting specific column of row by index</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href=""></a>df.loc[<span class="st">"dog"</span>, <span class="st">"leg_count"</span>] <span class="co"># Getting specific column of row by index</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>np.int64(4)</code></pre>
 </div>
 </div>
 <div id="3f191b7d" class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href=""></a>df.iloc[<span class="dv">0</span>:<span class="dv">2</span>] <span class="co"># Getting rows by row number (counting from 0)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href=""></a>df.iloc[<span class="dv">0</span>:<span class="dv">2</span>] <span class="co"># Getting rows by row number (counting from 0)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 <style scoped="">
