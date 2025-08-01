@@ -2,31 +2,30 @@
 name = "ml-intro"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "Jokūbas Putrius",email = "jokubasputrius@gmail.com"}
-]
+authors = [{ name = "Jokūbas Putrius", email = "jokubasputrius@gmail.com" }]
 readme = "README.md"
 requires-python = ">=3.10,<3.13"
 dependencies = [
-    "numpy (>=2.2.4,<3.0.0)",
-    "pandas (>=2.2.3,<3.0.0)",
-    "scikit-learn (>=1.6.1,<2.0.0)",
-    "pillow (>=11.1.0,<12.0.0)",
-    "matplotlib (>=3.10.1,<4.0.0)",
-    "torch (>=2.7,<2.8)",
-    "torchvision (>=0.22,<0.23)",
-    "datasets (>=3.5.1,<4.0.0)",
-    "spacy (>=3.8.5,<4.0.0)",
+  "numpy (>=2.2.4,<3.0.0)",
+  "pandas (>=2.2.3,<3.0.0)",
+  "scikit-learn (>=1.6.1,<2.0.0)",
+  "pillow (>=11.1.0,<12.0.0)",
+  "matplotlib (>=3.10.1,<4.0.0)",
+  "torch (>=2.7,<2.8)",
+  "torchvision (>=0.22,<0.23)",
+  "datasets (>=3.5.1,<4.0.0)",
+  "spacy (>=3.8.5,<4.0.0)",
+  "tqdm (>=4.67.1,<5.0.0)",
 ]
 
 [[tool.poetry.source]]
-name     = "pytorch-cpu"
+name = "pytorch-gpu"
 priority = "explicit"
-url      = "https://download.pytorch.org/whl/cpu"
+url = "https://download.pytorch.org/whl/cu128"
 
 [tool.poetry.dependencies]
-torch = { source = "pytorch-cpu" }
-torchvision = { source = "pytorch-cpu" }
+torch = { source = "pytorch-gpu" }
+torchvision = { source = "pytorch-gpu" }
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -36,4 +35,3 @@ build-backend = "poetry.core.masonry.api"
 package-mode = false
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.5"
-
