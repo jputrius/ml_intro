@@ -6,8 +6,8 @@
 <script src="05_convolutional_neural_networks_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="05_convolutional_neural_networks_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="05_convolutional_neural_networks_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="05_convolutional_neural_networks_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.31">
+<link href="05_convolutional_neural_networks_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
 
   <title>Chapter 5: Convolutional Neural Network</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -288,7 +288,7 @@ Dimensions of image: C:3, H:32, W:32</code></pre>
 </section>
 <section id="building-the-model-1" class="slide level2">
 <h2>Building the model</h2>
-<div id="4e3fa95d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="bfbd9e6c-880c-47d8-ed10-80fd610d496c">
+<div id="4e3fa95d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="bfbd9e6c-880c-47d8-ed10-80fd610d496c" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb4-2"><a href=""></a></span>
 <span id="cb4-3"><a href=""></a><span class="kw">class</span> NeuralNetwork(nn.Module):</span>
@@ -311,7 +311,7 @@ Dimensions of image: C:3, H:32, W:32</code></pre>
 </div>
 
 </section>
-<section id="building-the-model-1-output" class="slide level2 output-location-slide"><h2>Building the model</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="bfbd9e6c-880c-47d8-ed10-80fd610d496c">
+<section id="building-the-model-1-output" class="slide level2 output-location-slide"><h2>Building the model</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="bfbd9e6c-880c-47d8-ed10-80fd610d496c" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>NeuralNetwork(
   (flatten): Flatten(start_dim=1, end_dim=-1)
@@ -324,123 +324,133 @@ Dimensions of image: C:3, H:32, W:32</code></pre>
   )
 )</code></pre>
 </div>
-</div></section><section id="training-the-model" class="slide level2">
+</div></section><section id="dataloaders" class="slide level2">
+<h2>Dataloaders</h2>
+<p>Let’s define our dataloaders.</p>
+<div id="8b85b441" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">128</span></span>
+<span id="cb6-2"><a href=""></a></span>
+<span id="cb6-3"><a href=""></a>train_dataloader <span class="op">=</span> DataLoader(</span>
+<span id="cb6-4"><a href=""></a>  train_data,</span>
+<span id="cb6-5"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
+<span id="cb6-6"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span> <span class="co"># Whether to shuffle the data every loop, useful for SGD</span></span>
+<span id="cb6-7"><a href=""></a>)</span>
+<span id="cb6-8"><a href=""></a></span>
+<span id="cb6-9"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(test_data, batch_size<span class="op">=</span>batch_size, shuffle<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="training-the-model" class="slide level2">
 <h2>Training the model</h2>
-<p>To train the model we define the loss function and then build the training loop.</p>
+<p>Let’s define functions to train the model for 1 epoch.</p>
+<div id="08d207d4" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm <span class="co"># This is a library that implements loading bars</span></span>
+<span id="cb7-2"><a href=""></a><span class="im">import</span> sys</span>
+<span id="cb7-3"><a href=""></a></span>
+<span id="cb7-4"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
+<span id="cb7-5"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
+<span id="cb7-6"><a href=""></a></span>
+<span id="cb7-7"><a href=""></a>  total_loss <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-8"><a href=""></a>  total_batches <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-9"><a href=""></a></span>
+<span id="cb7-10"><a href=""></a>  <span class="cf">with</span> tqdm(dataloader, unit<span class="op">=</span><span class="st">"batch"</span>, <span class="bu">file</span><span class="op">=</span>sys.stdout) <span class="im">as</span> ep_tqdm:</span>
+<span id="cb7-11"><a href=""></a>    ep_tqdm.set_description(<span class="st">"Train"</span>)</span>
+<span id="cb7-12"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> ep_tqdm:</span>
+<span id="cb7-13"><a href=""></a>      X, y <span class="op">=</span> X.to(device), y.to(device)</span>
+<span id="cb7-14"><a href=""></a></span>
+<span id="cb7-15"><a href=""></a>      <span class="co"># Forward pass</span></span>
+<span id="cb7-16"><a href=""></a>      pred <span class="op">=</span> model(X)</span>
+<span id="cb7-17"><a href=""></a>      loss <span class="op">=</span> loss_fn(pred, y)</span>
+<span id="cb7-18"><a href=""></a>        </span>
+<span id="cb7-19"><a href=""></a>      <span class="co"># Backward pass</span></span>
+<span id="cb7-20"><a href=""></a>      loss.backward()</span>
+<span id="cb7-21"><a href=""></a>      optimizer.step()</span>
+<span id="cb7-22"><a href=""></a></span>
+<span id="cb7-23"><a href=""></a>      <span class="co"># Reset the computed gradients back to zero</span></span>
+<span id="cb7-24"><a href=""></a>      optimizer.zero_grad()</span>
+<span id="cb7-25"><a href=""></a></span>
+<span id="cb7-26"><a href=""></a>      <span class="co"># Output stats</span></span>
+<span id="cb7-27"><a href=""></a>      total_loss <span class="op">+=</span> loss</span>
+<span id="cb7-28"><a href=""></a>      total_batches <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-29"><a href=""></a>      ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item())</span>
+<span id="cb7-30"><a href=""></a></span>
+<span id="cb7-31"><a href=""></a><span class="kw">def</span> eval_epoch(dataloader, model, loss_fn):</span>
+<span id="cb7-32"><a href=""></a>  model.<span class="bu">eval</span>() <span class="co"># Set model to inference mode</span></span>
+<span id="cb7-33"><a href=""></a>  </span>
+<span id="cb7-34"><a href=""></a>  total_loss <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-35"><a href=""></a>  total_batches <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-36"><a href=""></a>  total_samples <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-37"><a href=""></a>  total_correct <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-38"><a href=""></a></span>
+<span id="cb7-39"><a href=""></a>  <span class="cf">with</span> torch.no_grad(): <span class="co"># Do not compute gradients</span></span>
+<span id="cb7-40"><a href=""></a>    <span class="cf">with</span> tqdm(dataloader, unit<span class="op">=</span><span class="st">"batch"</span>, <span class="bu">file</span><span class="op">=</span>sys.stdout) <span class="im">as</span> ep_tqdm:</span>
+<span id="cb7-41"><a href=""></a>      ep_tqdm.set_description(<span class="st">"Val"</span>)</span>
+<span id="cb7-42"><a href=""></a>      <span class="cf">for</span> X, y <span class="kw">in</span> ep_tqdm:</span>
+<span id="cb7-43"><a href=""></a>        X, y <span class="op">=</span> X.to(device), y.to(device)</span>
+<span id="cb7-44"><a href=""></a>        pred <span class="op">=</span> model(X)</span>
+<span id="cb7-45"><a href=""></a></span>
+<span id="cb7-46"><a href=""></a>        total_loss <span class="op">+=</span> loss_fn(pred, y)</span>
+<span id="cb7-47"><a href=""></a>        total_correct <span class="op">+=</span> (pred.argmax(dim<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> y.argmax(dim<span class="op">=</span><span class="dv">1</span>)).<span class="bu">type</span>(torch.<span class="bu">float</span>).<span class="bu">sum</span>()</span>
+<span id="cb7-48"><a href=""></a>        total_samples <span class="op">+=</span> <span class="bu">len</span>(X)</span>
+<span id="cb7-49"><a href=""></a>        total_batches <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-50"><a href=""></a></span>
+<span id="cb7-51"><a href=""></a>        ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item(), accuracy<span class="op">=</span>(total_correct<span class="op">/</span>total_samples).item())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="training-the-model-1" class="slide level2">
 <h2>Training the model</h2>
-<div id="5f5eec37" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="01edd6ff-a2d4-435d-e50f-70fc77e9655e">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="co"># Use GPU if available</span></span>
-<span id="cb6-2"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
-<span id="cb6-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
-<span id="cb6-4"><a href=""></a></span>
-<span id="cb6-5"><a href=""></a>model <span class="op">=</span> NeuralNetwork().to(device) <span class="co"># This tells pytorch which device to use when training and inferencing</span></span>
-<span id="cb6-6"><a href=""></a></span>
-<span id="cb6-7"><a href=""></a><span class="co"># Some hyperparameters</span></span>
-<span id="cb6-8"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.1</span></span>
-<span id="cb6-9"><a href=""></a>momentum <span class="op">=</span> <span class="fl">0.7</span></span>
-<span id="cb6-10"><a href=""></a>epochs <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb6-11"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">128</span></span>
-<span id="cb6-12"><a href=""></a></span>
-<span id="cb6-13"><a href=""></a>loss_fn <span class="op">=</span> nn.CrossEntropyLoss().to(device) <span class="co"># Initialize the loss function</span></span>
-<span id="cb6-14"><a href=""></a>optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span>learning_rate, momentum<span class="op">=</span>momentum) <span class="co"># Initialize the optimizer</span></span>
-<span id="cb6-15"><a href=""></a></span>
-<span id="cb6-16"><a href=""></a>train_dataloader <span class="op">=</span> DataLoader(</span>
-<span id="cb6-17"><a href=""></a>  train_data,</span>
-<span id="cb6-18"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
-<span id="cb6-19"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span> <span class="co"># Whether to shuffle the data every loop, useful for SGD</span></span>
-<span id="cb6-20"><a href=""></a>)</span>
-<span id="cb6-21"><a href=""></a></span>
-<span id="cb6-22"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(test_data, batch_size<span class="op">=</span>batch_size, shuffle<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb6-23"><a href=""></a></span>
-<span id="cb6-24"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
-<span id="cb6-25"><a href=""></a>  size <span class="op">=</span> <span class="bu">len</span>(dataloader.dataset)</span>
-<span id="cb6-26"><a href=""></a></span>
-<span id="cb6-27"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
-<span id="cb6-28"><a href=""></a></span>
-<span id="cb6-29"><a href=""></a>  <span class="cf">for</span> batch, (X, y) <span class="kw">in</span> <span class="bu">enumerate</span>(dataloader):</span>
-<span id="cb6-30"><a href=""></a>    X, y <span class="op">=</span> X.to(device), y.to(device)</span>
-<span id="cb6-31"><a href=""></a>    <span class="co"># Forward pass</span></span>
-<span id="cb6-32"><a href=""></a>    pred <span class="op">=</span> model(X)</span>
-<span id="cb6-33"><a href=""></a>    loss <span class="op">=</span> loss_fn(pred, y)</span>
-<span id="cb6-34"><a href=""></a></span>
-<span id="cb6-35"><a href=""></a>    <span class="co"># Backward pass</span></span>
-<span id="cb6-36"><a href=""></a>    loss.backward()</span>
-<span id="cb6-37"><a href=""></a>    optimizer.step()</span>
-<span id="cb6-38"><a href=""></a></span>
-<span id="cb6-39"><a href=""></a>    <span class="co"># Reset the computed gradients back to zero</span></span>
-<span id="cb6-40"><a href=""></a>    optimizer.zero_grad()</span>
-<span id="cb6-41"><a href=""></a></span>
-<span id="cb6-42"><a href=""></a>    <span class="cf">if</span> batch <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb6-43"><a href=""></a>      loss, current <span class="op">=</span> loss.item(), batch <span class="op">*</span> batch_size <span class="op">+</span> <span class="bu">len</span>(X)</span>
-<span id="cb6-44"><a href=""></a>      <span class="bu">print</span>(<span class="ss">f"loss: </span><span class="sc">{</span>loss<span class="sc">:&gt;7f}</span><span class="ss">  [</span><span class="sc">{</span>current<span class="sc">:&gt;5d}</span><span class="ss">/</span><span class="sc">{</span>size<span class="sc">:&gt;5d}</span><span class="ss">]"</span>)</span>
-<span id="cb6-45"><a href=""></a></span>
-<span id="cb6-46"><a href=""></a><span class="kw">def</span> <span class="bu">eval</span>(dataloader, model, loss_fn):</span>
-<span id="cb6-47"><a href=""></a>  model.<span class="bu">eval</span>() <span class="co"># Set model to inference mode</span></span>
-<span id="cb6-48"><a href=""></a>  size <span class="op">=</span> <span class="bu">len</span>(dataloader.dataset)</span>
-<span id="cb6-49"><a href=""></a>  num_batches <span class="op">=</span> <span class="bu">len</span>(dataloader)</span>
-<span id="cb6-50"><a href=""></a>  loss, correct <span class="op">=</span> <span class="dv">0</span>, <span class="dv">0</span></span>
-<span id="cb6-51"><a href=""></a>  <span class="cf">with</span> torch.no_grad(): <span class="co"># Do not compute gradients</span></span>
-<span id="cb6-52"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> dataloader:</span>
-<span id="cb6-53"><a href=""></a>      X, y <span class="op">=</span> X.to(device), y.to(device)</span>
-<span id="cb6-54"><a href=""></a>      pred <span class="op">=</span> model(X)</span>
-<span id="cb6-55"><a href=""></a>      loss <span class="op">+=</span> loss_fn(pred, y).item()</span>
-<span id="cb6-56"><a href=""></a>      correct <span class="op">+=</span> (pred.argmax(dim<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> y.argmax(dim<span class="op">=</span><span class="dv">1</span>)).<span class="bu">type</span>(torch.<span class="bu">float</span>).<span class="bu">sum</span>().item()</span>
-<span id="cb6-57"><a href=""></a></span>
-<span id="cb6-58"><a href=""></a>  loss <span class="op">=</span> loss <span class="op">/</span> num_batches</span>
-<span id="cb6-59"><a href=""></a>  correct <span class="op">=</span> correct <span class="op">/</span> size</span>
-<span id="cb6-60"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Test Error: </span><span class="ch">\n</span><span class="ss"> Accuracy: </span><span class="sc">{</span>(<span class="dv">100</span><span class="op">*</span>correct)<span class="sc">:&gt;0.1f}</span><span class="ss">%, Avg loss: </span><span class="sc">{</span>loss<span class="sc">:&gt;8f}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb6-61"><a href=""></a></span>
-<span id="cb6-62"><a href=""></a><span class="co"># Organize the training loop</span></span>
-<span id="cb6-63"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
-<span id="cb6-64"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
-<span id="cb6-65"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
-<span id="cb6-66"><a href=""></a>  <span class="bu">eval</span>(train_dataloader, model, loss_fn)</span>
-<span id="cb6-67"><a href=""></a></span>
-<span id="cb6-68"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now all that there is left to do is to define the loss function and organize the training loop.</p>
+<div id="5f5eec37" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="01edd6ff-a2d4-435d-e50f-70fc77e9655e" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="co"># Use GPU if available</span></span>
+<span id="cb8-2"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb8-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
+<span id="cb8-4"><a href=""></a></span>
+<span id="cb8-5"><a href=""></a>model <span class="op">=</span> NeuralNetwork().to(device) <span class="co"># This tells pytorch which device to use when training and inferencing</span></span>
+<span id="cb8-6"><a href=""></a></span>
+<span id="cb8-7"><a href=""></a><span class="co"># Hyperparameters</span></span>
+<span id="cb8-8"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
+<span id="cb8-9"><a href=""></a>epochs <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb8-10"><a href=""></a></span>
+<span id="cb8-11"><a href=""></a>loss_fn <span class="op">=</span> nn.CrossEntropyLoss().to(device) <span class="co"># Initialize the loss function</span></span>
+<span id="cb8-12"><a href=""></a>optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span>learning_rate) <span class="co"># Initialize the optimizer</span></span>
+<span id="cb8-13"><a href=""></a></span>
+<span id="cb8-14"><a href=""></a><span class="co"># Organize the training loop</span></span>
+<span id="cb8-15"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb8-16"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb8-17"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
+<span id="cb8-18"><a href=""></a>  eval_epoch(test_dataloader, model, loss_fn)</span>
+<span id="cb8-19"><a href=""></a>  <span class="bu">print</span>(<span class="st">"-------------------------------"</span>)</span>
+<span id="cb8-20"><a href=""></a></span>
+<span id="cb8-21"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
-<section id="training-the-model-1-output" class="slide level2 output-location-slide"><h2>Training the model</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="01edd6ff-a2d4-435d-e50f-70fc77e9655e">
+<section id="training-the-model-1-output" class="slide level2 output-location-slide"><h2>Training the model</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="01edd6ff-a2d4-435d-e50f-70fc77e9655e" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
 <pre><code>Using cuda device
 Epoch 1
--------------------------------
-loss: 2.309491  [  128/50000]
-loss: 1.938927  [12928/50000]
-loss: 2.044801  [25728/50000]
-loss: 1.812052  [38528/50000]
-Test Error: 
- Accuracy: 35.1%, Avg loss: 1.798949 
 
+Train: 100%|██████████| 391/391 [00:02&lt;00:00, 171.05batch/s, average_batch_loss=1.93]
+Val: 100%|██████████| 79/79 [00:00&lt;00:00, 180.31batch/s, accuracy=0.367, average_batch_loss=1.79]
+-------------------------------
 Epoch 2
--------------------------------
-loss: 1.920012  [  128/50000]
-loss: 1.789476  [12928/50000]
-loss: 1.644223  [25728/50000]
-loss: 1.829791  [38528/50000]
-Test Error: 
- Accuracy: 37.2%, Avg loss: 1.735003 
 
+Train: 100%|██████████| 391/391 [00:02&lt;00:00, 177.21batch/s, average_batch_loss=1.73]
+Val: 100%|██████████| 79/79 [00:00&lt;00:00, 198.39batch/s, accuracy=0.407, average_batch_loss=1.69]
+-------------------------------
 Epoch 3
--------------------------------
-loss: 1.587864  [  128/50000]
-loss: 1.642154  [12928/50000]
-loss: 1.600786  [25728/50000]
-loss: 1.729835  [38528/50000]
-Test Error: 
- Accuracy: 38.4%, Avg loss: 1.741529 
 
+Train: 100%|██████████| 391/391 [00:02&lt;00:00, 177.61batch/s, average_batch_loss=1.64]
+Val: 100%|██████████| 79/79 [00:00&lt;00:00, 196.90batch/s, accuracy=0.437, average_batch_loss=1.6] 
+-------------------------------
 Done!</code></pre>
 </div>
 </div></section><section id="training-the-model-2" class="slide level2">
 <h2>Training the model</h2>
 <p>We can also save the trained model to disk and load it as follows.</p>
-<div id="a09e151a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="8aec7fcb-7265-4830-c703-70038af3bd6b" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a>torch.save(model, <span class="st">'model.pth'</span>)</span>
-<span id="cb8-2"><a href=""></a>model1 <span class="op">=</span> torch.load(<span class="st">'model.pth'</span>, weights_only<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb8-3"><a href=""></a><span class="bu">print</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="a09e151a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="8aec7fcb-7265-4830-c703-70038af3bd6b" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a>torch.save(model, <span class="st">'model.pth'</span>)</span>
+<span id="cb10-2"><a href=""></a>model1 <span class="op">=</span> torch.load(<span class="st">'model.pth'</span>, weights_only<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-3"><a href=""></a><span class="bu">print</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>NeuralNetwork(
   (flatten): Flatten(start_dim=1, end_dim=-1)
@@ -458,11 +468,11 @@ Done!</code></pre>
 <section id="training-the-model-3" class="slide level2">
 <h2>Training the model</h2>
 <p>You can also save only the weights of the model and not the model structure as follows.</p>
-<div id="3202406c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="fe7fa842-09c6-477e-a6de-b73d0a71ad00" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a>torch.save(model.state_dict(), <span class="st">'model_weights.pth'</span>)</span>
-<span id="cb10-2"><a href=""></a>model1 <span class="op">=</span> NeuralNetwork()</span>
-<span id="cb10-3"><a href=""></a>model1.load_state_dict(torch.load(<span class="st">'model_weights.pth'</span>, weights_only<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div id="3202406c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="fe7fa842-09c6-477e-a6de-b73d0a71ad00" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a>torch.save(model.state_dict(), <span class="st">'model_weights.pth'</span>)</span>
+<span id="cb12-2"><a href=""></a>model1 <span class="op">=</span> NeuralNetwork()</span>
+<span id="cb12-3"><a href=""></a>model1.load_state_dict(torch.load(<span class="st">'model_weights.pth'</span>, weights_only<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>&lt;All keys matched successfully&gt;</code></pre>
 </div>
 </div>
@@ -487,115 +497,115 @@ Done!</code></pre>
 <section id="convolution-3" class="slide level2">
 <h2>Convolution</h2>
 <p>Let’s see how to apply the convolution operation in PyTorch.</p>
-<div id="05d11988" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:349}}" data-outputid="63d3a9df-aca0-474e-8f17-e479d7225760" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a><span class="im">import</span> torch</span>
-<span id="cb12-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
-<span id="cb12-3"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb12-4"><a href=""></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
-<span id="cb12-5"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb12-6"><a href=""></a></span>
-<span id="cb12-7"><a href=""></a><span class="kw">def</span> show(img):</span>
-<span id="cb12-8"><a href=""></a>  <span class="co">"""Function for displaying image"""</span></span>
-<span id="cb12-9"><a href=""></a>  plt.imshow(img.squeeze(), cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
-<span id="cb12-10"><a href=""></a>  plt.axis(<span class="st">'off'</span>)</span>
-<span id="cb12-11"><a href=""></a></span>
-<span id="cb12-12"><a href=""></a>img <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'../images/castle.jpg'</span>)</span>
-<span id="cb12-13"><a href=""></a>img.load()</span>
-<span id="cb12-14"><a href=""></a>img <span class="op">=</span> torch.from_numpy(np.asarray(img, dtype<span class="op">=</span><span class="st">"int32"</span>) <span class="op">/</span> <span class="dv">255</span>)</span>
-<span id="cb12-15"><a href=""></a></span>
-<span id="cb12-16"><a href=""></a><span class="bu">print</span>(<span class="st">"Input image:"</span>)</span>
-<span id="cb12-17"><a href=""></a>show(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="05d11988" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:349}}" data-outputid="63d3a9df-aca0-474e-8f17-e479d7225760" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a><span class="im">import</span> torch</span>
+<span id="cb14-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
+<span id="cb14-3"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb14-4"><a href=""></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb14-5"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb14-6"><a href=""></a></span>
+<span id="cb14-7"><a href=""></a><span class="kw">def</span> show(img):</span>
+<span id="cb14-8"><a href=""></a>  <span class="co">"""Function for displaying image"""</span></span>
+<span id="cb14-9"><a href=""></a>  plt.imshow(img.squeeze(), cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb14-10"><a href=""></a>  plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb14-11"><a href=""></a></span>
+<span id="cb14-12"><a href=""></a>img <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'../images/castle.jpg'</span>)</span>
+<span id="cb14-13"><a href=""></a>img.load()</span>
+<span id="cb14-14"><a href=""></a>img <span class="op">=</span> torch.from_numpy(np.asarray(img, dtype<span class="op">=</span><span class="st">"int32"</span>) <span class="op">/</span> <span class="dv">255</span>)</span>
+<span id="cb14-15"><a href=""></a></span>
+<span id="cb14-16"><a href=""></a><span class="bu">print</span>(<span class="st">"Input image:"</span>)</span>
+<span id="cb14-17"><a href=""></a>show(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
-<section id="convolution-3-output" class="slide level2 output-location-slide"><h2>Convolution</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:349}}" data-outputid="63d3a9df-aca0-474e-8f17-e479d7225760" data-execution_count="2">
+<section id="convolution-3-output" class="slide level2 output-location-slide"><h2>Convolution</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:349}}" data-outputid="63d3a9df-aca0-474e-8f17-e479d7225760" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code>Input image:</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="05_convolutional_neural_networks_files/figure-revealjs/cell-8-output-2.png"></p>
+<p><img data-src="05_convolutional_neural_networks_files/figure-revealjs/cell-10-output-2.png"></p>
 </figure>
 </div>
 </div>
 </div></section><section id="convolution-4" class="slide level2">
 <h2>Convolution</h2>
 <p>Let’s apply the edge detection filter.</p>
-<div id="9fd03109" class="cell" data-outputid="b5b62f99-bef1-460c-95a2-af85054d6a2b">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a>conv <span class="op">=</span> nn.Conv2d(</span>
-<span id="cb14-2"><a href=""></a>  in_channels<span class="op">=</span><span class="dv">1</span>, <span class="co"># How many channel our input has, we have a monochrome image so its 1 in our case</span></span>
-<span id="cb14-3"><a href=""></a>  out_channels<span class="op">=</span><span class="dv">1</span>, <span class="co"># How many filters to use</span></span>
-<span id="cb14-4"><a href=""></a>  kernel_size<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="co"># Filter matrix size</span></span>
-<span id="cb14-5"><a href=""></a>  bias<span class="op">=</span><span class="va">False</span></span>
-<span id="cb14-6"><a href=""></a>)</span>
-<span id="cb14-7"><a href=""></a>filter_matrix <span class="op">=</span> torch.tensor(</span>
-<span id="cb14-8"><a href=""></a>  [[<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>],</span>
-<span id="cb14-9"><a href=""></a>  [<span class="op">-</span><span class="dv">1</span>,  <span class="dv">8</span>, <span class="op">-</span><span class="dv">1</span>],</span>
-<span id="cb14-10"><a href=""></a>  [<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>]], dtype<span class="op">=</span>torch.float64</span>
-<span id="cb14-11"><a href=""></a>).unsqueeze(<span class="dv">0</span>).unsqueeze(<span class="dv">0</span>) <span class="co"># The unsqueezes are there to have the correct dimensions</span></span>
-<span id="cb14-12"><a href=""></a>conv.weight <span class="op">=</span> nn.Parameter(filter_matrix) <span class="co"># Manually set the filter</span></span>
-<span id="cb14-13"><a href=""></a><span class="bu">print</span>(<span class="st">"Edge detection applied:"</span>)</span>
-<span id="cb14-14"><a href=""></a>show(conv(img.unsqueeze(<span class="dv">0</span>)).detach().numpy()[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="9fd03109" class="cell" data-outputid="b5b62f99-bef1-460c-95a2-af85054d6a2b" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a>conv <span class="op">=</span> nn.Conv2d(</span>
+<span id="cb16-2"><a href=""></a>  in_channels<span class="op">=</span><span class="dv">1</span>, <span class="co"># How many channel our input has, we have a monochrome image so its 1 in our case</span></span>
+<span id="cb16-3"><a href=""></a>  out_channels<span class="op">=</span><span class="dv">1</span>, <span class="co"># How many filters to use</span></span>
+<span id="cb16-4"><a href=""></a>  kernel_size<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="co"># Filter matrix size</span></span>
+<span id="cb16-5"><a href=""></a>  bias<span class="op">=</span><span class="va">False</span></span>
+<span id="cb16-6"><a href=""></a>)</span>
+<span id="cb16-7"><a href=""></a>filter_matrix <span class="op">=</span> torch.tensor(</span>
+<span id="cb16-8"><a href=""></a>  [[<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>],</span>
+<span id="cb16-9"><a href=""></a>  [<span class="op">-</span><span class="dv">1</span>,  <span class="dv">8</span>, <span class="op">-</span><span class="dv">1</span>],</span>
+<span id="cb16-10"><a href=""></a>  [<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>]], dtype<span class="op">=</span>torch.float64</span>
+<span id="cb16-11"><a href=""></a>).unsqueeze(<span class="dv">0</span>).unsqueeze(<span class="dv">0</span>) <span class="co"># The unsqueezes are there to have the correct dimensions</span></span>
+<span id="cb16-12"><a href=""></a>conv.weight <span class="op">=</span> nn.Parameter(filter_matrix) <span class="co"># Manually set the filter</span></span>
+<span id="cb16-13"><a href=""></a><span class="bu">print</span>(<span class="st">"Edge detection applied:"</span>)</span>
+<span id="cb16-14"><a href=""></a>show(conv(img.unsqueeze(<span class="dv">0</span>)).detach().numpy()[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
-<section id="convolution-4-output" class="slide level2 output-location-slide"><h2>Convolution</h2><div class="cell output-location-slide" data-outputid="b5b62f99-bef1-460c-95a2-af85054d6a2b">
+<section id="convolution-4-output" class="slide level2 output-location-slide"><h2>Convolution</h2><div class="cell output-location-slide" data-outputid="b5b62f99-bef1-460c-95a2-af85054d6a2b" data-execution_count="10">
 <div class="cell-output cell-output-stdout">
 <pre><code>Edge detection applied:</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="05_convolutional_neural_networks_files/figure-revealjs/cell-9-output-2.png"></p>
+<p><img data-src="05_convolutional_neural_networks_files/figure-revealjs/cell-11-output-2.png"></p>
 </figure>
 </div>
 </div>
 </div></section><section id="convolutional-neural-networks" class="slide level2">
 <h2>Convolutional Neural Networks</h2>
 <p>Let’s build a CNN.</p>
-<div id="1b1d1013" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="47950b54-fe7d-46e4-af9a-e8b5f7304c1d">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a><span class="kw">class</span> CNN(nn.Module):</span>
-<span id="cb16-2"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb16-3"><a href=""></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb16-4"><a href=""></a>    <span class="va">self</span>.convolution <span class="op">=</span> nn.Sequential(</span>
-<span id="cb16-5"><a href=""></a>      nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">6</span>, kernel_size<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>)),</span>
-<span id="cb16-6"><a href=""></a>      nn.MaxPool2d(kernel_size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>)),</span>
-<span id="cb16-7"><a href=""></a>      nn.BatchNorm2d(num_features<span class="op">=</span><span class="dv">6</span>), <span class="co"># num_features - how many channels the input has</span></span>
-<span id="cb16-8"><a href=""></a>      nn.Conv2d(in_channels<span class="op">=</span><span class="dv">6</span>, out_channels<span class="op">=</span><span class="dv">12</span>, kernel_size<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>)),</span>
-<span id="cb16-9"><a href=""></a>      nn.MaxPool2d(kernel_size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb16-10"><a href=""></a>    )</span>
-<span id="cb16-11"><a href=""></a>    <span class="va">self</span>.flatten <span class="op">=</span> nn.Flatten()</span>
-<span id="cb16-12"><a href=""></a>    <span class="va">self</span>.linear_relu_stack <span class="op">=</span> nn.Sequential(</span>
-<span id="cb16-13"><a href=""></a>      nn.Linear(<span class="dv">432</span>, <span class="dv">1028</span>),</span>
-<span id="cb16-14"><a href=""></a>      nn.ReLU(),</span>
-<span id="cb16-15"><a href=""></a>      nn.Linear(<span class="dv">1028</span>, <span class="dv">1028</span>),</span>
-<span id="cb16-16"><a href=""></a>      nn.ReLU(),</span>
-<span id="cb16-17"><a href=""></a>      nn.Linear(<span class="dv">1028</span>, <span class="dv">10</span>),</span>
-<span id="cb16-18"><a href=""></a>    )</span>
-<span id="cb16-19"><a href=""></a></span>
-<span id="cb16-20"><a href=""></a>  <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
-<span id="cb16-21"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.convolution(x)</span>
-<span id="cb16-22"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.flatten(x)</span>
-<span id="cb16-23"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.linear_relu_stack(x)</span>
-<span id="cb16-24"><a href=""></a></span>
-<span id="cb16-25"><a href=""></a><span class="bu">print</span>(CNN())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="1b1d1013" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="47950b54-fe7d-46e4-af9a-e8b5f7304c1d" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a><span class="kw">class</span> CNN(nn.Module):</span>
+<span id="cb18-2"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb18-3"><a href=""></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb18-4"><a href=""></a>    <span class="va">self</span>.convolution <span class="op">=</span> nn.Sequential(</span>
+<span id="cb18-5"><a href=""></a>      nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">12</span>, kernel_size<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>)),</span>
+<span id="cb18-6"><a href=""></a>      nn.MaxPool2d(kernel_size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>)),</span>
+<span id="cb18-7"><a href=""></a>      nn.BatchNorm2d(num_features<span class="op">=</span><span class="dv">12</span>), <span class="co"># num_features - how many channels the input has</span></span>
+<span id="cb18-8"><a href=""></a>      nn.Conv2d(in_channels<span class="op">=</span><span class="dv">12</span>, out_channels<span class="op">=</span><span class="dv">24</span>, kernel_size<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>)),</span>
+<span id="cb18-9"><a href=""></a>      nn.MaxPool2d(kernel_size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb18-10"><a href=""></a>    )</span>
+<span id="cb18-11"><a href=""></a>    <span class="va">self</span>.flatten <span class="op">=</span> nn.Flatten()</span>
+<span id="cb18-12"><a href=""></a>    <span class="va">self</span>.linear_relu_stack <span class="op">=</span> nn.Sequential(</span>
+<span id="cb18-13"><a href=""></a>      nn.Linear(<span class="dv">864</span>, <span class="dv">1028</span>),</span>
+<span id="cb18-14"><a href=""></a>      nn.ReLU(),</span>
+<span id="cb18-15"><a href=""></a>      nn.Linear(<span class="dv">1028</span>, <span class="dv">1028</span>),</span>
+<span id="cb18-16"><a href=""></a>      nn.ReLU(),</span>
+<span id="cb18-17"><a href=""></a>      nn.Linear(<span class="dv">1028</span>, <span class="dv">10</span>),</span>
+<span id="cb18-18"><a href=""></a>    )</span>
+<span id="cb18-19"><a href=""></a></span>
+<span id="cb18-20"><a href=""></a>  <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb18-21"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.convolution(x)</span>
+<span id="cb18-22"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.flatten(x)</span>
+<span id="cb18-23"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.linear_relu_stack(x)</span>
+<span id="cb18-24"><a href=""></a></span>
+<span id="cb18-25"><a href=""></a><span class="bu">print</span>(CNN())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
-<section id="convolutional-neural-networks-output" class="slide level2 output-location-slide"><h2>Convolutional Neural Networks</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="47950b54-fe7d-46e4-af9a-e8b5f7304c1d">
+<section id="convolutional-neural-networks-output" class="slide level2 output-location-slide"><h2>Convolutional Neural Networks</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="47950b54-fe7d-46e4-af9a-e8b5f7304c1d" data-execution_count="11">
 <div class="cell-output cell-output-stdout">
 <pre><code>CNN(
   (convolution): Sequential(
-    (0): Conv2d(3, 6, kernel_size=(3, 3), stride=(1, 1))
+    (0): Conv2d(3, 12, kernel_size=(3, 3), stride=(1, 1))
     (1): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
-    (2): BatchNorm2d(6, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-    (3): Conv2d(6, 12, kernel_size=(3, 3), stride=(1, 1))
+    (2): BatchNorm2d(12, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (3): Conv2d(12, 24, kernel_size=(3, 3), stride=(1, 1))
     (4): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
   )
   (flatten): Flatten(start_dim=1, end_dim=-1)
   (linear_relu_stack): Sequential(
-    (0): Linear(in_features=432, out_features=1028, bias=True)
+    (0): Linear(in_features=864, out_features=1028, bias=True)
     (1): ReLU()
     (2): Linear(in_features=1028, out_features=1028, bias=True)
     (3): ReLU()
@@ -626,108 +636,49 @@ Done!</code></pre>
 <section id="convolutional-neural-networks-4" class="slide level2">
 <h2>Convolutional Neural Networks</h2>
 <p>Let’s train our CNN. We can copy paste the previous code.</p>
-<div id="36c207b5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="6b8c795b-763f-42f6-a425-ae41439f3fee">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a><span class="co"># Use GPU if available</span></span>
-<span id="cb18-2"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
-<span id="cb18-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
-<span id="cb18-4"><a href=""></a></span>
-<span id="cb18-5"><a href=""></a>model <span class="op">=</span> CNN().to(device) <span class="co"># This tells pytorch which device to use when training and inferencing</span></span>
-<span id="cb18-6"><a href=""></a></span>
-<span id="cb18-7"><a href=""></a><span class="co"># Some hyperparameters</span></span>
-<span id="cb18-8"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.1</span></span>
-<span id="cb18-9"><a href=""></a>momentum <span class="op">=</span> <span class="fl">0.7</span></span>
-<span id="cb18-10"><a href=""></a>epochs <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb18-11"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">128</span></span>
-<span id="cb18-12"><a href=""></a></span>
-<span id="cb18-13"><a href=""></a>loss_fn <span class="op">=</span> nn.CrossEntropyLoss().to(device) <span class="co"># Initialize the loss function</span></span>
-<span id="cb18-14"><a href=""></a>optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span>learning_rate, momentum<span class="op">=</span>momentum) <span class="co"># Initialize the optimizer</span></span>
-<span id="cb18-15"><a href=""></a></span>
-<span id="cb18-16"><a href=""></a>train_dataloader <span class="op">=</span> DataLoader(</span>
-<span id="cb18-17"><a href=""></a>  train_data,</span>
-<span id="cb18-18"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
-<span id="cb18-19"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span> <span class="co"># Whether to shuffle the data every loop, useful for SGD</span></span>
-<span id="cb18-20"><a href=""></a>)</span>
-<span id="cb18-21"><a href=""></a></span>
-<span id="cb18-22"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(test_data, batch_size<span class="op">=</span>batch_size, shuffle<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb18-23"><a href=""></a></span>
-<span id="cb18-24"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
-<span id="cb18-25"><a href=""></a>  size <span class="op">=</span> <span class="bu">len</span>(dataloader.dataset)</span>
-<span id="cb18-26"><a href=""></a></span>
-<span id="cb18-27"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
-<span id="cb18-28"><a href=""></a></span>
-<span id="cb18-29"><a href=""></a>  <span class="cf">for</span> batch, (X, y) <span class="kw">in</span> <span class="bu">enumerate</span>(dataloader):</span>
-<span id="cb18-30"><a href=""></a>    X, y <span class="op">=</span> X.to(device), y.to(device)</span>
-<span id="cb18-31"><a href=""></a>    <span class="co"># Forward pass</span></span>
-<span id="cb18-32"><a href=""></a>    pred <span class="op">=</span> model(X)</span>
-<span id="cb18-33"><a href=""></a>    loss <span class="op">=</span> loss_fn(pred, y)</span>
-<span id="cb18-34"><a href=""></a></span>
-<span id="cb18-35"><a href=""></a>    <span class="co"># Backward pass</span></span>
-<span id="cb18-36"><a href=""></a>    loss.backward()</span>
-<span id="cb18-37"><a href=""></a>    optimizer.step()</span>
-<span id="cb18-38"><a href=""></a></span>
-<span id="cb18-39"><a href=""></a>    <span class="co"># Reset the computed gradients back to zero</span></span>
-<span id="cb18-40"><a href=""></a>    optimizer.zero_grad()</span>
-<span id="cb18-41"><a href=""></a></span>
-<span id="cb18-42"><a href=""></a>    <span class="cf">if</span> batch <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb18-43"><a href=""></a>      loss, current <span class="op">=</span> loss.item(), batch <span class="op">*</span> batch_size <span class="op">+</span> <span class="bu">len</span>(X)</span>
-<span id="cb18-44"><a href=""></a>      <span class="bu">print</span>(<span class="ss">f"loss: </span><span class="sc">{</span>loss<span class="sc">:&gt;7f}</span><span class="ss">  [</span><span class="sc">{</span>current<span class="sc">:&gt;5d}</span><span class="ss">/</span><span class="sc">{</span>size<span class="sc">:&gt;5d}</span><span class="ss">]"</span>)</span>
-<span id="cb18-45"><a href=""></a></span>
-<span id="cb18-46"><a href=""></a><span class="kw">def</span> <span class="bu">eval</span>(dataloader, model, loss_fn):</span>
-<span id="cb18-47"><a href=""></a>  model.<span class="bu">eval</span>() <span class="co"># Set model to inference mode</span></span>
-<span id="cb18-48"><a href=""></a>  size <span class="op">=</span> <span class="bu">len</span>(dataloader.dataset)</span>
-<span id="cb18-49"><a href=""></a>  num_batches <span class="op">=</span> <span class="bu">len</span>(dataloader)</span>
-<span id="cb18-50"><a href=""></a>  loss, correct <span class="op">=</span> <span class="dv">0</span>, <span class="dv">0</span></span>
-<span id="cb18-51"><a href=""></a>  <span class="cf">with</span> torch.no_grad(): <span class="co"># Do not compute gradients</span></span>
-<span id="cb18-52"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> dataloader:</span>
-<span id="cb18-53"><a href=""></a>      X, y <span class="op">=</span> X.to(device), y.to(device)</span>
-<span id="cb18-54"><a href=""></a>      pred <span class="op">=</span> model(X)</span>
-<span id="cb18-55"><a href=""></a>      loss <span class="op">+=</span> loss_fn(pred, y).item()</span>
-<span id="cb18-56"><a href=""></a>      correct <span class="op">+=</span> (pred.argmax(dim<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> y.argmax(dim<span class="op">=</span><span class="dv">1</span>)).<span class="bu">type</span>(torch.<span class="bu">float</span>).<span class="bu">sum</span>().item()</span>
-<span id="cb18-57"><a href=""></a></span>
-<span id="cb18-58"><a href=""></a>  loss <span class="op">=</span> loss <span class="op">/</span> num_batches</span>
-<span id="cb18-59"><a href=""></a>  correct <span class="op">=</span> correct <span class="op">/</span> size</span>
-<span id="cb18-60"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Test Error: </span><span class="ch">\n</span><span class="ss"> Accuracy: </span><span class="sc">{</span>(<span class="dv">100</span><span class="op">*</span>correct)<span class="sc">:&gt;0.1f}</span><span class="ss">%, Avg loss: </span><span class="sc">{</span>loss<span class="sc">:&gt;8f}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb18-61"><a href=""></a></span>
-<span id="cb18-62"><a href=""></a><span class="co"># Organize the training loop</span></span>
-<span id="cb18-63"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
-<span id="cb18-64"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
-<span id="cb18-65"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
-<span id="cb18-66"><a href=""></a>  <span class="bu">eval</span>(train_dataloader, model, loss_fn)</span>
-<span id="cb18-67"><a href=""></a></span>
-<span id="cb18-68"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="36c207b5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="6b8c795b-763f-42f6-a425-ae41439f3fee" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href=""></a><span class="co"># Use GPU if available</span></span>
+<span id="cb20-2"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb20-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
+<span id="cb20-4"><a href=""></a></span>
+<span id="cb20-5"><a href=""></a>model <span class="op">=</span> CNN().to(device) <span class="co"># This tells pytorch which device to use when training and inferencing</span></span>
+<span id="cb20-6"><a href=""></a></span>
+<span id="cb20-7"><a href=""></a><span class="co"># Hyperparameters</span></span>
+<span id="cb20-8"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
+<span id="cb20-9"><a href=""></a>epochs <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb20-10"><a href=""></a></span>
+<span id="cb20-11"><a href=""></a>loss_fn <span class="op">=</span> nn.CrossEntropyLoss().to(device) <span class="co"># Initialize the loss function</span></span>
+<span id="cb20-12"><a href=""></a>optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span>learning_rate) <span class="co"># Initialize the optimizer</span></span>
+<span id="cb20-13"><a href=""></a></span>
+<span id="cb20-14"><a href=""></a><span class="co"># Organize the training loop</span></span>
+<span id="cb20-15"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb20-16"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb20-17"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
+<span id="cb20-18"><a href=""></a>  eval_epoch(test_dataloader, model, loss_fn)</span>
+<span id="cb20-19"><a href=""></a>  <span class="bu">print</span>(<span class="st">"-------------------------------"</span>)</span>
+<span id="cb20-20"><a href=""></a></span>
+<span id="cb20-21"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
-<section id="convolutional-neural-networks-4-output" class="slide level2 output-location-slide"><h2>Convolutional Neural Networks</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="6b8c795b-763f-42f6-a425-ae41439f3fee">
+<section id="convolutional-neural-networks-4-output" class="slide level2 output-location-slide"><h2>Convolutional Neural Networks</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="6b8c795b-763f-42f6-a425-ae41439f3fee" data-execution_count="12">
 <div class="cell-output cell-output-stdout">
 <pre><code>Using cuda device
 Epoch 1
--------------------------------
-loss: 2.297009  [  128/50000]
-loss: 1.528821  [12928/50000]
-loss: 1.335656  [25728/50000]
-loss: 1.189187  [38528/50000]
-Test Error: 
- Accuracy: 47.3%, Avg loss: 1.573081 
 
+Train: 100%|██████████| 391/391 [00:02&lt;00:00, 163.50batch/s, average_batch_loss=1.55]
+Val: 100%|██████████| 79/79 [00:00&lt;00:00, 194.79batch/s, accuracy=0.523, average_batch_loss=1.34]
+-------------------------------
 Epoch 2
--------------------------------
-loss: 1.130453  [  128/50000]
-loss: 1.088501  [12928/50000]
-loss: 1.074678  [25728/50000]
-loss: 0.944931  [38528/50000]
-Test Error: 
- Accuracy: 66.3%, Avg loss: 0.934795 
 
+Train: 100%|██████████| 391/391 [00:02&lt;00:00, 160.16batch/s, average_batch_loss=1.25]
+Val: 100%|██████████| 79/79 [00:00&lt;00:00, 192.54batch/s, accuracy=0.579, average_batch_loss=1.19]
+-------------------------------
 Epoch 3
--------------------------------
-loss: 0.715613  [  128/50000]
-loss: 0.885226  [12928/50000]
-loss: 0.971147  [25728/50000]
-loss: 0.834684  [38528/50000]
-Test Error: 
- Accuracy: 70.5%, Avg loss: 0.865960 
 
+Train: 100%|██████████| 391/391 [00:02&lt;00:00, 163.64batch/s, average_batch_loss=1.1] 
+Val: 100%|██████████| 79/79 [00:00&lt;00:00, 191.92batch/s, accuracy=0.609, average_batch_loss=1.1] 
+-------------------------------
 Done!</code></pre>
 </div>
 </div></section><section id="fine-tuning" class="slide level2">
@@ -750,195 +701,103 @@ Done!</code></pre>
 <h2>Fine tuning</h2>
 <p>Torchvision ships with some pre trained models for image processing tasks, ResNet included.</p>
 <p>We are going to use ResNet18 which is the smallest version. You can see all available versions <a href="https://pytorch.org/vision/main/models/resnet.html">here</a>.</p>
-<div id="V6agFYXba9fP" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="ae744183-4a4a-40c5-f2e2-2db74235c68e">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href=""></a><span class="im">from</span> torchvision <span class="im">import</span> models</span>
-<span id="cb20-2"><a href=""></a></span>
-<span id="cb20-3"><a href=""></a>resnet <span class="op">=</span> models.resnet18(weights<span class="op">=</span><span class="st">"ResNet18_Weights.DEFAULT"</span>)</span>
-<span id="cb20-4"><a href=""></a></span>
-<span id="cb20-5"><a href=""></a><span class="co"># Change the output layer dimension</span></span>
-<span id="cb20-6"><a href=""></a>resnet.fc <span class="op">=</span> nn.Linear(resnet.fc.in_features, <span class="dv">10</span>)</span>
-<span id="cb20-7"><a href=""></a></span>
-<span id="cb20-8"><a href=""></a>resnet</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="V6agFYXba9fP" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="ae744183-4a4a-40c5-f2e2-2db74235c68e" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href=""></a><span class="im">from</span> torchvision <span class="im">import</span> models</span>
+<span id="cb22-2"><a href=""></a></span>
+<span id="cb22-3"><a href=""></a>resnet <span class="op">=</span> models.resnet18(weights<span class="op">=</span><span class="st">"ResNet18_Weights.DEFAULT"</span>)</span>
+<span id="cb22-4"><a href=""></a></span>
+<span id="cb22-5"><a href=""></a><span class="co"># Change the output layer dimension</span></span>
+<span id="cb22-6"><a href=""></a>resnet.fc <span class="op">=</span> nn.Linear(resnet.fc.in_features, <span class="dv">10</span>)</span>
+<span id="cb22-7"><a href=""></a></span>
+<span id="cb22-8"><a href=""></a>resnet</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
-<section id="fine-tuning-3-output" class="slide level2 output-location-slide"><h2>Fine tuning</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="ae744183-4a4a-40c5-f2e2-2db74235c68e">
-<div class="cell-output cell-output-display" data-execution_count="45">
+<section id="fine-tuning-3-output" class="slide level2 output-location-slide"><h2>Fine tuning</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="ae744183-4a4a-40c5-f2e2-2db74235c68e" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>ResNet(
   (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
   (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
   (relu): ReLU(inplace=True)
   (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
   (layer1): Sequential(
-    (0): Bottleneck(
-      (conv1): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
       (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
       (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
       (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
-      (downsample): Sequential(
-        (0): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
-        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      )
     )
-    (1): Bottleneck(
-      (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (1): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
       (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
       (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
       (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
-    )
-    (2): Bottleneck(
-      (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
     )
   )
   (layer2): Sequential(
-    (0): Bottleneck(
-      (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
       (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
-      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
       (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer3): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer4): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
       (downsample): Sequential(
         (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
         (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
       )
     )
-    (1): Bottleneck(
-      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
-    )
-    (2): Bottleneck(
-      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
-    )
-    (3): Bottleneck(
-      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
-    )
-  )
-  (layer3): Sequential(
-    (0): Bottleneck(
-      (conv1): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
-      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
-      (downsample): Sequential(
-        (0): Conv2d(512, 1024, kernel_size=(1, 1), stride=(2, 2), bias=False)
-        (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      )
-    )
-    (1): Bottleneck(
-      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
-    )
-    (2): Bottleneck(
-      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
-    )
-    (3): Bottleneck(
-      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
-    )
-    (4): Bottleneck(
-      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
-    )
-    (5): Bottleneck(
-      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
-    )
-  )
-  (layer4): Sequential(
-    (0): Bottleneck(
-      (conv1): Conv2d(1024, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (1): BasicBlock(
+      (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
       (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
-      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
       (relu): ReLU(inplace=True)
-      (downsample): Sequential(
-        (0): Conv2d(1024, 2048, kernel_size=(1, 1), stride=(2, 2), bias=False)
-        (1): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      )
-    )
-    (1): Bottleneck(
-      (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
       (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
       (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
-    )
-    (2): Bottleneck(
-      (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn3): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
-      (relu): ReLU(inplace=True)
     )
   )
   (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
-  (fc): Linear(in_features=2048, out_features=10, bias=True)
+  (fc): Linear(in_features=512, out_features=10, bias=True)
 )</code></pre>
 </div>
 </div></section><section id="fine-tuning-4" class="slide level2">
@@ -948,108 +807,45 @@ Done!</code></pre>
 <section id="fine-tuning-5" class="slide level2">
 <h2>Fine tuning</h2>
 <p>We can again reuse the code for training.</p>
-<div id="bdl9HNkUbIWj" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="1ee31da1-39dd-4a43-eab4-e118a040ec2f">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href=""></a><span class="co"># Use GPU if available</span></span>
-<span id="cb22-2"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
-<span id="cb22-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
-<span id="cb22-4"><a href=""></a></span>
-<span id="cb22-5"><a href=""></a>model <span class="op">=</span> resnet.to(device) <span class="co"># This tells pytorch which device to use when training and inferencing</span></span>
-<span id="cb22-6"><a href=""></a></span>
-<span id="cb22-7"><a href=""></a><span class="co"># Some hyperparameters</span></span>
-<span id="cb22-8"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.1</span></span>
-<span id="cb22-9"><a href=""></a>momentum <span class="op">=</span> <span class="fl">0.7</span></span>
-<span id="cb22-10"><a href=""></a>epochs <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb22-11"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">128</span></span>
-<span id="cb22-12"><a href=""></a></span>
-<span id="cb22-13"><a href=""></a>loss_fn <span class="op">=</span> nn.CrossEntropyLoss().to(device) <span class="co"># Initialize the loss function</span></span>
-<span id="cb22-14"><a href=""></a>optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span>learning_rate, momentum<span class="op">=</span>momentum) <span class="co"># Initialize the optimizer</span></span>
-<span id="cb22-15"><a href=""></a></span>
-<span id="cb22-16"><a href=""></a>train_dataloader <span class="op">=</span> DataLoader(</span>
-<span id="cb22-17"><a href=""></a>  train_data,</span>
-<span id="cb22-18"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
-<span id="cb22-19"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span> <span class="co"># Whether to shuffle the data every loop, useful for SGD</span></span>
-<span id="cb22-20"><a href=""></a>)</span>
-<span id="cb22-21"><a href=""></a></span>
-<span id="cb22-22"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(test_data, batch_size<span class="op">=</span>batch_size, shuffle<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb22-23"><a href=""></a></span>
-<span id="cb22-24"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
-<span id="cb22-25"><a href=""></a>  size <span class="op">=</span> <span class="bu">len</span>(dataloader.dataset)</span>
-<span id="cb22-26"><a href=""></a></span>
-<span id="cb22-27"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
-<span id="cb22-28"><a href=""></a></span>
-<span id="cb22-29"><a href=""></a>  <span class="cf">for</span> batch, (X, y) <span class="kw">in</span> <span class="bu">enumerate</span>(dataloader):</span>
-<span id="cb22-30"><a href=""></a>    X, y <span class="op">=</span> X.to(device), y.to(device)</span>
-<span id="cb22-31"><a href=""></a>    <span class="co"># Forward pass</span></span>
-<span id="cb22-32"><a href=""></a>    pred <span class="op">=</span> model(X)</span>
-<span id="cb22-33"><a href=""></a>    loss <span class="op">=</span> loss_fn(pred, y)</span>
-<span id="cb22-34"><a href=""></a></span>
-<span id="cb22-35"><a href=""></a>    <span class="co"># Backward pass</span></span>
-<span id="cb22-36"><a href=""></a>    loss.backward()</span>
-<span id="cb22-37"><a href=""></a>    optimizer.step()</span>
-<span id="cb22-38"><a href=""></a></span>
-<span id="cb22-39"><a href=""></a>    <span class="co"># Reset the computed gradients back to zero</span></span>
-<span id="cb22-40"><a href=""></a>    optimizer.zero_grad()</span>
-<span id="cb22-41"><a href=""></a></span>
-<span id="cb22-42"><a href=""></a>    <span class="cf">if</span> batch <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb22-43"><a href=""></a>      loss, current <span class="op">=</span> loss.item(), batch <span class="op">*</span> batch_size <span class="op">+</span> <span class="bu">len</span>(X)</span>
-<span id="cb22-44"><a href=""></a>      <span class="bu">print</span>(<span class="ss">f"loss: </span><span class="sc">{</span>loss<span class="sc">:&gt;7f}</span><span class="ss">  [</span><span class="sc">{</span>current<span class="sc">:&gt;5d}</span><span class="ss">/</span><span class="sc">{</span>size<span class="sc">:&gt;5d}</span><span class="ss">]"</span>)</span>
-<span id="cb22-45"><a href=""></a></span>
-<span id="cb22-46"><a href=""></a><span class="kw">def</span> <span class="bu">eval</span>(dataloader, model, loss_fn):</span>
-<span id="cb22-47"><a href=""></a>  model.<span class="bu">eval</span>() <span class="co"># Set model to inference mode</span></span>
-<span id="cb22-48"><a href=""></a>  size <span class="op">=</span> <span class="bu">len</span>(dataloader.dataset)</span>
-<span id="cb22-49"><a href=""></a>  num_batches <span class="op">=</span> <span class="bu">len</span>(dataloader)</span>
-<span id="cb22-50"><a href=""></a>  loss, correct <span class="op">=</span> <span class="dv">0</span>, <span class="dv">0</span></span>
-<span id="cb22-51"><a href=""></a>  <span class="cf">with</span> torch.no_grad(): <span class="co"># Do not compute gradients</span></span>
-<span id="cb22-52"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> dataloader:</span>
-<span id="cb22-53"><a href=""></a>      X, y <span class="op">=</span> X.to(device), y.to(device)</span>
-<span id="cb22-54"><a href=""></a>      pred <span class="op">=</span> model(X)</span>
-<span id="cb22-55"><a href=""></a>      loss <span class="op">+=</span> loss_fn(pred, y).item()</span>
-<span id="cb22-56"><a href=""></a>      correct <span class="op">+=</span> (pred.argmax(dim<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> y.argmax(dim<span class="op">=</span><span class="dv">1</span>)).<span class="bu">type</span>(torch.<span class="bu">float</span>).<span class="bu">sum</span>().item()</span>
-<span id="cb22-57"><a href=""></a></span>
-<span id="cb22-58"><a href=""></a>  loss <span class="op">=</span> loss <span class="op">/</span> num_batches</span>
-<span id="cb22-59"><a href=""></a>  correct <span class="op">=</span> correct <span class="op">/</span> size</span>
-<span id="cb22-60"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Test Error: </span><span class="ch">\n</span><span class="ss"> Accuracy: </span><span class="sc">{</span>(<span class="dv">100</span><span class="op">*</span>correct)<span class="sc">:&gt;0.1f}</span><span class="ss">%, Avg loss: </span><span class="sc">{</span>loss<span class="sc">:&gt;8f}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb22-61"><a href=""></a></span>
-<span id="cb22-62"><a href=""></a><span class="co"># Organize the training loop</span></span>
-<span id="cb22-63"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
-<span id="cb22-64"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
-<span id="cb22-65"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
-<span id="cb22-66"><a href=""></a>  <span class="bu">eval</span>(train_dataloader, model, loss_fn)</span>
-<span id="cb22-67"><a href=""></a></span>
-<span id="cb22-68"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="bdl9HNkUbIWj" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="1ee31da1-39dd-4a43-eab4-e118a040ec2f" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href=""></a><span class="co"># Use GPU if available</span></span>
+<span id="cb24-2"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb24-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
+<span id="cb24-4"><a href=""></a></span>
+<span id="cb24-5"><a href=""></a>model <span class="op">=</span> resnet.to(device) <span class="co"># This tells pytorch which device to use when training and inferencing</span></span>
+<span id="cb24-6"><a href=""></a></span>
+<span id="cb24-7"><a href=""></a><span class="co"># Hyperparameters</span></span>
+<span id="cb24-8"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
+<span id="cb24-9"><a href=""></a>epochs <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb24-10"><a href=""></a></span>
+<span id="cb24-11"><a href=""></a>loss_fn <span class="op">=</span> nn.CrossEntropyLoss().to(device) <span class="co"># Initialize the loss function</span></span>
+<span id="cb24-12"><a href=""></a>optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span>learning_rate) <span class="co"># Initialize the optimizer</span></span>
+<span id="cb24-13"><a href=""></a></span>
+<span id="cb24-14"><a href=""></a><span class="co"># Organize the training loop</span></span>
+<span id="cb24-15"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb24-16"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
+<span id="cb24-17"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
+<span id="cb24-18"><a href=""></a>  eval_epoch(test_dataloader, model, loss_fn)</span>
+<span id="cb24-19"><a href=""></a></span>
+<span id="cb24-20"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
-<section id="fine-tuning-5-output" class="slide level2 output-location-slide"><h2>Fine tuning</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="1ee31da1-39dd-4a43-eab4-e118a040ec2f">
+<section id="fine-tuning-5-output" class="slide level2 output-location-slide"><h2>Fine tuning</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="1ee31da1-39dd-4a43-eab4-e118a040ec2f" data-execution_count="14">
 <div class="cell-output cell-output-stdout">
 <pre><code>Using cuda device
 Epoch 1
 -------------------------------
-loss: 2.321068  [  128/50000]
-loss: 1.176898  [12928/50000]
-loss: 0.816531  [25728/50000]
-loss: 0.763172  [38528/50000]
-Test Error: 
- Accuracy: 83.1%, Avg loss: 0.508749 
-
+Train: 100%|██████████| 391/391 [00:03&lt;00:00, 100.09batch/s, average_batch_loss=1.03]
+Val: 100%|██████████| 79/79 [00:00&lt;00:00, 152.04batch/s, accuracy=0.755, average_batch_loss=0.706]
 Epoch 2
 -------------------------------
-loss: 0.535526  [  128/50000]
-loss: 0.388443  [12928/50000]
-loss: 0.375917  [25728/50000]
-loss: 0.386666  [38528/50000]
-Test Error: 
- Accuracy: 89.6%, Avg loss: 0.316110 
-
+Train: 100%|██████████| 391/391 [00:03&lt;00:00, 99.27batch/s, average_batch_loss=0.562] 
+Val: 100%|██████████| 79/79 [00:00&lt;00:00, 153.76batch/s, accuracy=0.78, average_batch_loss=0.647] 
 Epoch 3
 -------------------------------
-loss: 0.296628  [  128/50000]
-loss: 0.374784  [12928/50000]
-loss: 0.337043  [25728/50000]
-loss: 0.340867  [38528/50000]
-Test Error: 
- Accuracy: 95.3%, Avg loss: 0.159566 
-
+Train: 100%|██████████| 391/391 [00:03&lt;00:00, 99.58batch/s, average_batch_loss=0.371] 
+Val: 100%|██████████| 79/79 [00:00&lt;00:00, 155.17batch/s, accuracy=0.794, average_batch_loss=0.629]
 Done!</code></pre>
 </div>
 </div></section><section id="practice-task" class="slide level2">

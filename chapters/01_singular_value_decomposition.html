@@ -6,8 +6,8 @@
 <script src="01_singular_value_decomposition_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="01_singular_value_decomposition_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="01_singular_value_decomposition_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="01_singular_value_decomposition_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.31">
+<link href="01_singular_value_decomposition_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
 
   <title>Singular Value Decomposition</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -463,9 +463,16 @@ MSE between our fit and sklearn: 7.851657522387278e-27</code></pre>
 </section>
 <section id="practice-task" class="slide level2">
 <h2>Practice Task</h2>
-<p>Use this idea to generate some recommendations for movies. You can use the Movie Lens dataset which you can find <a href="https://github.com/jputrius/ml_intro/tree/main/data/movielens">here</a>.</p>
+<p>Use this idea to generate some recommendations for movies (code for loading the data below).</p>
 <p>The goal is to write a script that given a movie name returns similar movies.</p>
 <p>Also, truncate the dataset to top 1000 movies in terms of review count. This should give more robust results.</p>
+<div id="a319410a-05ea-4ca4-b4b8-a65cc5bad887" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-3"><a href=""></a></span>
+<span id="cb8-4"><a href=""></a>ratings <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/jputrius/ml_intro/refs/heads/main/data/movielens/ratings.csv'</span>)</span>
+<span id="cb8-5"><a href=""></a>movies <span class="op">=</span> pd.read_csv(<span class="st">'http://raw.githubusercontent.com/jputrius/ml_intro/refs/heads/main/data/movielens/movies.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 </section>
     </div>
