@@ -303,7 +303,7 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 </section>
 <section id="transformers-1" class="slide level2">
 <h2>Transformers</h2>
-<div id="f699773d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="cc145697-b698-4afd-98a9-2c141f4670b6" data-execution_count="103">
+<div id="f699773d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="cc145697-b698-4afd-98a9-2c141f4670b6" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb1-3"><a href=""></a></span>
@@ -330,7 +330,7 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 </div>
 
 </section>
-<section id="transformers-1-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="cc145697-b698-4afd-98a9-2c141f4670b6" data-execution_count="103">
+<section id="transformers-1-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="cc145697-b698-4afd-98a9-2c141f4670b6" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <pre><code>TransformerBlock(
   (attention): MultiheadAttention(
@@ -357,7 +357,7 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 </section>
 <section id="transformers-4" class="slide level2">
 <h2>Transformers</h2>
-<div id="f0ca1f39" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="4c7efb04-1596-4089-cac6-679ce2b15f29" data-execution_count="104">
+<div id="f0ca1f39" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="4c7efb04-1596-4089-cac6-679ce2b15f29" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">class</span> Transformer(nn.Module):</span>
 <span id="cb3-2"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, no_tokens, seq_length, pad_idx, embed_dim, no_heads, depth):</span>
 <span id="cb3-3"><a href=""></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -385,7 +385,7 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 </div>
 
 </section>
-<section id="transformers-4-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="4c7efb04-1596-4089-cac6-679ce2b15f29" data-execution_count="104">
+<section id="transformers-4-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="4c7efb04-1596-4089-cac6-679ce2b15f29" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>Transformer(
   (token_embedding): Embedding(10, 10)
@@ -457,11 +457,11 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 </section>
 <section id="transformers-10" class="slide level2">
 <h2>Transformers</h2>
-<div id="c8b85dcc" class="cell" data-execution_count="305">
+<div id="c8b85dcc" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb5-3"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb5-4"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset</span>
+<span id="cb5-4"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset, DataLoader</span>
 <span id="cb5-5"><a href=""></a></span>
 <span id="cb5-6"><a href=""></a><span class="kw">class</span> CharLevelTokenizerLt:</span>
 <span id="cb5-7"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
@@ -522,138 +522,147 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <span id="cb5-62"><a href=""></a>    <span class="cf">return</span> inp, target</span>
 <span id="cb5-63"><a href=""></a></span>
 <span id="cb5-64"><a href=""></a>seq_length <span class="op">=</span> <span class="dv">15</span></span>
-<span id="cb5-65"><a href=""></a>data <span class="op">=</span> NameData(seq_length<span class="op">=</span>seq_length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-65"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">32</span></span>
+<span id="cb5-66"><a href=""></a></span>
+<span id="cb5-67"><a href=""></a>data <span class="op">=</span> NameData(seq_length<span class="op">=</span>seq_length)</span>
+<span id="cb5-68"><a href=""></a></span>
+<span id="cb5-69"><a href=""></a>dataloader <span class="op">=</span> DataLoader(</span>
+<span id="cb5-70"><a href=""></a>  data,</span>
+<span id="cb5-71"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
+<span id="cb5-72"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span></span>
+<span id="cb5-73"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="transformers-11" class="slide level2">
 <h2>Transformers</h2>
-<p>We can now train our model.</p>
+<p>Let’s create a function for training one epoch.</p>
+<div id="e578bf1d" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm <span class="co"># This is a library that implements loading bars</span></span>
+<span id="cb6-2"><a href=""></a><span class="im">import</span> sys</span>
+<span id="cb6-3"><a href=""></a></span>
+<span id="cb6-4"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
+<span id="cb6-5"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
+<span id="cb6-6"><a href=""></a></span>
+<span id="cb6-7"><a href=""></a>  total_loss <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-8"><a href=""></a>  total_batches <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-9"><a href=""></a></span>
+<span id="cb6-10"><a href=""></a>  <span class="cf">with</span> tqdm(dataloader, unit<span class="op">=</span><span class="st">"batch"</span>, <span class="bu">file</span><span class="op">=</span>sys.stdout) <span class="im">as</span> ep_tqdm:</span>
+<span id="cb6-11"><a href=""></a>    ep_tqdm.set_description(<span class="st">"Train"</span>)</span>
+<span id="cb6-12"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> ep_tqdm:</span>
+<span id="cb6-13"><a href=""></a>      X, y <span class="op">=</span> X.to(device), y.to(device)</span>
+<span id="cb6-14"><a href=""></a></span>
+<span id="cb6-15"><a href=""></a>      <span class="co"># Forward pass</span></span>
+<span id="cb6-16"><a href=""></a>      pred <span class="op">=</span> model(X)</span>
+<span id="cb6-17"><a href=""></a>      loss <span class="op">=</span> loss_fn(pred, y)</span>
+<span id="cb6-18"><a href=""></a>        </span>
+<span id="cb6-19"><a href=""></a>      <span class="co"># Backward pass</span></span>
+<span id="cb6-20"><a href=""></a>      loss.backward()</span>
+<span id="cb6-21"><a href=""></a>      optimizer.step()</span>
+<span id="cb6-22"><a href=""></a></span>
+<span id="cb6-23"><a href=""></a>      <span class="co"># Reset the computed gradients back to zero</span></span>
+<span id="cb6-24"><a href=""></a>      optimizer.zero_grad()</span>
+<span id="cb6-25"><a href=""></a></span>
+<span id="cb6-26"><a href=""></a>      <span class="co"># Output stats</span></span>
+<span id="cb6-27"><a href=""></a>      total_loss <span class="op">+=</span> loss</span>
+<span id="cb6-28"><a href=""></a>      total_batches <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb6-29"><a href=""></a>      ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="transformers-12" class="slide level2">
 <h2>Transformers</h2>
-<div id="7fd62212" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="a5085495-289c-40c2-abc5-5ce8b0a80756">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
-<span id="cb6-2"><a href=""></a></span>
-<span id="cb6-3"><a href=""></a><span class="co"># Hyperparameters</span></span>
-<span id="cb6-4"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
-<span id="cb6-5"><a href=""></a>epochs <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb6-6"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">32</span></span>
-<span id="cb6-7"><a href=""></a></span>
-<span id="cb6-8"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
-<span id="cb6-9"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
-<span id="cb6-10"><a href=""></a></span>
-<span id="cb6-11"><a href=""></a>model <span class="op">=</span> Transformer(</span>
-<span id="cb6-12"><a href=""></a>  no_tokens<span class="op">=</span>data.no_tokens,</span>
-<span id="cb6-13"><a href=""></a>  seq_length<span class="op">=</span>data.seq_length,</span>
-<span id="cb6-14"><a href=""></a>  pad_idx<span class="op">=</span>data.pad_idx,</span>
-<span id="cb6-15"><a href=""></a>  embed_dim<span class="op">=</span><span class="dv">128</span>,</span>
-<span id="cb6-16"><a href=""></a>  no_heads<span class="op">=</span><span class="dv">8</span>,</span>
-<span id="cb6-17"><a href=""></a>  depth<span class="op">=</span><span class="dv">2</span></span>
-<span id="cb6-18"><a href=""></a>).to(device)</span>
-<span id="cb6-19"><a href=""></a></span>
-<span id="cb6-20"><a href=""></a>dataloader <span class="op">=</span> DataLoader(</span>
-<span id="cb6-21"><a href=""></a>  data,</span>
-<span id="cb6-22"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
-<span id="cb6-23"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span></span>
-<span id="cb6-24"><a href=""></a>)</span>
-<span id="cb6-25"><a href=""></a></span>
-<span id="cb6-26"><a href=""></a>loss_fn <span class="op">=</span> nn.CrossEntropyLoss().to(device)</span>
-<span id="cb6-27"><a href=""></a>optimizer <span class="op">=</span> torch.optim.Adam(params<span class="op">=</span>model.parameters(), lr<span class="op">=</span>learning_rate)</span>
-<span id="cb6-28"><a href=""></a></span>
-<span id="cb6-29"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
-<span id="cb6-30"><a href=""></a>  size <span class="op">=</span> <span class="bu">len</span>(dataloader.dataset)</span>
-<span id="cb6-31"><a href=""></a></span>
-<span id="cb6-32"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
-<span id="cb6-33"><a href=""></a></span>
-<span id="cb6-34"><a href=""></a>  <span class="cf">for</span> batch, (X, y) <span class="kw">in</span> <span class="bu">enumerate</span>(dataloader):</span>
-<span id="cb6-35"><a href=""></a>    X, y <span class="op">=</span> X.to(device), y.to(device)</span>
-<span id="cb6-36"><a href=""></a>    <span class="co"># Forward pass</span></span>
-<span id="cb6-37"><a href=""></a>    pred <span class="op">=</span> model(X)</span>
-<span id="cb6-38"><a href=""></a>    loss <span class="op">=</span> loss_fn(pred, y)</span>
-<span id="cb6-39"><a href=""></a></span>
-<span id="cb6-40"><a href=""></a>    <span class="co"># Backward pass</span></span>
-<span id="cb6-41"><a href=""></a>    loss.backward()</span>
-<span id="cb6-42"><a href=""></a>    optimizer.step()</span>
-<span id="cb6-43"><a href=""></a></span>
-<span id="cb6-44"><a href=""></a>    <span class="co"># Reset the computed gradients back to zero</span></span>
-<span id="cb6-45"><a href=""></a>    optimizer.zero_grad()</span>
-<span id="cb6-46"><a href=""></a></span>
-<span id="cb6-47"><a href=""></a>    <span class="cf">if</span> batch <span class="op">%</span> <span class="dv">50</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb6-48"><a href=""></a>      loss, current <span class="op">=</span> loss.item(), batch <span class="op">*</span> batch_size <span class="op">+</span> <span class="bu">len</span>(X)</span>
-<span id="cb6-49"><a href=""></a>      <span class="bu">print</span>(<span class="ss">f"loss: </span><span class="sc">{</span>loss<span class="sc">:&gt;7f}</span><span class="ss">  [</span><span class="sc">{</span>current<span class="sc">:&gt;5d}</span><span class="ss">/</span><span class="sc">{</span>size<span class="sc">:&gt;5d}</span><span class="ss">]"</span>)</span>
-<span id="cb6-50"><a href=""></a></span>
-<span id="cb6-51"><a href=""></a><span class="co"># Organize the training loop</span></span>
-<span id="cb6-52"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
-<span id="cb6-53"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
-<span id="cb6-54"><a href=""></a>  train_epoch(dataloader, model, loss_fn, optimizer)</span>
-<span id="cb6-55"><a href=""></a></span>
-<span id="cb6-56"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we can train the model.</p>
+<div id="7fd62212" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="a5085495-289c-40c2-abc5-5ce8b0a80756" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="co"># Hyperparameters</span></span>
+<span id="cb7-2"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
+<span id="cb7-3"><a href=""></a>epochs <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb7-4"><a href=""></a></span>
+<span id="cb7-5"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb7-6"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
+<span id="cb7-7"><a href=""></a></span>
+<span id="cb7-8"><a href=""></a>model <span class="op">=</span> Transformer(</span>
+<span id="cb7-9"><a href=""></a>  no_tokens<span class="op">=</span>data.no_tokens,</span>
+<span id="cb7-10"><a href=""></a>  seq_length<span class="op">=</span>data.seq_length,</span>
+<span id="cb7-11"><a href=""></a>  pad_idx<span class="op">=</span>data.pad_idx,</span>
+<span id="cb7-12"><a href=""></a>  embed_dim<span class="op">=</span><span class="dv">128</span>,</span>
+<span id="cb7-13"><a href=""></a>  no_heads<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb7-14"><a href=""></a>  depth<span class="op">=</span><span class="dv">4</span></span>
+<span id="cb7-15"><a href=""></a>).to(device)</span>
+<span id="cb7-16"><a href=""></a></span>
+<span id="cb7-17"><a href=""></a>loss_fn <span class="op">=</span> nn.CrossEntropyLoss().to(device)</span>
+<span id="cb7-18"><a href=""></a>optimizer <span class="op">=</span> torch.optim.Adam(params<span class="op">=</span>model.parameters(), lr<span class="op">=</span>learning_rate)</span>
+<span id="cb7-19"><a href=""></a></span>
+<span id="cb7-20"><a href=""></a><span class="co"># Organize the training loop</span></span>
+<span id="cb7-21"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb7-22"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
+<span id="cb7-23"><a href=""></a>  train_epoch(dataloader, model, loss_fn, optimizer)</span>
+<span id="cb7-24"><a href=""></a></span>
+<span id="cb7-25"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
-<section id="transformers-12-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="a5085495-289c-40c2-abc5-5ce8b0a80756">
+<section id="transformers-12-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="a5085495-289c-40c2-abc5-5ce8b0a80756" data-execution_count="21">
 <div class="cell-output cell-output-stdout">
-<pre><code>Using cpu device
+<pre><code>Using cuda device
 Epoch 1
 -------------------------------
-loss: 1.488388  [   32/ 6189]
-loss: 0.880608  [ 1632/ 6189]
-loss: 0.790527  [ 3232/ 6189]
-loss: 0.797287  [ 4832/ 6189]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 214.43batch/s, average_batch_loss=0.816]
 Epoch 2
 -------------------------------
-loss: 0.755919  [   32/ 6189]
-loss: 0.740433  [ 1632/ 6189]
-loss: 0.711342  [ 3232/ 6189]
-loss: 0.697305  [ 4832/ 6189]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 211.03batch/s, average_batch_loss=0.703]
 Epoch 3
 -------------------------------
-loss: 0.706349  [   32/ 6189]
-loss: 0.684327  [ 1632/ 6189]
-loss: 0.698026  [ 3232/ 6189]
-loss: 0.664101  [ 4832/ 6189]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 227.83batch/s, average_batch_loss=0.673]
 Epoch 4
 -------------------------------
-loss: 0.684363  [   32/ 6189]
-loss: 0.655325  [ 1632/ 6189]
-loss: 0.693487  [ 3232/ 6189]
-loss: 0.675284  [ 4832/ 6189]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 233.20batch/s, average_batch_loss=0.658]
 Epoch 5
 -------------------------------
-loss: 0.680090  [   32/ 6189]
-loss: 0.673038  [ 1632/ 6189]
-loss: 0.632579  [ 3232/ 6189]
-loss: 0.619733  [ 4832/ 6189]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 214.30batch/s, average_batch_loss=0.648]
 Epoch 6
 -------------------------------
-loss: 0.626240  [   32/ 6189]
-loss: 0.685372  [ 1632/ 6189]
-loss: 0.665441  [ 3232/ 6189]
-loss: 0.611739  [ 4832/ 6189]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 227.10batch/s, average_batch_loss=0.64] 
 Epoch 7
 -------------------------------
-loss: 0.624446  [   32/ 6189]
-loss: 0.690106  [ 1632/ 6189]
-loss: 0.664815  [ 3232/ 6189]
-loss: 0.679398  [ 4832/ 6189]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 225.38batch/s, average_batch_loss=0.635]
 Epoch 8
 -------------------------------
-loss: 0.626988  [   32/ 6189]
-loss: 0.618654  [ 1632/ 6189]
-loss: 0.642076  [ 3232/ 6189]
-loss: 0.587421  [ 4832/ 6189]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 207.40batch/s, average_batch_loss=0.63] 
 Epoch 9
 -------------------------------
-loss: 0.669804  [   32/ 6189]
-loss: 0.682446  [ 1632/ 6189]
-loss: 0.656556  [ 3232/ 6189]
-loss: 0.601503  [ 4832/ 6189]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 196.02batch/s, average_batch_loss=0.626]
 Epoch 10
 -------------------------------
-loss: 0.638494  [   32/ 6189]
-loss: 0.656802  [ 1632/ 6189]
-loss: 0.608127  [ 3232/ 6189]
-loss: 0.666279  [ 4832/ 6189]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 223.32batch/s, average_batch_loss=0.624]
+Epoch 11
+-------------------------------
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 231.81batch/s, average_batch_loss=0.621]
+Epoch 12
+-------------------------------
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 232.91batch/s, average_batch_loss=0.62] 
+Epoch 13
+-------------------------------
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 228.96batch/s, average_batch_loss=0.618]
+Epoch 14
+-------------------------------
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 230.13batch/s, average_batch_loss=0.616]
+Epoch 15
+-------------------------------
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 224.80batch/s, average_batch_loss=0.615]
+Epoch 16
+-------------------------------
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 214.27batch/s, average_batch_loss=0.614]
+Epoch 17
+-------------------------------
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 213.94batch/s, average_batch_loss=0.613]
+Epoch 18
+-------------------------------
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 231.70batch/s, average_batch_loss=0.612]
+Epoch 19
+-------------------------------
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 222.33batch/s, average_batch_loss=0.612]
+Epoch 20
+-------------------------------
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 220.21batch/s, average_batch_loss=0.612]
 Done!</code></pre>
 </div>
 </div></section><section id="transformers-13" class="slide level2">
@@ -663,45 +672,45 @@ Done!</code></pre>
 </section>
 <section id="transformers-14" class="slide level2">
 <h2>Transformers</h2>
-<div id="3dc1f120" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="kw">def</span> sample(model, seed, temperature<span class="op">=</span><span class="fl">1.0</span>):</span>
-<span id="cb8-2"><a href=""></a>  <span class="cf">assert</span> <span class="bu">len</span>(seed) <span class="op">&gt;</span> <span class="dv">0</span></span>
-<span id="cb8-3"><a href=""></a>  model.<span class="bu">eval</span>()</span>
-<span id="cb8-4"><a href=""></a>  <span class="cf">with</span> torch.no_grad():</span>
-<span id="cb8-5"><a href=""></a>    idx_to_sample <span class="op">=</span> <span class="bu">len</span>(seed) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb8-6"><a href=""></a></span>
-<span id="cb8-7"><a href=""></a>    tokenizer <span class="op">=</span> CharLevelTokenizerLt()</span>
-<span id="cb8-8"><a href=""></a></span>
-<span id="cb8-9"><a href=""></a>    result <span class="op">=</span> <span class="st">''</span> <span class="op">+</span> seed</span>
-<span id="cb8-10"><a href=""></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">15</span> <span class="op">-</span> <span class="bu">len</span>(seed)):</span>
-<span id="cb8-11"><a href=""></a>      inp <span class="op">=</span> torch.LongTensor(tokenizer.string_to_idx(result, <span class="dv">15</span>)).view(<span class="dv">1</span>, <span class="dv">15</span>).to(device)</span>
-<span id="cb8-12"><a href=""></a>      inp <span class="op">=</span> model(inp)<span class="op">/</span>temperature</span>
-<span id="cb8-13"><a href=""></a>      inp <span class="op">=</span> inp[<span class="dv">0</span>, idx_to_sample, :]</span>
-<span id="cb8-14"><a href=""></a>      p <span class="op">=</span> nn.functional.softmax(inp, dim<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb8-15"><a href=""></a>      cd <span class="op">=</span> torch.distributions.Categorical(p)</span>
-<span id="cb8-16"><a href=""></a>      next_char <span class="op">=</span> cd.sample()</span>
-<span id="cb8-17"><a href=""></a>      <span class="cf">if</span> next_char <span class="op">==</span> tokenizer.eos_idx <span class="kw">or</span> next_char <span class="op">==</span> tokenizer.pad_idx:</span>
-<span id="cb8-18"><a href=""></a>        <span class="cf">break</span></span>
-<span id="cb8-19"><a href=""></a>      result <span class="op">+=</span> tokenizer.idx_to_string([next_char])</span>
-<span id="cb8-20"><a href=""></a>      idx_to_sample <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb8-21"><a href=""></a></span>
-<span id="cb8-22"><a href=""></a>    <span class="cf">return</span> result</span>
-<span id="cb8-23"><a href=""></a></span>
-<span id="cb8-24"><a href=""></a><span class="bu">print</span>(</span>
-<span id="cb8-25"><a href=""></a>  <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'jo'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
-<span id="cb8-26"><a href=""></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'jū'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
-<span id="cb8-27"><a href=""></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'ja'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
-<span id="cb8-28"><a href=""></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'je'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
-<span id="cb8-29"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="3dc1f120" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="kw">def</span> sample(model, seed, temperature<span class="op">=</span><span class="fl">1.0</span>):</span>
+<span id="cb9-2"><a href=""></a>  <span class="cf">assert</span> <span class="bu">len</span>(seed) <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb9-3"><a href=""></a>  model.<span class="bu">eval</span>()</span>
+<span id="cb9-4"><a href=""></a>  <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb9-5"><a href=""></a>    idx_to_sample <span class="op">=</span> <span class="bu">len</span>(seed) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb9-6"><a href=""></a></span>
+<span id="cb9-7"><a href=""></a>    tokenizer <span class="op">=</span> CharLevelTokenizerLt()</span>
+<span id="cb9-8"><a href=""></a></span>
+<span id="cb9-9"><a href=""></a>    result <span class="op">=</span> <span class="st">''</span> <span class="op">+</span> seed</span>
+<span id="cb9-10"><a href=""></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">15</span> <span class="op">-</span> <span class="bu">len</span>(seed)):</span>
+<span id="cb9-11"><a href=""></a>      inp <span class="op">=</span> torch.LongTensor(tokenizer.string_to_idx(result, <span class="dv">15</span>)).view(<span class="dv">1</span>, <span class="dv">15</span>).to(device)</span>
+<span id="cb9-12"><a href=""></a>      inp <span class="op">=</span> model(inp)<span class="op">/</span>temperature</span>
+<span id="cb9-13"><a href=""></a>      inp <span class="op">=</span> inp[<span class="dv">0</span>, idx_to_sample, :]</span>
+<span id="cb9-14"><a href=""></a>      p <span class="op">=</span> nn.functional.softmax(inp, dim<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb9-15"><a href=""></a>      cd <span class="op">=</span> torch.distributions.Categorical(p)</span>
+<span id="cb9-16"><a href=""></a>      next_char <span class="op">=</span> cd.sample()</span>
+<span id="cb9-17"><a href=""></a>      <span class="cf">if</span> next_char <span class="op">==</span> tokenizer.eos_idx <span class="kw">or</span> next_char <span class="op">==</span> tokenizer.pad_idx:</span>
+<span id="cb9-18"><a href=""></a>        <span class="cf">break</span></span>
+<span id="cb9-19"><a href=""></a>      result <span class="op">+=</span> tokenizer.idx_to_string([next_char])</span>
+<span id="cb9-20"><a href=""></a>      idx_to_sample <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb9-21"><a href=""></a></span>
+<span id="cb9-22"><a href=""></a>    <span class="cf">return</span> result</span>
+<span id="cb9-23"><a href=""></a></span>
+<span id="cb9-24"><a href=""></a><span class="bu">print</span>(</span>
+<span id="cb9-25"><a href=""></a>  <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'jo'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
+<span id="cb9-26"><a href=""></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'jū'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
+<span id="cb9-27"><a href=""></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'ja'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
+<span id="cb9-28"><a href=""></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'je'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
+<span id="cb9-29"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
-<section id="transformers-14-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d">
+<section id="transformers-14-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d" data-execution_count="22">
 <div class="cell-output cell-output-stdout">
-<pre><code>jogberė jofygerė joberas jokrėlis jognaris
-jūvatdė jūtvenas jūva jūbomiras jūpva
-jažgeinė jazfielijus jažgindė jaržvildė jažuydijorė
-ježbimanda jepirojas jefronis ježontija ježborina
+<pre><code>joelmantė jopvydas johelas jozavinė joherdas
+jūrija jūkija jūfraja jūšrija jūratijus
+jačius jaolgvinė jaūgvidė jaomintė jaūdronė
+jevdrohijas jeongirdas jevfropijas ječimonė jeompinė
 </code></pre>
 </div>
 </div></section><section id="extras" class="slide level2">
@@ -714,7 +723,8 @@ ježbimanda jepirojas jefronis ježontija ježborina
 </section>
 <section id="practice-task" class="slide level2">
 <h2>Practice task</h2>
-<p>Try building a transformer model for sentiment analysis on this <a href="https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment">dataset</a>.</p>
+<p>Try building a transformer model for sentiment analysis on this <a href="https://github.com/jputrius/ml_intro/tree/main/data/reviewpolarity">dataset</a>.</p>
+<p>Also try to figure out how to finetune some pretrained huggingface transformer, for example this <a href="https://huggingface.co/distilbert">one</a>. Here is a <a href="https://huggingface.co/docs/transformers/en/training">guide</a>.</p>
 
 </section>
     </div>

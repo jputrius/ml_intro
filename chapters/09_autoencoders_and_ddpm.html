@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="09_autoencoders_and_ddpm_files/libs/clipboard/clipboard.min.js"></script>
+<script src="09_autoencoders_and_ddpm_files/libs/clipboard/clipboard.min.js"></script>
 <script src="09_autoencoders_and_ddpm_files/libs/quarto-html/tabby.min.js"></script>
 <script src="09_autoencoders_and_ddpm_files/libs/quarto-html/popper.min.js"></script>
 <script src="09_autoencoders_and_ddpm_files/libs/quarto-html/tippy.umd.min.js"></script>
@@ -186,10 +186,6 @@
       margin-right: 0; 
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-  
-  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-  <script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -234,7 +230,7 @@
 </section>
 <section id="anomaly-detection-2" class="slide level2">
 <h2>Anomaly Detection</h2>
-<div id="35642459" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:371,&quot;referenced_widgets&quot;:[&quot;91cb262120b640dcb4d49951a9775c2f&quot;,&quot;e9675b56c3d24485969179a7b06e97f7&quot;,&quot;106f29fde12e48e7911e9ad8daa74238&quot;,&quot;a7142a68a35e43f494cbc222cd534a34&quot;,&quot;f8c27f75a68c46458e581c6e4ec4113d&quot;,&quot;33d07c3d29634cd6aa66c3db6d3f4f4c&quot;,&quot;d0996340ffbc4769b63e010d496789c8&quot;,&quot;25783082924e4188b902445981044f8d&quot;,&quot;108223a3c79743a7ae17240aab40783b&quot;,&quot;5992713f602948609997c9748c67b939&quot;,&quot;0e8f102d4da04732a6cb0d6e8cd018cf&quot;,&quot;c4b51bc3470d43d5bca24f6db1802562&quot;,&quot;b08c20567474405dbc10ebe9ebb193a8&quot;,&quot;1aafd93544dd4219bb99d584bd38cfc7&quot;,&quot;07cdc93c94d448c08c606c8c33ed27b7&quot;,&quot;9ea5dc7507fa47d2b9ddfba9dbe0db4e&quot;,&quot;6acba2eb6a664908b9067756aa49c726&quot;,&quot;50cfb97d824649cf81c3b7f0e7f8c902&quot;,&quot;60cc18fbc15d42309dfc74078b6b264b&quot;,&quot;6b839594b37b4d68abe14a4ac22e2857&quot;,&quot;b39a1e25388346889e4a1733fa190baf&quot;,&quot;87eb7e656ffd4e0e905b9e76db367094&quot;,&quot;4a15a69d1fb34b4abe33759660b09180&quot;,&quot;0e671043af2b4ccfa8152572b9f4140b&quot;,&quot;c65eb186a4cc4a728a9690c7cb496961&quot;,&quot;c7fbbdfe780a440baab343b5a16c38fc&quot;,&quot;534133cd68e2438c91a99ca1e4477b43&quot;,&quot;f914cbb644d94022ab6585833daf1f4d&quot;,&quot;5e0eda7ba5324940981132fa14658930&quot;,&quot;633402731d634696b18621ef8b9f57d1&quot;,&quot;a268b3608ee44cf79637f6e63bacdb1c&quot;,&quot;0745d7d97705471285713c5364bd3187&quot;,&quot;e3ffaa9ab91c44d694f3b6c8bce94635&quot;,&quot;191ced0f72fb47bf82214ae43de50efd&quot;,&quot;28841f6a14694a03b60e6f6eb1315069&quot;,&quot;e3d3f3a88911479da761b4c1993e48a6&quot;,&quot;444fd73ba9c04121acf9863ec0e4e88f&quot;,&quot;91063bf662c34852904d023b8f803906&quot;,&quot;7961a39842cd43eaa50f58c88de5f4c0&quot;,&quot;59a4732e21434df6b34ae602659d89a3&quot;,&quot;d95ba8d5b37e405a9dd81fee36e03575&quot;,&quot;6f711cbecdec4abbbe0c3325adcd4a0e&quot;,&quot;b2614db6bc794e228962031519450743&quot;,&quot;c23e403cc1764b9dac22ebc1b18beee0&quot;,&quot;366f579514ff49eeb76b69572c66ccad&quot;,&quot;449a6baa200640a088f8e7a1bea834b4&quot;,&quot;22954eee33294aea858990dda18e73b9&quot;,&quot;07d988be9a0a4924bf122328a44c4b30&quot;,&quot;8aafad5aea9c4815b4639d9599b70ad2&quot;,&quot;92f19c551b904aa0b925333d3eda73a4&quot;,&quot;626e13c7143b43128f65a8d3eea0de8d&quot;,&quot;f6b4da9135a848a0a39d5ff2eddab083&quot;,&quot;4d88c269b70e4a958f7a87175e4db8c5&quot;,&quot;a1ce0d32261a4e1698d32a5907f5ebac&quot;,&quot;26cda09f2cfe49a08bcd18f33d98a6d7&quot;,&quot;8dcf0d0dbe6e4516bc3df3b4d355b626&quot;,&quot;b5f75b64c00f441fa82f68ab5a5de810&quot;,&quot;1bbdb985a59b45c289c1461f1ba1a498&quot;,&quot;68bb1ceb4e9947cd9671521de88bc437&quot;,&quot;d6257bf0734e4b7680326dda4465074f&quot;,&quot;24ad1ff1c43442f9a9b3c6fcef7fa8a7&quot;,&quot;5ffb22156c164381a40c4f3a80c51f87&quot;,&quot;e3bd102d6c714a9ab52455e2ecde6efb&quot;,&quot;661e7cf364bd4ea9ac1ca520bebeb794&quot;,&quot;56660a0225304f6bbdbb84021eadaee3&quot;,&quot;2ec0b03df38244e9a83ac077923f898d&quot;,&quot;2335e2c516414e0495ca978f8ee4ac7b&quot;,&quot;a1316c00ef7b413395281bff7969e441&quot;,&quot;7528e51a7af246a5852f6b07bcb2c99a&quot;,&quot;728f5ac143fd4e2b8901b8ee73e27ee3&quot;,&quot;76b3721eb4a34cc1b05ac893686ed6d7&quot;,&quot;b992246ea0c0461a9195d62af9ee0d67&quot;,&quot;b1ffb9b1f43a47fa9a7c1643e9d9d8aa&quot;,&quot;34325a29bf934bb589d832ee4d8a8d53&quot;,&quot;8002df47b0b04537ab268ef04f7d2907&quot;,&quot;c3029c9065e44e20981a44fc9eca6bd9&quot;,&quot;ff4d1e9b2c3c48ea9c34fd4cb52f3d94&quot;]}}" data-outputid="d04081dd-e64c-4565-b65b-0e9f044fe1c8">
+<div id="35642459" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:371,&quot;referenced_widgets&quot;:[&quot;91cb262120b640dcb4d49951a9775c2f&quot;,&quot;e9675b56c3d24485969179a7b06e97f7&quot;,&quot;106f29fde12e48e7911e9ad8daa74238&quot;,&quot;a7142a68a35e43f494cbc222cd534a34&quot;,&quot;f8c27f75a68c46458e581c6e4ec4113d&quot;,&quot;33d07c3d29634cd6aa66c3db6d3f4f4c&quot;,&quot;d0996340ffbc4769b63e010d496789c8&quot;,&quot;25783082924e4188b902445981044f8d&quot;,&quot;108223a3c79743a7ae17240aab40783b&quot;,&quot;5992713f602948609997c9748c67b939&quot;,&quot;0e8f102d4da04732a6cb0d6e8cd018cf&quot;,&quot;c4b51bc3470d43d5bca24f6db1802562&quot;,&quot;b08c20567474405dbc10ebe9ebb193a8&quot;,&quot;1aafd93544dd4219bb99d584bd38cfc7&quot;,&quot;07cdc93c94d448c08c606c8c33ed27b7&quot;,&quot;9ea5dc7507fa47d2b9ddfba9dbe0db4e&quot;,&quot;6acba2eb6a664908b9067756aa49c726&quot;,&quot;50cfb97d824649cf81c3b7f0e7f8c902&quot;,&quot;60cc18fbc15d42309dfc74078b6b264b&quot;,&quot;6b839594b37b4d68abe14a4ac22e2857&quot;,&quot;b39a1e25388346889e4a1733fa190baf&quot;,&quot;87eb7e656ffd4e0e905b9e76db367094&quot;,&quot;4a15a69d1fb34b4abe33759660b09180&quot;,&quot;0e671043af2b4ccfa8152572b9f4140b&quot;,&quot;c65eb186a4cc4a728a9690c7cb496961&quot;,&quot;c7fbbdfe780a440baab343b5a16c38fc&quot;,&quot;534133cd68e2438c91a99ca1e4477b43&quot;,&quot;f914cbb644d94022ab6585833daf1f4d&quot;,&quot;5e0eda7ba5324940981132fa14658930&quot;,&quot;633402731d634696b18621ef8b9f57d1&quot;,&quot;a268b3608ee44cf79637f6e63bacdb1c&quot;,&quot;0745d7d97705471285713c5364bd3187&quot;,&quot;e3ffaa9ab91c44d694f3b6c8bce94635&quot;,&quot;191ced0f72fb47bf82214ae43de50efd&quot;,&quot;28841f6a14694a03b60e6f6eb1315069&quot;,&quot;e3d3f3a88911479da761b4c1993e48a6&quot;,&quot;444fd73ba9c04121acf9863ec0e4e88f&quot;,&quot;91063bf662c34852904d023b8f803906&quot;,&quot;7961a39842cd43eaa50f58c88de5f4c0&quot;,&quot;59a4732e21434df6b34ae602659d89a3&quot;,&quot;d95ba8d5b37e405a9dd81fee36e03575&quot;,&quot;6f711cbecdec4abbbe0c3325adcd4a0e&quot;,&quot;b2614db6bc794e228962031519450743&quot;,&quot;c23e403cc1764b9dac22ebc1b18beee0&quot;,&quot;366f579514ff49eeb76b69572c66ccad&quot;,&quot;449a6baa200640a088f8e7a1bea834b4&quot;,&quot;22954eee33294aea858990dda18e73b9&quot;,&quot;07d988be9a0a4924bf122328a44c4b30&quot;,&quot;8aafad5aea9c4815b4639d9599b70ad2&quot;,&quot;92f19c551b904aa0b925333d3eda73a4&quot;,&quot;626e13c7143b43128f65a8d3eea0de8d&quot;,&quot;f6b4da9135a848a0a39d5ff2eddab083&quot;,&quot;4d88c269b70e4a958f7a87175e4db8c5&quot;,&quot;a1ce0d32261a4e1698d32a5907f5ebac&quot;,&quot;26cda09f2cfe49a08bcd18f33d98a6d7&quot;,&quot;8dcf0d0dbe6e4516bc3df3b4d355b626&quot;,&quot;b5f75b64c00f441fa82f68ab5a5de810&quot;,&quot;1bbdb985a59b45c289c1461f1ba1a498&quot;,&quot;68bb1ceb4e9947cd9671521de88bc437&quot;,&quot;d6257bf0734e4b7680326dda4465074f&quot;,&quot;24ad1ff1c43442f9a9b3c6fcef7fa8a7&quot;,&quot;5ffb22156c164381a40c4f3a80c51f87&quot;,&quot;e3bd102d6c714a9ab52455e2ecde6efb&quot;,&quot;661e7cf364bd4ea9ac1ca520bebeb794&quot;,&quot;56660a0225304f6bbdbb84021eadaee3&quot;,&quot;2ec0b03df38244e9a83ac077923f898d&quot;,&quot;2335e2c516414e0495ca978f8ee4ac7b&quot;,&quot;a1316c00ef7b413395281bff7969e441&quot;,&quot;7528e51a7af246a5852f6b07bcb2c99a&quot;,&quot;728f5ac143fd4e2b8901b8ee73e27ee3&quot;,&quot;76b3721eb4a34cc1b05ac893686ed6d7&quot;,&quot;b992246ea0c0461a9195d62af9ee0d67&quot;,&quot;b1ffb9b1f43a47fa9a7c1643e9d9d8aa&quot;,&quot;34325a29bf934bb589d832ee4d8a8d53&quot;,&quot;8002df47b0b04537ab268ef04f7d2907&quot;,&quot;c3029c9065e44e20981a44fc9eca6bd9&quot;,&quot;ff4d1e9b2c3c48ea9c34fd4cb52f3d94&quot;]}}" data-outputid="d04081dd-e64c-4565-b65b-0e9f044fe1c8" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset</span>
 <span id="cb1-3"><a href=""></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
@@ -263,41 +259,6 @@
 <span id="cb1-26"><a href=""></a></span>
 <span id="cb1-27"><a href=""></a>train_anomalies <span class="op">=</span> MNISTAnomalies(train<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb1-28"><a href=""></a>test_anomalies <span class="op">=</span> MNISTAnomalies(train<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"91cb262120b640dcb4d49951a9775c2f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"c4b51bc3470d43d5bca24f6db1802562","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4a15a69d1fb34b4abe33759660b09180","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"191ced0f72fb47bf82214ae43de50efd","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"366f579514ff49eeb76b69572c66ccad","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"8dcf0d0dbe6e4516bc3df3b4d355b626","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"2335e2c516414e0495ca978f8ee4ac7b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
-</script>
-</div>
 </div>
 </section>
 <section id="anomaly-detection-3" class="slide level2">
@@ -350,55 +311,63 @@
 <h2>Anomaly Detection</h2>
 <p>Now let’s train it.</p>
 <div id="7fb39250" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="63afd5ef-0a83-4c54-b9d7-93a1ffeeb8b1" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
-<span id="cb4-2"><a href=""></a><span class="co"># Use GPU if available</span></span>
-<span id="cb4-3"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
-<span id="cb4-4"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
-<span id="cb4-5"><a href=""></a></span>
-<span id="cb4-6"><a href=""></a>model <span class="op">=</span> Autoencoder().to(device)</span>
-<span id="cb4-7"><a href=""></a></span>
-<span id="cb4-8"><a href=""></a><span class="co"># Some hyperparameters</span></span>
-<span id="cb4-9"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.001</span></span>
-<span id="cb4-10"><a href=""></a>epochs <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb4-11"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">64</span></span>
-<span id="cb4-12"><a href=""></a></span>
-<span id="cb4-13"><a href=""></a>loss_fn <span class="op">=</span> nn.MSELoss().to(device)</span>
-<span id="cb4-14"><a href=""></a>optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span>learning_rate)</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<span id="cb4-2"><a href=""></a><span class="im">import</span> sys</span>
+<span id="cb4-3"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
+<span id="cb4-4"><a href=""></a></span>
+<span id="cb4-5"><a href=""></a><span class="co"># Use GPU if available</span></span>
+<span id="cb4-6"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb4-7"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
+<span id="cb4-8"><a href=""></a></span>
+<span id="cb4-9"><a href=""></a>model <span class="op">=</span> Autoencoder().to(device)</span>
+<span id="cb4-10"><a href=""></a></span>
+<span id="cb4-11"><a href=""></a><span class="co"># Some hyperparameters</span></span>
+<span id="cb4-12"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.001</span></span>
+<span id="cb4-13"><a href=""></a>epochs <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb4-14"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">64</span></span>
 <span id="cb4-15"><a href=""></a></span>
-<span id="cb4-16"><a href=""></a>train_dataloader <span class="op">=</span> DataLoader(</span>
-<span id="cb4-17"><a href=""></a>  train_anomalies,</span>
-<span id="cb4-18"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
-<span id="cb4-19"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span></span>
-<span id="cb4-20"><a href=""></a>)</span>
-<span id="cb4-21"><a href=""></a></span>
-<span id="cb4-22"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
-<span id="cb4-23"><a href=""></a>  size <span class="op">=</span> <span class="bu">len</span>(dataloader.dataset)</span>
+<span id="cb4-16"><a href=""></a>loss_fn <span class="op">=</span> nn.MSELoss().to(device)</span>
+<span id="cb4-17"><a href=""></a>optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span>learning_rate)</span>
+<span id="cb4-18"><a href=""></a></span>
+<span id="cb4-19"><a href=""></a>train_dataloader <span class="op">=</span> DataLoader(</span>
+<span id="cb4-20"><a href=""></a>  train_anomalies,</span>
+<span id="cb4-21"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
+<span id="cb4-22"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span></span>
+<span id="cb4-23"><a href=""></a>)</span>
 <span id="cb4-24"><a href=""></a></span>
-<span id="cb4-25"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
-<span id="cb4-26"><a href=""></a></span>
-<span id="cb4-27"><a href=""></a>  <span class="cf">for</span> batch, (X, _) <span class="kw">in</span> <span class="bu">enumerate</span>(dataloader):</span>
-<span id="cb4-28"><a href=""></a>    X <span class="op">=</span> X.to(device)</span>
-<span id="cb4-29"><a href=""></a>    <span class="co"># Forward pass</span></span>
-<span id="cb4-30"><a href=""></a>    pred <span class="op">=</span> model(X)</span>
-<span id="cb4-31"><a href=""></a>    loss <span class="op">=</span> loss_fn(pred, X)</span>
-<span id="cb4-32"><a href=""></a></span>
-<span id="cb4-33"><a href=""></a>    <span class="co"># Backward pass</span></span>
-<span id="cb4-34"><a href=""></a>    loss.backward()</span>
-<span id="cb4-35"><a href=""></a>    optimizer.step()</span>
-<span id="cb4-36"><a href=""></a></span>
-<span id="cb4-37"><a href=""></a>    <span class="co"># Reset the computed gradients back to zero</span></span>
-<span id="cb4-38"><a href=""></a>    optimizer.zero_grad()</span>
-<span id="cb4-39"><a href=""></a></span>
-<span id="cb4-40"><a href=""></a>    <span class="cf">if</span> batch <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb4-41"><a href=""></a>      loss, current <span class="op">=</span> loss.item(), batch <span class="op">*</span> batch_size <span class="op">+</span> <span class="bu">len</span>(X)</span>
-<span id="cb4-42"><a href=""></a>      <span class="bu">print</span>(<span class="ss">f"loss: </span><span class="sc">{</span>loss<span class="sc">:&gt;7f}</span><span class="ss">  [</span><span class="sc">{</span>current<span class="sc">:&gt;5d}</span><span class="ss">/</span><span class="sc">{</span>size<span class="sc">:&gt;5d}</span><span class="ss">]"</span>)</span>
+<span id="cb4-25"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
+<span id="cb4-26"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
+<span id="cb4-27"><a href=""></a></span>
+<span id="cb4-28"><a href=""></a>  total_loss <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-29"><a href=""></a>  total_batches <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-30"><a href=""></a></span>
+<span id="cb4-31"><a href=""></a>  <span class="cf">with</span> tqdm(dataloader, unit<span class="op">=</span><span class="st">"batch"</span>, <span class="bu">file</span><span class="op">=</span>sys.stdout) <span class="im">as</span> ep_tqdm:</span>
+<span id="cb4-32"><a href=""></a>    ep_tqdm.set_description(<span class="st">"Train"</span>)</span>
+<span id="cb4-33"><a href=""></a>    <span class="cf">for</span> X, _ <span class="kw">in</span> ep_tqdm:</span>
+<span id="cb4-34"><a href=""></a>      X <span class="op">=</span> X.to(device)</span>
+<span id="cb4-35"><a href=""></a></span>
+<span id="cb4-36"><a href=""></a>      <span class="co"># Forward pass</span></span>
+<span id="cb4-37"><a href=""></a>      pred <span class="op">=</span> model(X)</span>
+<span id="cb4-38"><a href=""></a>      loss <span class="op">=</span> loss_fn(pred, X)</span>
+<span id="cb4-39"><a href=""></a>        </span>
+<span id="cb4-40"><a href=""></a>      <span class="co"># Backward pass</span></span>
+<span id="cb4-41"><a href=""></a>      loss.backward()</span>
+<span id="cb4-42"><a href=""></a>      optimizer.step()</span>
 <span id="cb4-43"><a href=""></a></span>
-<span id="cb4-44"><a href=""></a><span class="co"># Organize the training loop</span></span>
-<span id="cb4-45"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
-<span id="cb4-46"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
-<span id="cb4-47"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
-<span id="cb4-48"><a href=""></a></span>
-<span id="cb4-49"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-44"><a href=""></a>      <span class="co"># Reset the computed gradients back to zero</span></span>
+<span id="cb4-45"><a href=""></a>      optimizer.zero_grad()</span>
+<span id="cb4-46"><a href=""></a></span>
+<span id="cb4-47"><a href=""></a>      <span class="co"># Output stats</span></span>
+<span id="cb4-48"><a href=""></a>      total_loss <span class="op">+=</span> loss</span>
+<span id="cb4-49"><a href=""></a>      total_batches <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-50"><a href=""></a>      ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item())</span>
+<span id="cb4-51"><a href=""></a></span>
+<span id="cb4-52"><a href=""></a><span class="co"># Organize the training loop</span></span>
+<span id="cb4-53"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb4-54"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
+<span id="cb4-55"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
+<span id="cb4-56"><a href=""></a></span>
+<span id="cb4-57"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
@@ -407,50 +376,40 @@
 <pre><code>Using cuda device
 Epoch 1
 -------------------------------
-loss: 0.239401  [   64/ 6742]
-loss: 0.019034  [ 6464/ 6742]
+Train: 100%|██████████| 106/106 [00:01&lt;00:00, 74.78batch/s, average_batch_loss=0.045] 
 Epoch 2
 -------------------------------
-loss: 0.015610  [   64/ 6742]
-loss: 0.015947  [ 6464/ 6742]
+Train: 100%|██████████| 106/106 [00:01&lt;00:00, 82.13batch/s, average_batch_loss=0.0158]
 Epoch 3
 -------------------------------
-loss: 0.013423  [   64/ 6742]
-loss: 0.010258  [ 6464/ 6742]
+Train: 100%|██████████| 106/106 [00:01&lt;00:00, 80.53batch/s, average_batch_loss=0.0124]
 Epoch 4
 -------------------------------
-loss: 0.009101  [   64/ 6742]
-loss: 0.008643  [ 6464/ 6742]
+Train: 100%|██████████| 106/106 [00:01&lt;00:00, 83.12batch/s, average_batch_loss=0.00896]
 Epoch 5
 -------------------------------
-loss: 0.008318  [   64/ 6742]
-loss: 0.007892  [ 6464/ 6742]
+Train: 100%|██████████| 106/106 [00:01&lt;00:00, 81.57batch/s, average_batch_loss=0.00685]
 Epoch 6
 -------------------------------
-loss: 0.006744  [   64/ 6742]
-loss: 0.008014  [ 6464/ 6742]
+Train: 100%|██████████| 106/106 [00:01&lt;00:00, 80.41batch/s, average_batch_loss=0.0055]
 Epoch 7
 -------------------------------
-loss: 0.005262  [   64/ 6742]
-loss: 0.004530  [ 6464/ 6742]
+Train: 100%|██████████| 106/106 [00:01&lt;00:00, 81.06batch/s, average_batch_loss=0.00467]
 Epoch 8
 -------------------------------
-loss: 0.003991  [   64/ 6742]
-loss: 0.004526  [ 6464/ 6742]
+Train: 100%|██████████| 106/106 [00:01&lt;00:00, 81.67batch/s, average_batch_loss=0.0042]
 Epoch 9
 -------------------------------
-loss: 0.003141  [   64/ 6742]
-loss: 0.003758  [ 6464/ 6742]
+Train: 100%|██████████| 106/106 [00:01&lt;00:00, 80.47batch/s, average_batch_loss=0.00382]
 Epoch 10
 -------------------------------
-loss: 0.003673  [   64/ 6742]
-loss: 0.003432  [ 6464/ 6742]
+Train: 100%|██████████| 106/106 [00:01&lt;00:00, 81.60batch/s, average_batch_loss=0.00354]
 Done!</code></pre>
 </div>
 </div></section><section id="anomaly-detection-5" class="slide level2">
 <h2>Anomaly Detection</h2>
 <p>Let’s check if it works.</p>
-<div id="98805476" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="8fb505b5-a840-4c22-d0a8-89df47ad27ef" data-execution_count="7">
+<div id="98805476" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="8fb505b5-a840-4c22-d0a8-89df47ad27ef" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="kw">def</span> loss(real, pred):</span>
 <span id="cb6-2"><a href=""></a>  <span class="cf">return</span> ((real<span class="op">-</span>pred)<span class="op">**</span><span class="dv">2</span>).mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb6-3"><a href=""></a></span>
@@ -459,17 +418,18 @@ Done!</code></pre>
 <span id="cb6-6"><a href=""></a>  batch_size <span class="op">=</span> <span class="bu">len</span>(test_anomalies)</span>
 <span id="cb6-7"><a href=""></a>)</span>
 <span id="cb6-8"><a href=""></a></span>
-<span id="cb6-9"><a href=""></a>X, y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(test_dataloader))</span>
-<span id="cb6-10"><a href=""></a>X, y <span class="op">=</span> X.to(device), y.to(device)</span>
-<span id="cb6-11"><a href=""></a>reconstructed <span class="op">=</span> model(X)</span>
-<span id="cb6-12"><a href=""></a></span>
-<span id="cb6-13"><a href=""></a>losses <span class="op">=</span> loss(X.view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">28</span><span class="op">*</span><span class="dv">28</span>).detach().cpu().numpy(), reconstructed.view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">28</span><span class="op">*</span><span class="dv">28</span>).detach().cpu().numpy())</span>
-<span id="cb6-14"><a href=""></a></span>
-<span id="cb6-15"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Reconstruction error of anomalies: </span><span class="sc">{</span>losses[y.detach().cpu().numpy()<span class="op">==</span><span class="dv">0</span>]<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb6-16"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Reconstruction error of typical data: </span><span class="sc">{</span>losses[y.detach().cpu().numpy()<span class="op">==</span><span class="dv">1</span>]<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-9"><a href=""></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb6-10"><a href=""></a>  X, y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(test_dataloader))</span>
+<span id="cb6-11"><a href=""></a>  X, y <span class="op">=</span> X.to(device), y.to(device)</span>
+<span id="cb6-12"><a href=""></a>  reconstructed <span class="op">=</span> model(X)</span>
+<span id="cb6-13"><a href=""></a></span>
+<span id="cb6-14"><a href=""></a>  losses <span class="op">=</span> loss(X.view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">28</span><span class="op">*</span><span class="dv">28</span>), reconstructed.view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">28</span><span class="op">*</span><span class="dv">28</span>))</span>
+<span id="cb6-15"><a href=""></a></span>
+<span id="cb6-16"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Reconstruction error of anomalies: </span><span class="sc">{</span>losses[y<span class="op">==</span><span class="dv">0</span>]<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-17"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Reconstruction error of typical data: </span><span class="sc">{</span>losses[y<span class="op">==</span><span class="dv">1</span>]<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Reconstruction error of anomalies: 0.10733052343130112
-Reconstruction error of typical data: 0.0034905648790299892</code></pre>
+<pre><code>Reconstruction error of anomalies: 0.10304060578346252
+Reconstruction error of typical data: 0.0032625803723931313</code></pre>
 </div>
 </div>
 </section>
@@ -479,7 +439,7 @@ Reconstruction error of typical data: 0.0034905648790299892</code></pre>
 </section>
 <section id="anomaly-detection-7" class="slide level2">
 <h2>Anomaly Detection</h2>
-<div id="87d31203" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:86}}" data-outputid="50c57af9-bab9-4bb3-aae8-d8e2cfebe308" data-execution_count="9">
+<div id="87d31203" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:86}}" data-outputid="50c57af9-bab9-4bb3-aae8-d8e2cfebe308" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb8-2"><a href=""></a></span>
 <span id="cb8-3"><a href=""></a><span class="kw">def</span> show(img):</span>
@@ -493,10 +453,11 @@ Reconstruction error of typical data: 0.0034905648790299892</code></pre>
 <span id="cb8-11"><a href=""></a>  batch_size <span class="op">=</span> <span class="dv">20</span></span>
 <span id="cb8-12"><a href=""></a>)</span>
 <span id="cb8-13"><a href=""></a></span>
-<span id="cb8-14"><a href=""></a>X, y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(test_dataloader))</span>
-<span id="cb8-15"><a href=""></a>X, y <span class="op">=</span> X.to(device), y.to(device)</span>
-<span id="cb8-16"><a href=""></a>reconstructed <span class="op">=</span> model(X)</span>
-<span id="cb8-17"><a href=""></a>show(torch.concat([X, reconstructed], axis<span class="op">=</span><span class="dv">2</span>).transpose(<span class="dv">2</span>, <span class="dv">3</span>).reshape(<span class="dv">1</span>, <span class="dv">20</span><span class="op">*</span><span class="dv">28</span>, <span class="dv">2</span><span class="op">*</span><span class="dv">28</span>).transpose(<span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-14"><a href=""></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb8-15"><a href=""></a>  X, y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(test_dataloader))</span>
+<span id="cb8-16"><a href=""></a>  X, y <span class="op">=</span> X.to(device), y.to(device)</span>
+<span id="cb8-17"><a href=""></a>  reconstructed <span class="op">=</span> model(X)</span>
+<span id="cb8-18"><a href=""></a>  show(torch.concat([X, reconstructed], axis<span class="op">=</span><span class="dv">2</span>).transpose(<span class="dv">2</span>, <span class="dv">3</span>).reshape(<span class="dv">1</span>, <span class="dv">20</span><span class="op">*</span><span class="dv">28</span>, <span class="dv">2</span><span class="op">*</span><span class="dv">28</span>).transpose(<span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="09_autoencoders_and_ddpm_files/figure-revealjs/cell-7-output-1.png" class="r-stretch"></section>
@@ -507,7 +468,7 @@ Reconstruction error of typical data: 0.0034905648790299892</code></pre>
 </section>
 <section id="denoising-images-1" class="slide level2">
 <h2>Denoising Images</h2>
-<div id="732ae5b5" class="cell" data-execution_count="10">
+<div id="732ae5b5" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb9-2"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset</span>
 <span id="cb9-3"><a href=""></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
@@ -540,198 +501,153 @@ Reconstruction error of typical data: 0.0034905648790299892</code></pre>
 <section id="denoising-images-2" class="slide level2">
 <h2>Denoising Images</h2>
 <p>Now we can train an autoencoder on this data, we will use the exact same architecture as we defined previously.</p>
-<div id="377f7cc1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="70bf2870-fb3c-4c0b-b884-811d665620e7" data-execution_count="11">
+<div id="377f7cc1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="70bf2870-fb3c-4c0b-b884-811d665620e7" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
-<span id="cb10-2"><a href=""></a><span class="co"># Use GPU if available</span></span>
-<span id="cb10-3"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
-<span id="cb10-4"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
-<span id="cb10-5"><a href=""></a></span>
-<span id="cb10-6"><a href=""></a>model <span class="op">=</span> Autoencoder().to(device)</span>
-<span id="cb10-7"><a href=""></a></span>
-<span id="cb10-8"><a href=""></a><span class="co"># Some hyperparametes</span></span>
-<span id="cb10-9"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.001</span></span>
-<span id="cb10-10"><a href=""></a><span class="co">#momentum = 0.7</span></span>
-<span id="cb10-11"><a href=""></a>epochs <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb10-12"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">128</span></span>
-<span id="cb10-13"><a href=""></a></span>
-<span id="cb10-14"><a href=""></a>loss_fn <span class="op">=</span> nn.MSELoss().to(device)</span>
-<span id="cb10-15"><a href=""></a>optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span>learning_rate)</span>
-<span id="cb10-16"><a href=""></a></span>
-<span id="cb10-17"><a href=""></a>train_dataloader <span class="op">=</span> DataLoader(</span>
-<span id="cb10-18"><a href=""></a>  train,</span>
-<span id="cb10-19"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
-<span id="cb10-20"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span></span>
-<span id="cb10-21"><a href=""></a>)</span>
-<span id="cb10-22"><a href=""></a></span>
-<span id="cb10-23"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(</span>
-<span id="cb10-24"><a href=""></a>  test,</span>
-<span id="cb10-25"><a href=""></a>  batch_size <span class="op">=</span> <span class="bu">len</span>(test)</span>
-<span id="cb10-26"><a href=""></a>)</span>
-<span id="cb10-27"><a href=""></a></span>
-<span id="cb10-28"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
-<span id="cb10-29"><a href=""></a>  size <span class="op">=</span> <span class="bu">len</span>(dataloader.dataset)</span>
-<span id="cb10-30"><a href=""></a></span>
+<span id="cb10-2"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<span id="cb10-3"><a href=""></a><span class="im">import</span> sys</span>
+<span id="cb10-4"><a href=""></a></span>
+<span id="cb10-5"><a href=""></a><span class="co"># Use GPU if available</span></span>
+<span id="cb10-6"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb10-7"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
+<span id="cb10-8"><a href=""></a></span>
+<span id="cb10-9"><a href=""></a>model <span class="op">=</span> Autoencoder().to(device)</span>
+<span id="cb10-10"><a href=""></a></span>
+<span id="cb10-11"><a href=""></a><span class="co"># Some hyperparametes</span></span>
+<span id="cb10-12"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.001</span></span>
+<span id="cb10-13"><a href=""></a>epochs <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb10-14"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">128</span></span>
+<span id="cb10-15"><a href=""></a></span>
+<span id="cb10-16"><a href=""></a>loss_fn <span class="op">=</span> nn.MSELoss().to(device)</span>
+<span id="cb10-17"><a href=""></a>optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span>learning_rate)</span>
+<span id="cb10-18"><a href=""></a></span>
+<span id="cb10-19"><a href=""></a>train_dataloader <span class="op">=</span> DataLoader(</span>
+<span id="cb10-20"><a href=""></a>  train,</span>
+<span id="cb10-21"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
+<span id="cb10-22"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span></span>
+<span id="cb10-23"><a href=""></a>)</span>
+<span id="cb10-24"><a href=""></a></span>
+<span id="cb10-25"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(</span>
+<span id="cb10-26"><a href=""></a>  test,</span>
+<span id="cb10-27"><a href=""></a>  batch_size <span class="op">=</span> <span class="bu">len</span>(test)</span>
+<span id="cb10-28"><a href=""></a>)</span>
+<span id="cb10-29"><a href=""></a></span>
+<span id="cb10-30"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
 <span id="cb10-31"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
 <span id="cb10-32"><a href=""></a></span>
-<span id="cb10-33"><a href=""></a>  <span class="cf">for</span> batch, (X, y) <span class="kw">in</span> <span class="bu">enumerate</span>(dataloader):</span>
-<span id="cb10-34"><a href=""></a>    X, y <span class="op">=</span> X.to(device), y.to(device)</span>
-<span id="cb10-35"><a href=""></a>    <span class="co"># Forward pass</span></span>
-<span id="cb10-36"><a href=""></a>    pred <span class="op">=</span> model(X)</span>
-<span id="cb10-37"><a href=""></a>    loss <span class="op">=</span> loss_fn(pred, y)</span>
-<span id="cb10-38"><a href=""></a></span>
-<span id="cb10-39"><a href=""></a>    <span class="co"># Backward pass</span></span>
-<span id="cb10-40"><a href=""></a>    loss.backward()</span>
-<span id="cb10-41"><a href=""></a>    optimizer.step()</span>
-<span id="cb10-42"><a href=""></a></span>
-<span id="cb10-43"><a href=""></a>    <span class="co"># Reset the computed gradients back to zero</span></span>
-<span id="cb10-44"><a href=""></a>    optimizer.zero_grad()</span>
-<span id="cb10-45"><a href=""></a></span>
-<span id="cb10-46"><a href=""></a>    <span class="cf">if</span> batch <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb10-47"><a href=""></a>      loss, current <span class="op">=</span> loss.item(), batch <span class="op">*</span> batch_size <span class="op">+</span> <span class="bu">len</span>(X)</span>
-<span id="cb10-48"><a href=""></a>      <span class="bu">print</span>(<span class="ss">f"loss: </span><span class="sc">{</span>loss<span class="sc">:&gt;7f}</span><span class="ss">  [</span><span class="sc">{</span>current<span class="sc">:&gt;5d}</span><span class="ss">/</span><span class="sc">{</span>size<span class="sc">:&gt;5d}</span><span class="ss">]"</span>)</span>
-<span id="cb10-49"><a href=""></a></span>
-<span id="cb10-50"><a href=""></a><span class="kw">def</span> <span class="bu">eval</span>(dataloader, model, loss_fn):</span>
-<span id="cb10-51"><a href=""></a>  model.<span class="bu">eval</span>() <span class="co"># Set model to inference mode</span></span>
-<span id="cb10-52"><a href=""></a>  size <span class="op">=</span> <span class="bu">len</span>(dataloader.dataset)</span>
-<span id="cb10-53"><a href=""></a>  num_batches <span class="op">=</span> <span class="bu">len</span>(dataloader)</span>
-<span id="cb10-54"><a href=""></a>  loss <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb10-55"><a href=""></a>  <span class="cf">with</span> torch.no_grad(): <span class="co"># Do not compute gradients</span></span>
-<span id="cb10-56"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> dataloader:</span>
-<span id="cb10-57"><a href=""></a>      X, y <span class="op">=</span> X.to(device), y.to(device)</span>
-<span id="cb10-58"><a href=""></a>      pred <span class="op">=</span> model(X)</span>
-<span id="cb10-59"><a href=""></a>      loss <span class="op">+=</span> loss_fn(pred, y).item()</span>
-<span id="cb10-60"><a href=""></a></span>
-<span id="cb10-61"><a href=""></a>  loss <span class="op">=</span> loss <span class="op">/</span> num_batches</span>
-<span id="cb10-62"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Test Error: </span><span class="ch">\n</span><span class="ss"> Avg loss: </span><span class="sc">{</span>loss<span class="sc">:&gt;8f}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb10-63"><a href=""></a></span>
-<span id="cb10-64"><a href=""></a><span class="co"># Organize the training loop</span></span>
-<span id="cb10-65"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
-<span id="cb10-66"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
-<span id="cb10-67"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
-<span id="cb10-68"><a href=""></a>  <span class="bu">eval</span>(test_dataloader, model, loss_fn)</span>
-<span id="cb10-69"><a href=""></a></span>
-<span id="cb10-70"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-33"><a href=""></a>  total_loss <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-34"><a href=""></a>  total_batches <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-35"><a href=""></a></span>
+<span id="cb10-36"><a href=""></a>  <span class="cf">with</span> tqdm(dataloader, unit<span class="op">=</span><span class="st">"batch"</span>, <span class="bu">file</span><span class="op">=</span>sys.stdout) <span class="im">as</span> ep_tqdm:</span>
+<span id="cb10-37"><a href=""></a>    ep_tqdm.set_description(<span class="st">"Train"</span>)</span>
+<span id="cb10-38"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> ep_tqdm:</span>
+<span id="cb10-39"><a href=""></a>      X, y <span class="op">=</span> X.to(device), y.to(device)</span>
+<span id="cb10-40"><a href=""></a></span>
+<span id="cb10-41"><a href=""></a>      <span class="co"># Forward pass</span></span>
+<span id="cb10-42"><a href=""></a>      pred <span class="op">=</span> model(X)</span>
+<span id="cb10-43"><a href=""></a>      loss <span class="op">=</span> loss_fn(pred, y)</span>
+<span id="cb10-44"><a href=""></a>        </span>
+<span id="cb10-45"><a href=""></a>      <span class="co"># Backward pass</span></span>
+<span id="cb10-46"><a href=""></a>      loss.backward()</span>
+<span id="cb10-47"><a href=""></a>      optimizer.step()</span>
+<span id="cb10-48"><a href=""></a></span>
+<span id="cb10-49"><a href=""></a>      <span class="co"># Reset the computed gradients back to zero</span></span>
+<span id="cb10-50"><a href=""></a>      optimizer.zero_grad()</span>
+<span id="cb10-51"><a href=""></a></span>
+<span id="cb10-52"><a href=""></a>      <span class="co"># Output stats</span></span>
+<span id="cb10-53"><a href=""></a>      total_loss <span class="op">+=</span> loss</span>
+<span id="cb10-54"><a href=""></a>      total_batches <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb10-55"><a href=""></a>      ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item())</span>
+<span id="cb10-56"><a href=""></a></span>
+<span id="cb10-57"><a href=""></a><span class="kw">def</span> eval_epoch(dataloader, model, loss_fn):</span>
+<span id="cb10-58"><a href=""></a>  model.<span class="bu">eval</span>() <span class="co"># Set model to inference mode</span></span>
+<span id="cb10-59"><a href=""></a>  </span>
+<span id="cb10-60"><a href=""></a>  total_loss <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-61"><a href=""></a>  total_batches <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-62"><a href=""></a>  total_samples <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-63"><a href=""></a>  total_correct <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-64"><a href=""></a></span>
+<span id="cb10-65"><a href=""></a>  <span class="cf">with</span> torch.no_grad(): <span class="co"># Do not compute gradients</span></span>
+<span id="cb10-66"><a href=""></a>    <span class="cf">with</span> tqdm(dataloader, unit<span class="op">=</span><span class="st">"batch"</span>, <span class="bu">file</span><span class="op">=</span>sys.stdout) <span class="im">as</span> ep_tqdm:</span>
+<span id="cb10-67"><a href=""></a>      ep_tqdm.set_description(<span class="st">"Val"</span>)</span>
+<span id="cb10-68"><a href=""></a>      <span class="cf">for</span> X, y <span class="kw">in</span> ep_tqdm:</span>
+<span id="cb10-69"><a href=""></a>        X, y <span class="op">=</span> X.to(device), y.to(device)</span>
+<span id="cb10-70"><a href=""></a>        pred <span class="op">=</span> model(X)</span>
+<span id="cb10-71"><a href=""></a></span>
+<span id="cb10-72"><a href=""></a>        total_loss <span class="op">+=</span> loss_fn(pred, y)</span>
+<span id="cb10-73"><a href=""></a>        total_batches <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb10-74"><a href=""></a></span>
+<span id="cb10-75"><a href=""></a>        ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item())</span>
+<span id="cb10-76"><a href=""></a></span>
+<span id="cb10-77"><a href=""></a><span class="co"># Organize the training loop</span></span>
+<span id="cb10-78"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb10-79"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
+<span id="cb10-80"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
+<span id="cb10-81"><a href=""></a>  eval_epoch(test_dataloader, model, loss_fn)</span>
+<span id="cb10-82"><a href=""></a></span>
+<span id="cb10-83"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
-<section id="denoising-images-2-output" class="slide level2 output-location-slide"><h2>Denoising Images</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="70bf2870-fb3c-4c0b-b884-811d665620e7" data-execution_count="11">
+<section id="denoising-images-2-output" class="slide level2 output-location-slide"><h2>Denoising Images</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="70bf2870-fb3c-4c0b-b884-811d665620e7" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
 <pre><code>Using cuda device
 Epoch 1
 -------------------------------
-loss: 0.233067  [  128/60000]
-loss: 0.052420  [12928/60000]
-loss: 0.039551  [25728/60000]
-loss: 0.028036  [38528/60000]
-loss: 0.023804  [51328/60000]
-Test Error: 
- Avg loss: 0.021235 
-
+Train: 100%|██████████| 469/469 [00:06&lt;00:00, 69.73batch/s, average_batch_loss=0.0436]
+Val: 100%|██████████| 1/1 [00:01&lt;00:00,  1.09s/batch, average_batch_loss=0.0215]
 Epoch 2
 -------------------------------
-loss: 0.023110  [  128/60000]
-loss: 0.020140  [12928/60000]
-loss: 0.017674  [25728/60000]
-loss: 0.016366  [38528/60000]
-loss: 0.016451  [51328/60000]
-Test Error: 
- Avg loss: 0.014173 
-
+Train: 100%|██████████| 469/469 [00:06&lt;00:00, 68.60batch/s, average_batch_loss=0.0175]
+Val: 100%|██████████| 1/1 [00:00&lt;00:00,  1.04batch/s, average_batch_loss=0.0143]
 Epoch 3
 -------------------------------
-loss: 0.015569  [  128/60000]
-loss: 0.013149  [12928/60000]
-loss: 0.012908  [25728/60000]
-loss: 0.012721  [38528/60000]
-loss: 0.012449  [51328/60000]
-Test Error: 
- Avg loss: 0.011806 
-
+Train: 100%|██████████| 469/469 [00:06&lt;00:00, 71.03batch/s, average_batch_loss=0.0133]
+Val: 100%|██████████| 1/1 [00:00&lt;00:00,  1.03batch/s, average_batch_loss=0.0119]
 Epoch 4
 -------------------------------
-loss: 0.011434  [  128/60000]
-loss: 0.011053  [12928/60000]
-loss: 0.012106  [25728/60000]
-loss: 0.011768  [38528/60000]
-loss: 0.010259  [51328/60000]
-Test Error: 
- Avg loss: 0.010740 
-
+Train: 100%|██████████| 469/469 [00:06&lt;00:00, 72.02batch/s, average_batch_loss=0.0116]
+Val: 100%|██████████| 1/1 [00:00&lt;00:00,  1.04batch/s, average_batch_loss=0.0109]
 Epoch 5
 -------------------------------
-loss: 0.011034  [  128/60000]
-loss: 0.010404  [12928/60000]
-loss: 0.010630  [25728/60000]
-loss: 0.010361  [38528/60000]
-loss: 0.010292  [51328/60000]
-Test Error: 
- Avg loss: 0.010052 
-
+Train: 100%|██████████| 469/469 [00:06&lt;00:00, 71.95batch/s, average_batch_loss=0.0107]
+Val: 100%|██████████| 1/1 [00:01&lt;00:00,  1.04s/batch, average_batch_loss=0.0101]
 Epoch 6
 -------------------------------
-loss: 0.010547  [  128/60000]
-loss: 0.009880  [12928/60000]
-loss: 0.010157  [25728/60000]
-loss: 0.010538  [38528/60000]
-loss: 0.010207  [51328/60000]
-Test Error: 
- Avg loss: 0.009580 
-
+Train: 100%|██████████| 469/469 [00:06&lt;00:00, 71.78batch/s, average_batch_loss=0.0101]
+Val: 100%|██████████| 1/1 [00:00&lt;00:00,  1.04batch/s, average_batch_loss=0.00961]
 Epoch 7
 -------------------------------
-loss: 0.009516  [  128/60000]
-loss: 0.009889  [12928/60000]
-loss: 0.009806  [25728/60000]
-loss: 0.009608  [38528/60000]
-loss: 0.009108  [51328/60000]
-Test Error: 
- Avg loss: 0.009342 
-
+Train: 100%|██████████| 469/469 [00:06&lt;00:00, 71.93batch/s, average_batch_loss=0.00968]
+Val: 100%|██████████| 1/1 [00:01&lt;00:00,  1.05s/batch, average_batch_loss=0.00934]
 Epoch 8
 -------------------------------
-loss: 0.009398  [  128/60000]
-loss: 0.009332  [12928/60000]
-loss: 0.008779  [25728/60000]
-loss: 0.009662  [38528/60000]
-loss: 0.009487  [51328/60000]
-Test Error: 
- Avg loss: 0.009056 
-
+Train: 100%|██████████| 469/469 [00:06&lt;00:00, 72.10batch/s, average_batch_loss=0.00936]
+Val: 100%|██████████| 1/1 [00:00&lt;00:00,  1.04batch/s, average_batch_loss=0.00902]
 Epoch 9
 -------------------------------
-loss: 0.008833  [  128/60000]
-loss: 0.009587  [12928/60000]
-loss: 0.008834  [25728/60000]
-loss: 0.009212  [38528/60000]
-loss: 0.008867  [51328/60000]
-Test Error: 
- Avg loss: 0.008853 
-
+Train: 100%|██████████| 469/469 [00:06&lt;00:00, 72.08batch/s, average_batch_loss=0.00914]
+Val: 100%|██████████| 1/1 [00:00&lt;00:00,  1.04batch/s, average_batch_loss=0.00887]
 Epoch 10
 -------------------------------
-loss: 0.009040  [  128/60000]
-loss: 0.008881  [12928/60000]
-loss: 0.009638  [25728/60000]
-loss: 0.008925  [38528/60000]
-loss: 0.008983  [51328/60000]
-Test Error: 
- Avg loss: 0.008662 
-
+Train: 100%|██████████| 469/469 [00:06&lt;00:00, 71.29batch/s, average_batch_loss=0.00895]
+Val: 100%|██████████| 1/1 [00:00&lt;00:00,  1.04batch/s, average_batch_loss=0.00866]
 Done!</code></pre>
 </div>
 </div></section><section id="denoising-images-3" class="slide level2">
 <h2>Denoising Images</h2>
 <p>Let’s display and see if it works.</p>
-<div id="4ca9a937" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:111}}" data-outputid="35fd2e49-10dc-4d08-c690-ec661970f3dc" data-execution_count="13">
+<div id="4ca9a937" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:111}}" data-outputid="35fd2e49-10dc-4d08-c690-ec661970f3dc" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(</span>
 <span id="cb12-2"><a href=""></a>  test,</span>
 <span id="cb12-3"><a href=""></a>  batch_size <span class="op">=</span> <span class="dv">20</span></span>
 <span id="cb12-4"><a href=""></a>)</span>
-<span id="cb12-5"><a href=""></a>X, y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(test_dataloader))</span>
-<span id="cb12-6"><a href=""></a>X <span class="op">=</span> X.to(device)</span>
-<span id="cb12-7"><a href=""></a>pred <span class="op">=</span> model(X).cpu()</span>
-<span id="cb12-8"><a href=""></a>X <span class="op">=</span> X.cpu()</span>
-<span id="cb12-9"><a href=""></a>show(torch.concat([X, pred, y], axis<span class="op">=</span><span class="dv">2</span>).transpose(<span class="dv">2</span>, <span class="dv">3</span>).reshape(<span class="dv">1</span>, <span class="dv">20</span><span class="op">*</span><span class="dv">28</span>, <span class="dv">3</span><span class="op">*</span><span class="dv">28</span>).transpose(<span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-5"><a href=""></a></span>
+<span id="cb12-6"><a href=""></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb12-7"><a href=""></a>  X, y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(test_dataloader))</span>
+<span id="cb12-8"><a href=""></a>  X <span class="op">=</span> X.to(device)</span>
+<span id="cb12-9"><a href=""></a>  pred <span class="op">=</span> model(X).cpu()</span>
+<span id="cb12-10"><a href=""></a>  X <span class="op">=</span> X.cpu()</span>
+<span id="cb12-11"><a href=""></a>  show(torch.concat([X, pred, y], axis<span class="op">=</span><span class="dv">2</span>).transpose(<span class="dv">2</span>, <span class="dv">3</span>).reshape(<span class="dv">1</span>, <span class="dv">20</span><span class="op">*</span><span class="dv">28</span>, <span class="dv">3</span><span class="op">*</span><span class="dv">28</span>).transpose(<span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="09_autoencoders_and_ddpm_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
@@ -768,7 +684,7 @@ Done!</code></pre>
 <section id="ddpm-5" class="slide level2">
 <h2>DDPM</h2>
 <p>Let’s implement DDPM, we’ll train it on MNIST.</p>
-<div id="2d47fcc2" class="cell" data-execution_count="14">
+<div id="2d47fcc2" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb13-2"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset</span>
 <span id="cb13-3"><a href=""></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset, concatenate_datasets</span>
@@ -795,7 +711,7 @@ Done!</code></pre>
 <section id="ddpm-6" class="slide level2">
 <h2>DDPM</h2>
 <p>Now let’s define a class that is going to add noise to images, predict the added noise and generate images.</p>
-<div id="1556071f" class="cell" data-execution_count="15">
+<div id="1556071f" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a><span class="kw">class</span> DDPM():</span>
 <span id="cb14-2"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, model, image_dim, device, no_steps<span class="op">=</span><span class="dv">300</span>, min_beta<span class="op">=</span><span class="fl">0.0001</span>, max_beta<span class="op">=</span><span class="fl">0.02</span>):</span>
 <span id="cb14-3"><a href=""></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -818,39 +734,28 @@ Done!</code></pre>
 <span id="cb14-20"><a href=""></a>  <span class="kw">def</span> predict_noise(<span class="va">self</span>, x, t):</span>
 <span id="cb14-21"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.model(x, t)</span>
 <span id="cb14-22"><a href=""></a></span>
-<span id="cb14-23"><a href=""></a>  <span class="kw">def</span> sample(<span class="va">self</span>):</span>
+<span id="cb14-23"><a href=""></a>  <span class="kw">def</span> sample(<span class="va">self</span>, n_samples<span class="op">=</span><span class="dv">10</span>):</span>
 <span id="cb14-24"><a href=""></a>    <span class="va">self</span>.model.<span class="bu">eval</span>()</span>
-<span id="cb14-25"><a href=""></a>    x <span class="op">=</span> torch.randn(<span class="va">self</span>.image_dim).to(<span class="va">self</span>.device)</span>
-<span id="cb14-26"><a href=""></a>    <span class="cf">for</span> t <span class="kw">in</span> <span class="bu">reversed</span>(<span class="bu">range</span>(<span class="va">self</span>.no_steps)):</span>
-<span id="cb14-27"><a href=""></a>      noise <span class="op">=</span> <span class="va">self</span>.predict_noise(x.unsqueeze(<span class="dv">0</span>), torch.IntTensor([t]).unsqueeze(<span class="dv">0</span>).to(<span class="va">self</span>.device))[<span class="dv">0</span>]</span>
-<span id="cb14-28"><a href=""></a>      x <span class="op">=</span> (<span class="dv">1</span><span class="op">/</span><span class="va">self</span>.alphas[t].sqrt().reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))<span class="op">*</span>(x<span class="op">-</span><span class="va">self</span>.betas[t].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)<span class="op">*</span>noise<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span><span class="va">self</span>.alpha_bars[t]).sqrt().reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb14-29"><a href=""></a>      <span class="cf">if</span> t <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb14-30"><a href=""></a>        noise <span class="op">=</span> torch.randn(<span class="va">self</span>.image_dim).to(<span class="va">self</span>.device)</span>
-<span id="cb14-31"><a href=""></a>        x <span class="op">=</span> x <span class="op">+</span> <span class="va">self</span>.betas[t].sqrt().reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)<span class="op">*</span>noise</span>
-<span id="cb14-32"><a href=""></a>    <span class="cf">return</span> x</span>
-<span id="cb14-33"><a href=""></a></span>
-<span id="cb14-34"><a href=""></a>  <span class="kw">def</span> sample(<span class="va">self</span>, n_samples<span class="op">=</span><span class="dv">10</span>):</span>
-<span id="cb14-35"><a href=""></a>    <span class="va">self</span>.model.<span class="bu">eval</span>()</span>
-<span id="cb14-36"><a href=""></a>    <span class="cf">with</span> torch.no_grad():</span>
-<span id="cb14-37"><a href=""></a>      c, h, w <span class="op">=</span> <span class="va">self</span>.image_dim</span>
-<span id="cb14-38"><a href=""></a>      x <span class="op">=</span> torch.randn(n_samples, c, h, w).to(<span class="va">self</span>.device)</span>
-<span id="cb14-39"><a href=""></a></span>
-<span id="cb14-40"><a href=""></a>      <span class="cf">for</span> idx, t <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">list</span>(<span class="bu">range</span>(ddpm.no_steps))[::<span class="op">-</span><span class="dv">1</span>]):</span>
-<span id="cb14-41"><a href=""></a>        t_tensor <span class="op">=</span> (torch.ones(n_samples, <span class="dv">1</span>) <span class="op">*</span> t).to(<span class="va">self</span>.device).<span class="bu">long</span>()</span>
-<span id="cb14-42"><a href=""></a>        noise <span class="op">=</span> <span class="va">self</span>.predict_noise(x, t_tensor)</span>
+<span id="cb14-25"><a href=""></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb14-26"><a href=""></a>      c, h, w <span class="op">=</span> <span class="va">self</span>.image_dim</span>
+<span id="cb14-27"><a href=""></a>      x <span class="op">=</span> torch.randn(n_samples, c, h, w).to(<span class="va">self</span>.device)</span>
+<span id="cb14-28"><a href=""></a></span>
+<span id="cb14-29"><a href=""></a>      <span class="cf">for</span> idx, t <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">list</span>(<span class="bu">range</span>(ddpm.no_steps))[::<span class="op">-</span><span class="dv">1</span>]):</span>
+<span id="cb14-30"><a href=""></a>        t_tensor <span class="op">=</span> (torch.ones(n_samples, <span class="dv">1</span>) <span class="op">*</span> t).to(<span class="va">self</span>.device).<span class="bu">long</span>()</span>
+<span id="cb14-31"><a href=""></a>        noise <span class="op">=</span> <span class="va">self</span>.predict_noise(x, t_tensor)</span>
+<span id="cb14-32"><a href=""></a></span>
+<span id="cb14-33"><a href=""></a>        <span class="co"># Partially denoising the image</span></span>
+<span id="cb14-34"><a href=""></a>        x <span class="op">=</span> (<span class="dv">1</span> <span class="op">/</span> <span class="va">self</span>.alphas[t].sqrt()) <span class="op">*</span> (x <span class="op">-</span> (<span class="dv">1</span> <span class="op">-</span> <span class="va">self</span>.alphas[t]) <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> <span class="va">self</span>.alpha_bars[t]).sqrt() <span class="op">*</span> noise)</span>
+<span id="cb14-35"><a href=""></a></span>
+<span id="cb14-36"><a href=""></a>        <span class="cf">if</span> t <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb14-37"><a href=""></a>          x <span class="op">=</span> x <span class="op">+</span> <span class="va">self</span>.betas[t].sqrt() <span class="op">*</span> torch.randn(n_samples, c, h, w).to(<span class="va">self</span>.device)</span>
+<span id="cb14-38"><a href=""></a></span>
+<span id="cb14-39"><a href=""></a>      <span class="co"># Normalizing the image</span></span>
+<span id="cb14-40"><a href=""></a>      <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(x)):</span>
+<span id="cb14-41"><a href=""></a>        x[i] <span class="op">-=</span> torch.<span class="bu">min</span>(x[i])</span>
+<span id="cb14-42"><a href=""></a>        x[i] <span class="op">*=</span> <span class="dv">255</span> <span class="op">/</span> torch.<span class="bu">max</span>(x[i])</span>
 <span id="cb14-43"><a href=""></a></span>
-<span id="cb14-44"><a href=""></a>        <span class="co"># Partially denoising the image</span></span>
-<span id="cb14-45"><a href=""></a>        x <span class="op">=</span> (<span class="dv">1</span> <span class="op">/</span> <span class="va">self</span>.alphas[t].sqrt()) <span class="op">*</span> (x <span class="op">-</span> (<span class="dv">1</span> <span class="op">-</span> <span class="va">self</span>.alphas[t]) <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> <span class="va">self</span>.alpha_bars[t]).sqrt() <span class="op">*</span> noise)</span>
-<span id="cb14-46"><a href=""></a></span>
-<span id="cb14-47"><a href=""></a>        <span class="cf">if</span> t <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb14-48"><a href=""></a>          x <span class="op">=</span> x <span class="op">+</span> <span class="va">self</span>.betas[t].sqrt() <span class="op">*</span> torch.randn(n_samples, c, h, w).to(<span class="va">self</span>.device)</span>
-<span id="cb14-49"><a href=""></a></span>
-<span id="cb14-50"><a href=""></a>      <span class="co"># Normalizing the image</span></span>
-<span id="cb14-51"><a href=""></a>      <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(x)):</span>
-<span id="cb14-52"><a href=""></a>        x[i] <span class="op">-=</span> torch.<span class="bu">min</span>(x[i])</span>
-<span id="cb14-53"><a href=""></a>        x[i] <span class="op">*=</span> <span class="dv">255</span> <span class="op">/</span> torch.<span class="bu">max</span>(x[i])</span>
-<span id="cb14-54"><a href=""></a></span>
-<span id="cb14-55"><a href=""></a>      <span class="cf">return</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-44"><a href=""></a>      <span class="cf">return</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="ddpm-7" class="slide level2">
@@ -871,7 +776,7 @@ Done!</code></pre>
 <section id="ddpm-9" class="slide level2">
 <h2>DDPM</h2>
 <p>Let’s build our U-net.</p>
-<div id="e8947441" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="e8eb7188-c7d8-4fef-80b9-f1dbe2e35c91" data-execution_count="16">
+<div id="e8947441" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="e8eb7188-c7d8-4fef-80b9-f1dbe2e35c91" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb15-2"><a href=""></a></span>
 <span id="cb15-3"><a href=""></a><span class="kw">class</span> UNet(nn.Module):</span>
@@ -1055,7 +960,7 @@ Done!</code></pre>
 </div>
 
 </section>
-<section id="ddpm-9-output" class="slide level2 output-location-slide"><h2>DDPM</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="e8eb7188-c7d8-4fef-80b9-f1dbe2e35c91" data-execution_count="16">
+<section id="ddpm-9-output" class="slide level2 output-location-slide"><h2>DDPM</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="e8eb7188-c7d8-4fef-80b9-f1dbe2e35c91" data-execution_count="12">
 <div class="cell-output cell-output-stdout">
 <pre><code>UNet(
   (time_embedding): Embedding(1000, 128)
@@ -1224,7 +1129,7 @@ Done!</code></pre>
 </div></section><section id="ddpm-10" class="slide level2">
 <h2>DDPM</h2>
 <p>We can now train the model.</p>
-<div id="cd29841a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="5ebaad75-3abe-46d0-d1eb-71524c3d5b4f">
+<div id="cd29841a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="5ebaad75-3abe-46d0-d1eb-71524c3d5b4f" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
 <span id="cb17-2"><a href=""></a></span>
 <span id="cb17-3"><a href=""></a><span class="co"># Hyperparameters</span></span>
@@ -1254,211 +1159,114 @@ Done!</code></pre>
 <span id="cb17-27"><a href=""></a>optimizer <span class="op">=</span> torch.optim.Adam(params<span class="op">=</span>model.parameters(), lr<span class="op">=</span>learning_rate)</span>
 <span id="cb17-28"><a href=""></a></span>
 <span id="cb17-29"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
-<span id="cb17-30"><a href=""></a>  size <span class="op">=</span> <span class="bu">len</span>(dataloader.dataset)</span>
+<span id="cb17-30"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
 <span id="cb17-31"><a href=""></a></span>
-<span id="cb17-32"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
-<span id="cb17-33"><a href=""></a></span>
-<span id="cb17-34"><a href=""></a>  <span class="cf">for</span> batch, X <span class="kw">in</span> <span class="bu">enumerate</span>(dataloader):</span>
-<span id="cb17-35"><a href=""></a>    X <span class="op">=</span> X.to(device)</span>
-<span id="cb17-36"><a href=""></a></span>
-<span id="cb17-37"><a href=""></a>    noise <span class="op">=</span> torch.randn(X.shape).to(device)</span>
-<span id="cb17-38"><a href=""></a>    t <span class="op">=</span> torch.randint(<span class="dv">0</span>, no_steps, (<span class="bu">len</span>(X),)).to(device)</span>
-<span id="cb17-39"><a href=""></a></span>
-<span id="cb17-40"><a href=""></a>    <span class="co"># Forward pass</span></span>
-<span id="cb17-41"><a href=""></a>    image_w_noise <span class="op">=</span> ddpm.add_noise(X, t, noise)</span>
-<span id="cb17-42"><a href=""></a>    predicted_noise <span class="op">=</span> ddpm.predict_noise(image_w_noise, t)</span>
-<span id="cb17-43"><a href=""></a>    loss <span class="op">=</span> loss_fn(predicted_noise, noise)</span>
-<span id="cb17-44"><a href=""></a></span>
-<span id="cb17-45"><a href=""></a>    <span class="co"># Backward pass</span></span>
-<span id="cb17-46"><a href=""></a>    loss.backward()</span>
-<span id="cb17-47"><a href=""></a>    optimizer.step()</span>
-<span id="cb17-48"><a href=""></a></span>
-<span id="cb17-49"><a href=""></a>    <span class="co"># Reset the computed gradients back to zero</span></span>
-<span id="cb17-50"><a href=""></a>    optimizer.zero_grad()</span>
-<span id="cb17-51"><a href=""></a></span>
-<span id="cb17-52"><a href=""></a>    <span class="cf">if</span> batch <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb17-53"><a href=""></a>      loss, current <span class="op">=</span> loss.item(), batch <span class="op">*</span> batch_size <span class="op">+</span> <span class="bu">len</span>(X)</span>
-<span id="cb17-54"><a href=""></a>      <span class="bu">print</span>(<span class="ss">f"loss: </span><span class="sc">{</span>loss<span class="sc">:&gt;7f}</span><span class="ss">  [</span><span class="sc">{</span>current<span class="sc">:&gt;5d}</span><span class="ss">/</span><span class="sc">{</span>size<span class="sc">:&gt;5d}</span><span class="ss">]"</span>)</span>
-<span id="cb17-55"><a href=""></a></span>
-<span id="cb17-56"><a href=""></a><span class="co"># Organize the training loop</span></span>
-<span id="cb17-57"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
-<span id="cb17-58"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
-<span id="cb17-59"><a href=""></a>  train_epoch(dataloader, model, loss_fn, optimizer)</span>
-<span id="cb17-60"><a href=""></a></span>
-<span id="cb17-61"><a href=""></a>torch.save(model, <span class="st">'ddpm_unet.pth'</span>)</span>
-<span id="cb17-62"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-32"><a href=""></a>  total_loss <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-33"><a href=""></a>  total_batches <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-34"><a href=""></a></span>
+<span id="cb17-35"><a href=""></a>  <span class="cf">with</span> tqdm(dataloader, unit<span class="op">=</span><span class="st">"batch"</span>, <span class="bu">file</span><span class="op">=</span>sys.stdout) <span class="im">as</span> ep_tqdm:</span>
+<span id="cb17-36"><a href=""></a>    ep_tqdm.set_description(<span class="st">"Train"</span>)</span>
+<span id="cb17-37"><a href=""></a>    <span class="cf">for</span> X <span class="kw">in</span> ep_tqdm:</span>
+<span id="cb17-38"><a href=""></a>      X <span class="op">=</span> X.to(device)</span>
+<span id="cb17-39"><a href=""></a>      noise <span class="op">=</span> torch.randn(X.shape).to(device)</span>
+<span id="cb17-40"><a href=""></a>      t <span class="op">=</span> torch.randint(<span class="dv">0</span>, no_steps, (<span class="bu">len</span>(X),)).to(device)</span>
+<span id="cb17-41"><a href=""></a></span>
+<span id="cb17-42"><a href=""></a>      <span class="co"># Forward pass</span></span>
+<span id="cb17-43"><a href=""></a>      image_w_noise <span class="op">=</span> ddpm.add_noise(X, t, noise)</span>
+<span id="cb17-44"><a href=""></a>      predicted_noise <span class="op">=</span> ddpm.predict_noise(image_w_noise, t)</span>
+<span id="cb17-45"><a href=""></a>      loss <span class="op">=</span> loss_fn(predicted_noise, noise)</span>
+<span id="cb17-46"><a href=""></a>        </span>
+<span id="cb17-47"><a href=""></a>      <span class="co"># Backward pass</span></span>
+<span id="cb17-48"><a href=""></a>      loss.backward()</span>
+<span id="cb17-49"><a href=""></a>      optimizer.step()</span>
+<span id="cb17-50"><a href=""></a></span>
+<span id="cb17-51"><a href=""></a>      <span class="co"># Reset the computed gradients back to zero</span></span>
+<span id="cb17-52"><a href=""></a>      optimizer.zero_grad()</span>
+<span id="cb17-53"><a href=""></a></span>
+<span id="cb17-54"><a href=""></a>      <span class="co"># Output stats</span></span>
+<span id="cb17-55"><a href=""></a>      total_loss <span class="op">+=</span> loss</span>
+<span id="cb17-56"><a href=""></a>      total_batches <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb17-57"><a href=""></a>      ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item())</span>
+<span id="cb17-58"><a href=""></a></span>
+<span id="cb17-59"><a href=""></a><span class="co"># Organize the training loop</span></span>
+<span id="cb17-60"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb17-61"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
+<span id="cb17-62"><a href=""></a>  train_epoch(dataloader, model, loss_fn, optimizer)</span>
+<span id="cb17-63"><a href=""></a></span>
+<span id="cb17-64"><a href=""></a>torch.save(model, <span class="st">'ddpm_unet.pth'</span>)</span>
+<span id="cb17-65"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
-<section id="ddpm-10-output" class="slide level2 output-location-slide"><h2>DDPM</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="5ebaad75-3abe-46d0-d1eb-71524c3d5b4f">
+<section id="ddpm-10-output" class="slide level2 output-location-slide"><h2>DDPM</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="5ebaad75-3abe-46d0-d1eb-71524c3d5b4f" data-execution_count="13">
 <div class="cell-output cell-output-stdout">
 <pre><code>Using cuda device
 Epoch 1
 -------------------------------
-loss: 1.066751  [  128/70000]
-loss: 0.325556  [12928/70000]
-loss: 0.218633  [25728/70000]
-loss: 0.154081  [38528/70000]
-loss: 0.123057  [51328/70000]
-loss: 0.108382  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.84batch/s, average_batch_loss=0.241]
 Epoch 2
 -------------------------------
-loss: 0.090769  [  128/70000]
-loss: 0.086969  [12928/70000]
-loss: 0.082260  [25728/70000]
-loss: 0.066372  [38528/70000]
-loss: 0.071303  [51328/70000]
-loss: 0.062475  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.96batch/s, average_batch_loss=0.0743]
 Epoch 3
 -------------------------------
-loss: 0.057960  [  128/70000]
-loss: 0.060079  [12928/70000]
-loss: 0.060467  [25728/70000]
-loss: 0.053249  [38528/70000]
-loss: 0.052465  [51328/70000]
-loss: 0.052113  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.99batch/s, average_batch_loss=0.0563]
 Epoch 4
 -------------------------------
-loss: 0.052642  [  128/70000]
-loss: 0.048210  [12928/70000]
-loss: 0.057514  [25728/70000]
-loss: 0.051548  [38528/70000]
-loss: 0.043050  [51328/70000]
-loss: 0.042883  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.95batch/s, average_batch_loss=0.0478]
 Epoch 5
 -------------------------------
-loss: 0.041096  [  128/70000]
-loss: 0.050343  [12928/70000]
-loss: 0.038786  [25728/70000]
-loss: 0.040965  [38528/70000]
-loss: 0.043934  [51328/70000]
-loss: 0.040484  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.93batch/s, average_batch_loss=0.0437]
 Epoch 6
 -------------------------------
-loss: 0.036143  [  128/70000]
-loss: 0.039375  [12928/70000]
-loss: 0.037169  [25728/70000]
-loss: 0.031720  [38528/70000]
-loss: 0.038786  [51328/70000]
-loss: 0.043896  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.95batch/s, average_batch_loss=0.0402]
 Epoch 7
 -------------------------------
-loss: 0.039888  [  128/70000]
-loss: 0.038205  [12928/70000]
-loss: 0.037109  [25728/70000]
-loss: 0.038041  [38528/70000]
-loss: 0.051140  [51328/70000]
-loss: 0.037092  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.93batch/s, average_batch_loss=0.038] 
 Epoch 8
 -------------------------------
-loss: 0.030792  [  128/70000]
-loss: 0.030550  [12928/70000]
-loss: 0.032652  [25728/70000]
-loss: 0.035268  [38528/70000]
-loss: 0.044124  [51328/70000]
-loss: 0.035639  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.94batch/s, average_batch_loss=0.0357]
 Epoch 9
 -------------------------------
-loss: 0.035939  [  128/70000]
-loss: 0.032855  [12928/70000]
-loss: 0.034952  [25728/70000]
-loss: 0.031740  [38528/70000]
-loss: 0.035296  [51328/70000]
-loss: 0.031059  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.93batch/s, average_batch_loss=0.0342]
 Epoch 10
 -------------------------------
-loss: 0.030422  [  128/70000]
-loss: 0.027894  [12928/70000]
-loss: 0.041076  [25728/70000]
-loss: 0.037261  [38528/70000]
-loss: 0.033831  [51328/70000]
-loss: 0.033548  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.93batch/s, average_batch_loss=0.0325]
 Epoch 11
 -------------------------------
-loss: 0.034784  [  128/70000]
-loss: 0.033396  [12928/70000]
-loss: 0.027124  [25728/70000]
-loss: 0.033590  [38528/70000]
-loss: 0.035279  [51328/70000]
-loss: 0.032526  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.99batch/s, average_batch_loss=0.0314]
 Epoch 12
 -------------------------------
-loss: 0.028767  [  128/70000]
-loss: 0.031289  [12928/70000]
-loss: 0.032430  [25728/70000]
-loss: 0.027275  [38528/70000]
-loss: 0.029186  [51328/70000]
-loss: 0.028506  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.95batch/s, average_batch_loss=0.0305]
 Epoch 13
 -------------------------------
-loss: 0.026329  [  128/70000]
-loss: 0.031078  [12928/70000]
-loss: 0.025979  [25728/70000]
-loss: 0.032838  [38528/70000]
-loss: 0.030207  [51328/70000]
-loss: 0.026226  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 24.00batch/s, average_batch_loss=0.0295]
 Epoch 14
 -------------------------------
-loss: 0.026861  [  128/70000]
-loss: 0.029134  [12928/70000]
-loss: 0.027233  [25728/70000]
-loss: 0.028447  [38528/70000]
-loss: 0.025201  [51328/70000]
-loss: 0.027168  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.98batch/s, average_batch_loss=0.029] 
 Epoch 15
 -------------------------------
-loss: 0.029057  [  128/70000]
-loss: 0.028646  [12928/70000]
-loss: 0.033382  [25728/70000]
-loss: 0.029023  [38528/70000]
-loss: 0.031114  [51328/70000]
-loss: 0.028889  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.92batch/s, average_batch_loss=0.0281]
 Epoch 16
 -------------------------------
-loss: 0.024805  [  128/70000]
-loss: 0.031732  [12928/70000]
-loss: 0.024983  [25728/70000]
-loss: 0.028747  [38528/70000]
-loss: 0.025798  [51328/70000]
-loss: 0.029000  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.91batch/s, average_batch_loss=0.0279]
 Epoch 17
 -------------------------------
-loss: 0.024695  [  128/70000]
-loss: 0.027723  [12928/70000]
-loss: 0.027739  [25728/70000]
-loss: 0.024120  [38528/70000]
-loss: 0.032494  [51328/70000]
-loss: 0.031106  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.95batch/s, average_batch_loss=0.0275]
 Epoch 18
 -------------------------------
-loss: 0.023680  [  128/70000]
-loss: 0.025009  [12928/70000]
-loss: 0.025043  [25728/70000]
-loss: 0.025041  [38528/70000]
-loss: 0.028115  [51328/70000]
-loss: 0.027138  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.92batch/s, average_batch_loss=0.0271]
 Epoch 19
 -------------------------------
-loss: 0.024716  [  128/70000]
-loss: 0.028969  [12928/70000]
-loss: 0.026358  [25728/70000]
-loss: 0.021127  [38528/70000]
-loss: 0.034760  [51328/70000]
-loss: 0.032345  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.91batch/s, average_batch_loss=0.0268]
 Epoch 20
 -------------------------------
-loss: 0.026089  [  128/70000]
-loss: 0.025972  [12928/70000]
-loss: 0.028599  [25728/70000]
-loss: 0.030176  [38528/70000]
-loss: 0.023382  [51328/70000]
-loss: 0.028659  [64128/70000]
+Train: 100%|██████████| 547/547 [00:22&lt;00:00, 23.94batch/s, average_batch_loss=0.0259]
 Done!</code></pre>
 </div>
 </div></section><section id="ddpm-11" class="slide level2">
 <h2>DDPM</h2>
 <p>Le’s generate some images.</p>
-<div id="557e178b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:86}}" data-outputid="e940c2a3-e115-4078-9e8d-1326de259aa4" data-execution_count="26">
+<div id="557e178b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:86}}" data-outputid="e940c2a3-e115-4078-9e8d-1326de259aa4" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb19-2"><a href=""></a></span>
 <span id="cb19-3"><a href=""></a><span class="kw">def</span> show(img):</span>
@@ -1692,9 +1500,6 @@ Done!</code></pre>
           RevealZoom
         ]
       });
-    </script>
-    <script type="application/vnd.jupyter.widget-state+json">
-    {"0745d7d97705471285713c5364bd3187":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"07cdc93c94d448c08c606c8c33ed27b7":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_b39a1e25388346889e4a1733fa190baf","placeholder":"​","style":"IPY_MODEL_87eb7e656ffd4e0e905b9e76db367094","value":" 15.6M/15.6M [00:00&lt;00:00, 147MB/s]"}},"07d988be9a0a4924bf122328a44c4b30":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_a1ce0d32261a4e1698d32a5907f5ebac","placeholder":"​","style":"IPY_MODEL_26cda09f2cfe49a08bcd18f33d98a6d7","value":" 10000/10000 [00:00&lt;00:00, 161116.75 examples/s]"}},"0e671043af2b4ccfa8152572b9f4140b":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_f914cbb644d94022ab6585833daf1f4d","placeholder":"​","style":"IPY_MODEL_5e0eda7ba5324940981132fa14658930","value":"test-00000-of-00001.parquet: 100%"}},"0e8f102d4da04732a6cb0d6e8cd018cf":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"106f29fde12e48e7911e9ad8daa74238":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"ProgressView","bar_style":"success","description":"","description_tooltip":null,"layout":"IPY_MODEL_25783082924e4188b902445981044f8d","max":6971,"min":0,"orientation":"horizontal","style":"IPY_MODEL_108223a3c79743a7ae17240aab40783b","value":6971}},"108223a3c79743a7ae17240aab40783b":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","bar_color":null,"description_width":""}},"191ced0f72fb47bf82214ae43de50efd":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_28841f6a14694a03b60e6f6eb1315069","IPY_MODEL_e3d3f3a88911479da761b4c1993e48a6","IPY_MODEL_444fd73ba9c04121acf9863ec0e4e88f"],"layout":"IPY_MODEL_91063bf662c34852904d023b8f803906"}},"1aafd93544dd4219bb99d584bd38cfc7":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"ProgressView","bar_style":"success","description":"","description_tooltip":null,"layout":"IPY_MODEL_60cc18fbc15d42309dfc74078b6b264b","max":15561616,"min":0,"orientation":"horizontal","style":"IPY_MODEL_6b839594b37b4d68abe14a4ac22e2857","value":15561616}},"1bbdb985a59b45c289c1461f1ba1a498":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"ProgressView","bar_style":"success","description":"","description_tooltip":null,"layout":"IPY_MODEL_e3bd102d6c714a9ab52455e2ecde6efb","max":60000,"min":0,"orientation":"horizontal","style":"IPY_MODEL_661e7cf364bd4ea9ac1ca520bebeb794","value":60000}},"22954eee33294aea858990dda18e73b9":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"ProgressView","bar_style":"success","description":"","description_tooltip":null,"layout":"IPY_MODEL_f6b4da9135a848a0a39d5ff2eddab083","max":10000,"min":0,"orientation":"horizontal","style":"IPY_MODEL_4d88c269b70e4a958f7a87175e4db8c5","value":10000}},"2335e2c516414e0495ca978f8ee4ac7b":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_a1316c00ef7b413395281bff7969e441","IPY_MODEL_7528e51a7af246a5852f6b07bcb2c99a","IPY_MODEL_728f5ac143fd4e2b8901b8ee73e27ee3"],"layout":"IPY_MODEL_76b3721eb4a34cc1b05ac893686ed6d7"}},"24ad1ff1c43442f9a9b3c6fcef7fa8a7":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"25783082924e4188b902445981044f8d":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"26cda09f2cfe49a08bcd18f33d98a6d7":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"28841f6a14694a03b60e6f6eb1315069":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_7961a39842cd43eaa50f58c88de5f4c0","placeholder":"​","style":"IPY_MODEL_59a4732e21434df6b34ae602659d89a3","value":"Generating train split: 100%"}},"2ec0b03df38244e9a83ac077923f898d":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"33d07c3d29634cd6aa66c3db6d3f4f4c":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"34325a29bf934bb589d832ee4d8a8d53":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"366f579514ff49eeb76b69572c66ccad":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_449a6baa200640a088f8e7a1bea834b4","IPY_MODEL_22954eee33294aea858990dda18e73b9","IPY_MODEL_07d988be9a0a4924bf122328a44c4b30"],"layout":"IPY_MODEL_8aafad5aea9c4815b4639d9599b70ad2"}},"444fd73ba9c04121acf9863ec0e4e88f":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_b2614db6bc794e228962031519450743","placeholder":"​","style":"IPY_MODEL_c23e403cc1764b9dac22ebc1b18beee0","value":" 60000/60000 [00:00&lt;00:00, 195714.36 examples/s]"}},"449a6baa200640a088f8e7a1bea834b4":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_92f19c551b904aa0b925333d3eda73a4","placeholder":"​","style":"IPY_MODEL_626e13c7143b43128f65a8d3eea0de8d","value":"Generating test split: 100%"}},"4a15a69d1fb34b4abe33759660b09180":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_0e671043af2b4ccfa8152572b9f4140b","IPY_MODEL_c65eb186a4cc4a728a9690c7cb496961","IPY_MODEL_c7fbbdfe780a440baab343b5a16c38fc"],"layout":"IPY_MODEL_534133cd68e2438c91a99ca1e4477b43"}},"4d88c269b70e4a958f7a87175e4db8c5":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","bar_color":null,"description_width":""}},"50cfb97d824649cf81c3b7f0e7f8c902":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"534133cd68e2438c91a99ca1e4477b43":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"56660a0225304f6bbdbb84021eadaee3":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"5992713f602948609997c9748c67b939":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"59a4732e21434df6b34ae602659d89a3":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"5e0eda7ba5324940981132fa14658930":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"5ffb22156c164381a40c4f3a80c51f87":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"60cc18fbc15d42309dfc74078b6b264b":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"626e13c7143b43128f65a8d3eea0de8d":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"633402731d634696b18621ef8b9f57d1":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"661e7cf364bd4ea9ac1ca520bebeb794":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","bar_color":null,"description_width":""}},"68bb1ceb4e9947cd9671521de88bc437":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_56660a0225304f6bbdbb84021eadaee3","placeholder":"​","style":"IPY_MODEL_2ec0b03df38244e9a83ac077923f898d","value":" 60000/60000 [00:04&lt;00:00, 18638.39 examples/s]"}},"6acba2eb6a664908b9067756aa49c726":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"6b839594b37b4d68abe14a4ac22e2857":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","bar_color":null,"description_width":""}},"6f711cbecdec4abbbe0c3325adcd4a0e":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","bar_color":null,"description_width":""}},"728f5ac143fd4e2b8901b8ee73e27ee3":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_c3029c9065e44e20981a44fc9eca6bd9","placeholder":"​","style":"IPY_MODEL_ff4d1e9b2c3c48ea9c34fd4cb52f3d94","value":" 10000/10000 [00:00&lt;00:00, 16416.59 examples/s]"}},"7528e51a7af246a5852f6b07bcb2c99a":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"ProgressView","bar_style":"success","description":"","description_tooltip":null,"layout":"IPY_MODEL_34325a29bf934bb589d832ee4d8a8d53","max":10000,"min":0,"orientation":"horizontal","style":"IPY_MODEL_8002df47b0b04537ab268ef04f7d2907","value":10000}},"76b3721eb4a34cc1b05ac893686ed6d7":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"7961a39842cd43eaa50f58c88de5f4c0":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"8002df47b0b04537ab268ef04f7d2907":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","bar_color":null,"description_width":""}},"87eb7e656ffd4e0e905b9e76db367094":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"8aafad5aea9c4815b4639d9599b70ad2":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"8dcf0d0dbe6e4516bc3df3b4d355b626":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_b5f75b64c00f441fa82f68ab5a5de810","IPY_MODEL_1bbdb985a59b45c289c1461f1ba1a498","IPY_MODEL_68bb1ceb4e9947cd9671521de88bc437"],"layout":"IPY_MODEL_d6257bf0734e4b7680326dda4465074f"}},"91063bf662c34852904d023b8f803906":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"91cb262120b640dcb4d49951a9775c2f":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_e9675b56c3d24485969179a7b06e97f7","IPY_MODEL_106f29fde12e48e7911e9ad8daa74238","IPY_MODEL_a7142a68a35e43f494cbc222cd534a34"],"layout":"IPY_MODEL_f8c27f75a68c46458e581c6e4ec4113d"}},"92f19c551b904aa0b925333d3eda73a4":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"9ea5dc7507fa47d2b9ddfba9dbe0db4e":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"a1316c00ef7b413395281bff7969e441":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_b992246ea0c0461a9195d62af9ee0d67","placeholder":"​","style":"IPY_MODEL_b1ffb9b1f43a47fa9a7c1643e9d9d8aa","value":"Filter: 100%"}},"a1ce0d32261a4e1698d32a5907f5ebac":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"a268b3608ee44cf79637f6e63bacdb1c":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"ProgressStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"ProgressStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","bar_color":null,"description_width":""}},"a7142a68a35e43f494cbc222cd534a34":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_5992713f602948609997c9748c67b939","placeholder":"​","style":"IPY_MODEL_0e8f102d4da04732a6cb0d6e8cd018cf","value":" 6.97k/6.97k [00:00&lt;00:00, 698kB/s]"}},"b08c20567474405dbc10ebe9ebb193a8":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_6acba2eb6a664908b9067756aa49c726","placeholder":"​","style":"IPY_MODEL_50cfb97d824649cf81c3b7f0e7f8c902","value":"train-00000-of-00001.parquet: 100%"}},"b1ffb9b1f43a47fa9a7c1643e9d9d8aa":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"b2614db6bc794e228962031519450743":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"b39a1e25388346889e4a1733fa190baf":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"b5f75b64c00f441fa82f68ab5a5de810":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_24ad1ff1c43442f9a9b3c6fcef7fa8a7","placeholder":"​","style":"IPY_MODEL_5ffb22156c164381a40c4f3a80c51f87","value":"Filter: 100%"}},"b992246ea0c0461a9195d62af9ee0d67":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"c23e403cc1764b9dac22ebc1b18beee0":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"c3029c9065e44e20981a44fc9eca6bd9":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"c4b51bc3470d43d5bca24f6db1802562":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HBoxModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HBoxModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HBoxView","box_style":"","children":["IPY_MODEL_b08c20567474405dbc10ebe9ebb193a8","IPY_MODEL_1aafd93544dd4219bb99d584bd38cfc7","IPY_MODEL_07cdc93c94d448c08c606c8c33ed27b7"],"layout":"IPY_MODEL_9ea5dc7507fa47d2b9ddfba9dbe0db4e"}},"c65eb186a4cc4a728a9690c7cb496961":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"ProgressView","bar_style":"success","description":"","description_tooltip":null,"layout":"IPY_MODEL_633402731d634696b18621ef8b9f57d1","max":2595890,"min":0,"orientation":"horizontal","style":"IPY_MODEL_a268b3608ee44cf79637f6e63bacdb1c","value":2595890}},"c7fbbdfe780a440baab343b5a16c38fc":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_0745d7d97705471285713c5364bd3187","placeholder":"​","style":"IPY_MODEL_e3ffaa9ab91c44d694f3b6c8bce94635","value":" 2.60M/2.60M [00:00&lt;00:00, 143MB/s]"}},"d0996340ffbc4769b63e010d496789c8":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"d6257bf0734e4b7680326dda4465074f":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"d95ba8d5b37e405a9dd81fee36e03575":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"e3bd102d6c714a9ab52455e2ecde6efb":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"e3d3f3a88911479da761b4c1993e48a6":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"FloatProgressModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"FloatProgressModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"ProgressView","bar_style":"success","description":"","description_tooltip":null,"layout":"IPY_MODEL_d95ba8d5b37e405a9dd81fee36e03575","max":60000,"min":0,"orientation":"horizontal","style":"IPY_MODEL_6f711cbecdec4abbbe0c3325adcd4a0e","value":60000}},"e3ffaa9ab91c44d694f3b6c8bce94635":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}},"e9675b56c3d24485969179a7b06e97f7":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"HTMLModel","state":{"_dom_classes":[],"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"HTMLModel","_view_count":null,"_view_module":"@jupyter-widgets/controls","_view_module_version":"1.5.0","_view_name":"HTMLView","description":"","description_tooltip":null,"layout":"IPY_MODEL_33d07c3d29634cd6aa66c3db6d3f4f4c","placeholder":"​","style":"IPY_MODEL_d0996340ffbc4769b63e010d496789c8","value":"README.md: 100%"}},"f6b4da9135a848a0a39d5ff2eddab083":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"f8c27f75a68c46458e581c6e4ec4113d":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"f914cbb644d94022ab6585833daf1f4d":{"model_module":"@jupyter-widgets/base","model_module_version":"1.2.0","model_name":"LayoutModel","state":{"_model_module":"@jupyter-widgets/base","_model_module_version":"1.2.0","_model_name":"LayoutModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"LayoutView","align_content":null,"align_items":null,"align_self":null,"border":null,"bottom":null,"display":null,"flex":null,"flex_flow":null,"grid_area":null,"grid_auto_columns":null,"grid_auto_flow":null,"grid_auto_rows":null,"grid_column":null,"grid_gap":null,"grid_row":null,"grid_template_areas":null,"grid_template_columns":null,"grid_template_rows":null,"height":null,"justify_content":null,"justify_items":null,"left":null,"margin":null,"max_height":null,"max_width":null,"min_height":null,"min_width":null,"object_fit":null,"object_position":null,"order":null,"overflow":null,"overflow_x":null,"overflow_y":null,"padding":null,"right":null,"top":null,"visibility":null,"width":null}},"ff4d1e9b2c3c48ea9c34fd4cb52f3d94":{"model_module":"@jupyter-widgets/controls","model_module_version":"1.5.0","model_name":"DescriptionStyleModel","state":{"_model_module":"@jupyter-widgets/controls","_model_module_version":"1.5.0","_model_name":"DescriptionStyleModel","_view_count":null,"_view_module":"@jupyter-widgets/base","_view_module_version":"1.2.0","_view_name":"StyleView","description_width":""}}}
     </script>
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
