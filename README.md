@@ -9,7 +9,7 @@ The course slides are available [here](https://jputrius.github.io/ml_intro/).
 
 ## Running the notebooks
 
-The easiest way to run the notebooks is to open them in Google Colab (wou will need a google account).
+The easiest way to run the notebooks is to open them in Google Colab (you will need a google account).
 The Colab links for the notebooks can be found [here](https://jputrius.github.io/ml_intro/).
 
 However, if your machine has a GPU then I recommend setting up the project locally.
