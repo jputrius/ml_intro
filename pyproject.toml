@@ -22,7 +22,7 @@ dependencies = [
 [[tool.poetry.source]]
 name = "pytorch-gpu"
 priority = "explicit"
-url = "https://download.pytorch.org/whl/cu128"
+url = "https://download.pytorch.org/whl/cu128" # Edit this line to set the pytorch version that is compatible with your hardware
 
 [tool.poetry.dependencies]
 torch = { source = "pytorch-gpu" }
