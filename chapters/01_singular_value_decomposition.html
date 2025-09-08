@@ -542,9 +542,7 @@ y_n
 <p>Usually, in implementations of linear regression, <span class="math inline">\(\beta\)</span> is computed using SVD.</p>
 <p>Let <span class="math inline">\(X=UMV^T\)</span> be the SVD of <span class="math inline">\(X.\)</span> Then, <span class="math display">\[\begin{equation*}
 \begin{split}
-  &amp;\beta = (X^TX)^{-1}X^TY = ((UMV^T)^TUMV^T)^{-1}(UMV^T)^TY \\
-  &amp;= (VM^TU^TUMV^T)^{-1}VM^TU^TY \\
-  &amp;= VM^{-1}(M^T)^{-1}V^{-1}VM^TU^TY = VM^{-1}U^TY.
+  &amp;\beta = VM^{-1}U^TY.
 \end{split}
 \end{equation*}\]</span></p>
 </section>

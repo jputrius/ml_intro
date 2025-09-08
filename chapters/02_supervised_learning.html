@@ -1920,13 +1920,27 @@ weighted avg       0.85      0.85      0.85       179
 </table>
 <p>Also accuracy is 2/5.</p>
 </section>
+<section id="evaluating-the-model-4" class="slide level2">
+<h2>Evaluating the model</h2>
+<p>To evaluate a model you can also use a confusion matrix. Here is how to generate a confusion matrix using sklearn.</p>
+<div id="53cadfd6" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> ConfusionMatrixDisplay</span>
+<span id="cb22-2"><a href=""></a></span>
+<span id="cb22-3"><a href=""></a>ConfusionMatrixDisplay.from_predictions(y_test, y_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="02_supervised_learning_files/figure-revealjs/cell-17-output-1.png" class="r-stretch"></section>
+<section id="evaluating-the-model-5" class="slide level2">
+<h2>Evaluating the model</h2>
+<p>Confusion matrices quickly become unwieldy when there are more than two classes (in real world applications there can easily be 100+ classes). You can get the same insights from the precision and recall metrics that you would get from a confusion matrix.</p>
+</section>
 <section id="feature-importance" class="slide level2">
 <h2>Feature Importance</h2>
 <p>In logistic regression, the higher the absolute value of the weight of the feature the more important the feature is.</p>
 <p>We can can check the importance of the features in our model as follows:</p>
-<div id="9b7e4f02" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href=""></a>pd.DataFrame(pipeline[<span class="st">"model"</span>].coef_, columns<span class="op">=</span>pipeline[:<span class="op">-</span><span class="dv">1</span>].get_feature_names_out())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
+<div id="9b7e4f02" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href=""></a>pd.DataFrame(pipeline[<span class="st">"model"</span>].coef_, columns<span class="op">=</span>pipeline[:<span class="op">-</span><span class="dv">1</span>].get_feature_names_out())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -1991,14 +2005,14 @@ weighted avg       0.85      0.85      0.85       179
 <h2>Practice task</h2>
 <p>For practice, you could try building a logistic regression model for the <code>Iris dataset</code>. This dataset ships with <code>sklearn</code>. The goal is to predict the type of plant given some measurements.</p>
 <p>Here is how to load the dataset:</p>
-<div id="d5c01ffa" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
-<span id="cb23-2"><a href=""></a></span>
-<span id="cb23-3"><a href=""></a>data <span class="op">=</span> load_iris()</span>
-<span id="cb23-4"><a href=""></a>df <span class="op">=</span> pd.DataFrame(data[<span class="st">"data"</span>], columns<span class="op">=</span>data[<span class="st">"feature_names"</span>])</span>
-<span id="cb23-5"><a href=""></a>df[<span class="st">"target"</span>] <span class="op">=</span> data[<span class="st">"target_names"</span>][data[<span class="st">"target"</span>]]</span>
-<span id="cb23-6"><a href=""></a>df.head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div id="d5c01ffa" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
+<span id="cb24-2"><a href=""></a></span>
+<span id="cb24-3"><a href=""></a>data <span class="op">=</span> load_iris()</span>
+<span id="cb24-4"><a href=""></a>df <span class="op">=</span> pd.DataFrame(data[<span class="st">"data"</span>], columns<span class="op">=</span>data[<span class="st">"feature_names"</span>])</span>
+<span id="cb24-5"><a href=""></a>df[<span class="st">"target"</span>] <span class="op">=</span> data[<span class="st">"target_names"</span>][data[<span class="st">"target"</span>]]</span>
+<span id="cb24-6"><a href=""></a>df.head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
