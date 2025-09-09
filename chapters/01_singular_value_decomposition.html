@@ -614,11 +614,15 @@ MSE between our fit and sklearn: 6.325051042998488e-27</code></pre>
 </section>
 <section id="principal-component-analysis-3" class="slide level2">
 <h2>Principal Component Analysis</h2>
+
+<img data-src="../images/svd-and-rank-k-approximations-l.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="principal-component-analysis-4" class="slide level2">
+<h2>Principal Component Analysis</h2>
 <p>One typical use of PCA is to visualize high dimensional data. Reduce the dimension of your samples to 2 and then you can visualize your dataset using a scatter plot.</p>
 <p><code>sklearn</code> has an implementation of PCA, which also performs step 1 automatically, i.e.&nbsp;you do not have to provide centralized data.</p>
 <p>Let’s visualize the iris dataset using PCA. Iris dataset contains measurement samples of three types of flowers.</p>
 </section>
-<section id="principal-component-analysis-4" class="slide level2">
+<section id="principal-component-analysis-5" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <div id="dd821493" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
@@ -636,19 +640,19 @@ MSE between our fit and sklearn: 6.325051042998488e-27</code></pre>
 
 </div>
 <img data-src="01_singular_value_decomposition_files/figure-revealjs/cell-5-output-1.png" class="r-stretch"></section>
-<section id="principal-component-analysis-5" class="slide level2">
+<section id="principal-component-analysis-6" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>There is another similar way to compute PCA.</p>
 <p>Let’s say that our data is placed in a matrix <span class="math inline">\(A\)</span> (rows represent samples, columns represent variables). For simplicities sake, let’s assume that our variables are centered (so the mean of each column of <span class="math inline">\(A\)</span> is <span class="math inline">\(0\)</span>).</p>
 <p>Now compute a singular value decomposition of <span class="math inline">\(A = UMV^T,\)</span> where the regular space saving truncation is applied. Now truncate <span class="math inline">\(V\)</span> by keeping only the first <span class="math inline">\(k\)</span> columns (so you are keeping the first <span class="math inline">\(k\)</span> rows of <span class="math inline">\(V^T\)</span>). Denote the truncated matrix by <span class="math inline">\(V_k.\)</span></p>
 </section>
-<section id="principal-component-analysis-6" class="slide level2">
+<section id="principal-component-analysis-7" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>Now multiplying <span class="math inline">\(A\)</span> by <span class="math inline">\(V_k\)</span> you will get the same result as the previous procedure of computing PCA.</p>
 <p>This is how PCA is implemented in <code>sklearn</code>.</p>
 <p>The advantage of this approach is that the truncated matrix <span class="math inline">\(V_k\)</span> defines a map from the full space <span class="math inline">\(\mathbb{R}^m\)</span> to the compressed space <span class="math inline">\(\mathbb{R}^k.\)</span> You can use this map to compress samples of data that were not used when fitting the PCA model (“fitting” here means computing <span class="math inline">\(V_k\)</span>). You do this by forming a row vector out of your sample and multiplying it with <span class="math inline">\(V_k\)</span>.</p>
 </section>
-<section id="principal-component-analysis-7" class="slide level2">
+<section id="principal-component-analysis-8" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>You can also decompress a sample of data by mutiplying with <span class="math inline">\(V_k^T\)</span>.</p>
 <p>Note that this compression is lossy. That is, if you compress and then decompress you will get a vector that is different from the original.</p>
