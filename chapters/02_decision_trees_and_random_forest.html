@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="02_decision_trees_and_random_forest_files/libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="02_decision_trees_and_random_forest_files/libs/clipboard/clipboard.min.js"></script>
 <script src="02_decision_trees_and_random_forest_files/libs/quarto-html/tabby.min.js"></script>
 <script src="02_decision_trees_and_random_forest_files/libs/quarto-html/popper.min.js"></script>
 <script src="02_decision_trees_and_random_forest_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="02_decision_trees_and_random_forest_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="02_decision_trees_and_random_forest_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="02_decision_trees_and_random_forest_files/libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.34">
+<link href="02_decision_trees_and_random_forest_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <title>Decision Trees and Random Forest</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="02_decision_trees_and_random_forest_files/libs/revealjs/dist/theme/quarto-37f64f33d17d36c7c7406230333751da.css">
+  <link rel="stylesheet" href="02_decision_trees_and_random_forest_files/libs/revealjs/dist/theme/quarto-9df06d9b3e1683bd31835b8738a1bbfc.css">
   <link href="02_decision_trees_and_random_forest_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="02_decision_trees_and_random_forest_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="02_decision_trees_and_random_forest_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -186,7 +186,7 @@
       margin-right: 0; 
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
   
   <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
@@ -266,7 +266,7 @@
 <h2>Decision Trees</h2>
 <p>We can train a decision tree using sklearn. We’ll use this <a href="https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic">dataset</a>.</p>
 <div id="a8ad0e42" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_breast_cancer</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_breast_cancer</span>
 <span id="cb1-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb1-3"><a href=""></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
 <span id="cb1-4"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
@@ -281,7 +281,7 @@
 <span id="cb1-13"><a href=""></a>model.fit(X_train, y_train)</span>
 <span id="cb1-14"><a href=""></a>y_pred <span class="op">=</span> model.predict(X_test)</span>
 <span id="cb1-15"><a href=""></a></span>
-<span id="cb1-16"><a href=""></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-16"><a href=""></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -307,7 +307,7 @@ weighted avg       0.94      0.94      0.94       171
 <h2>Overfitting</h2>
 <p>Let’s illustrate overfitting.</p>
 <div id="d45de911" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
 <span id="cb3-2"><a href=""></a></span>
 <span id="cb3-3"><a href=""></a>losses <span class="op">=</span> []</span>
 <span id="cb3-4"><a href=""></a></span>
@@ -319,7 +319,7 @@ weighted avg       0.94      0.94      0.94       171
 <span id="cb3-10"><a href=""></a>    accuracy_score(y_test, model.predict(X_test))</span>
 <span id="cb3-11"><a href=""></a>  ])</span>
 <span id="cb3-12"><a href=""></a></span>
-<span id="cb3-13"><a href=""></a>pd.DataFrame(losses, columns<span class="op">=</span>[<span class="st">'train'</span>, <span class="st">'test'</span>]).plot(title<span class="op">=</span><span class="st">'Accuracy for different max_depth values'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-13"><a href=""></a>pd.DataFrame(losses, columns<span class="op">=</span>[<span class="st">'train'</span>, <span class="st">'test'</span>]).plot(title<span class="op">=</span><span class="st">'Accuracy for different max_depth values'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -341,14 +341,14 @@ weighted avg       0.94      0.94      0.94       171
 <p>Decision Trees and Random Forest can also be used on regression problems. In a regression problem we are trying to predict a continuous variable given some inputs.</p>
 <p>Let’s train a Random Forest Regression model on California housing dataset that ships with sklearn.</p>
 <div id="261271dd" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_california_housing</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_california_housing</span>
 <span id="cb4-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb4-3"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-4"><a href=""></a></span>
 <span id="cb4-5"><a href=""></a>data <span class="op">=</span> fetch_california_housing()</span>
 <span id="cb4-6"><a href=""></a>df <span class="op">=</span> pd.DataFrame(data[<span class="st">"data"</span>], columns<span class="op">=</span>data[<span class="st">"feature_names"</span>])</span>
 <span id="cb4-7"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(df, data[<span class="st">"target"</span>], test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">34</span>)</span>
-<span id="cb4-8"><a href=""></a>X_train.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-8"><a href=""></a>X_train.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -369,7 +369,7 @@ weighted avg       0.94      0.94      0.94       171
     }
 </style>
 
-<table class="dataframe caption-top" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top" data-border="1">
 <thead>
 <tr class="header" style="text-align: right;">
 <th data-quarto-table-cell-role="th"></th>
@@ -385,7 +385,7 @@ weighted avg       0.94      0.94      0.94       171
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">7067</td>
+<th data-quarto-table-cell-role="th">7067</th>
 <td>4.4318</td>
 <td>36.0</td>
 <td>5.721014</td>
@@ -396,7 +396,7 @@ weighted avg       0.94      0.94      0.94       171
 <td>-118.01</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">18972</td>
+<th data-quarto-table-cell-role="th">18972</th>
 <td>5.2636</td>
 <td>1.0</td>
 <td>7.694030</td>
@@ -407,7 +407,7 @@ weighted avg       0.94      0.94      0.94       171
 <td>-122.00</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">10877</td>
+<th data-quarto-table-cell-role="th">10877</th>
 <td>3.9844</td>
 <td>38.0</td>
 <td>5.403042</td>
@@ -418,7 +418,7 @@ weighted avg       0.94      0.94      0.94       171
 <td>-117.88</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">20440</td>
+<th data-quarto-table-cell-role="th">20440</th>
 <td>6.4963</td>
 <td>6.0</td>
 <td>7.799038</td>
@@ -429,7 +429,7 @@ weighted avg       0.94      0.94      0.94       171
 <td>-118.77</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">15424</td>
+<th data-quarto-table-cell-role="th">15424</th>
 <td>4.3542</td>
 <td>34.0</td>
 <td>5.578313</td>
@@ -440,7 +440,7 @@ weighted avg       0.94      0.94      0.94       171
 <td>-117.27</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">20222</td>
+<th data-quarto-table-cell-role="th">20222</th>
 <td>3.5294</td>
 <td>33.0</td>
 <td>4.310962</td>
@@ -451,7 +451,7 @@ weighted avg       0.94      0.94      0.94       171
 <td>-119.29</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">16512</td>
+<th data-quarto-table-cell-role="th">16512</th>
 <td>2.6368</td>
 <td>34.0</td>
 <td>5.769022</td>
@@ -462,7 +462,7 @@ weighted avg       0.94      0.94      0.94       171
 <td>-121.22</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2622</td>
+<th data-quarto-table-cell-role="th">2622</th>
 <td>1.8993</td>
 <td>17.0</td>
 <td>4.699367</td>
@@ -473,7 +473,7 @@ weighted avg       0.94      0.94      0.94       171
 <td>-124.10</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">6033</td>
+<th data-quarto-table-cell-role="th">6033</th>
 <td>3.8438</td>
 <td>28.0</td>
 <td>5.422432</td>
@@ -484,7 +484,7 @@ weighted avg       0.94      0.94      0.94       171
 <td>-117.73</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3421</td>
+<th data-quarto-table-cell-role="th">3421</th>
 <td>2.8000</td>
 <td>34.0</td>
 <td>4.553531</td>
@@ -507,7 +507,7 @@ weighted avg       0.94      0.94      0.94       171
 <section id="random-forest-3" class="slide level2">
 <h2>Random Forest</h2>
 <div id="d26a7b57" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb5-2"><a href=""></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
 <span id="cb5-3"><a href=""></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
 <span id="cb5-4"><a href=""></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
@@ -530,7 +530,7 @@ weighted avg       0.94      0.94      0.94       171
 <span id="cb5-21"><a href=""></a>  <span class="cf">return</span> pipeline</span>
 <span id="cb5-22"><a href=""></a></span>
 <span id="cb5-23"><a href=""></a>pipeline <span class="op">=</span> make_pipeline()</span>
-<span id="cb5-24"><a href=""></a>pipeline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-24"><a href=""></a>pipeline</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -965,11 +965,11 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 \text{MSE} = \frac{1}{n} \sum_{i=1}^n (y_i^{\text{true}}-y_i^{\text{pred}})^2
 \]</span></p>
 <div id="afd32a5b" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
 <span id="cb6-2"><a href=""></a></span>
 <span id="cb6-3"><a href=""></a>pipeline.fit(X_train, y_train)</span>
 <span id="cb6-4"><a href=""></a>y_pred <span class="op">=</span> pipeline.predict(X_test)</span>
-<span id="cb6-5"><a href=""></a><span class="bu">print</span>(<span class="ss">f"MSE on train set: </span><span class="sc">{</span>mean_squared_error(y_test, y_pred)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-5"><a href=""></a><span class="bu">print</span>(<span class="ss">f"MSE on train set: </span><span class="sc">{</span>mean_squared_error(y_test, y_pred)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>MSE on train set: 0.6841335525164595</code></pre>
 </div>
@@ -1002,7 +1002,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <h2>Grid Search</h2>
 <p>To implement a grid search we first need to unhardcode the hyperparameters in our pipeline.</p>
 <div id="79f79662" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="kw">def</span> make_pipeline(n_estimators<span class="op">=</span><span class="dv">100</span>, max_depth<span class="op">=</span><span class="dv">3</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="kw">def</span> make_pipeline(n_estimators<span class="op">=</span><span class="dv">100</span>, max_depth<span class="op">=</span><span class="dv">3</span>):</span>
 <span id="cb8-2"><a href=""></a>  model <span class="op">=</span> RandomForestRegressor(</span>
 <span id="cb8-3"><a href=""></a>    n_estimators<span class="op">=</span>n_estimators,</span>
 <span id="cb8-4"><a href=""></a>    max_depth<span class="op">=</span>max_depth,</span>
@@ -1018,14 +1018,14 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <span id="cb8-14"><a href=""></a>    ],</span>
 <span id="cb8-15"><a href=""></a>  )</span>
 <span id="cb8-16"><a href=""></a></span>
-<span id="cb8-17"><a href=""></a>  <span class="cf">return</span> pipeline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-17"><a href=""></a>  <span class="cf">return</span> pipeline</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="grid-search-1" class="slide level2">
 <h2>Grid Search</h2>
 <p>Now implementing a grid search from scratch is not difficult.</p>
 <div id="951b5357" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a>best_n_estimators <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a>best_n_estimators <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
 <span id="cb9-2"><a href=""></a>best_max_depth <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
 <span id="cb9-3"><a href=""></a>best_mse <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb9-4"><a href=""></a></span>
@@ -1040,7 +1040,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <span id="cb9-13"><a href=""></a>      best_n_estimators <span class="op">=</span> n_estimators</span>
 <span id="cb9-14"><a href=""></a>      best_max_depth <span class="op">=</span> max_depth</span>
 <span id="cb9-15"><a href=""></a></span>
-<span id="cb9-16"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Best combination n_estimators=</span><span class="sc">{</span>best_n_estimators<span class="sc">}</span><span class="ss">, max_depth=</span><span class="sc">{</span>best_max_depth<span class="sc">}</span><span class="ss"> with MSE=</span><span class="sc">{</span>best_mse<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-16"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Best combination n_estimators=</span><span class="sc">{</span>best_n_estimators<span class="sc">}</span><span class="ss">, max_depth=</span><span class="sc">{</span>best_max_depth<span class="sc">}</span><span class="ss"> with MSE=</span><span class="sc">{</span>best_mse<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Best combination n_estimators=500, max_depth=5 with MSE=0.4958425838126335</code></pre>
 </div>
@@ -1075,12 +1075,12 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <p>If you want to use Random Forest, you will need to use the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier">RandomForestClassifier</a> class from sklearn.</p>
 <p>Here is how to load the data:</p>
 <div id="d368cce8" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_covtype</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_covtype</span>
 <span id="cb11-2"><a href=""></a></span>
 <span id="cb11-3"><a href=""></a>data <span class="op">=</span> fetch_covtype()</span>
 <span id="cb11-4"><a href=""></a>df <span class="op">=</span> pd.DataFrame(data[<span class="st">"data"</span>], columns<span class="op">=</span>data[<span class="st">"feature_names"</span>])</span>
 <span id="cb11-5"><a href=""></a>df[<span class="st">"target"</span>] <span class="op">=</span> data[<span class="st">"target"</span>]</span>
-<span id="cb11-6"><a href=""></a>df.head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-6"><a href=""></a>df.head(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 <style scoped="">
@@ -1097,7 +1097,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     }
 </style>
 
-<table class="dataframe caption-top" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top" data-border="1">
 <thead>
 <tr class="header" style="text-align: right;">
 <th data-quarto-table-cell-role="th"></th>
@@ -1126,7 +1126,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>2596.0</td>
 <td>51.0</td>
 <td>3.0</td>
@@ -1150,7 +1150,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <td>5</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>2590.0</td>
 <td>56.0</td>
 <td>2.0</td>
@@ -1174,7 +1174,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <td>5</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>2804.0</td>
 <td>139.0</td>
 <td>9.0</td>
@@ -1395,7 +1395,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1469,13 +1469,14 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

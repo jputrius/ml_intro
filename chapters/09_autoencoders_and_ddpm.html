@@ -6,8 +6,8 @@
 <script src="09_autoencoders_and_ddpm_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="09_autoencoders_and_ddpm_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="09_autoencoders_and_ddpm_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="09_autoencoders_and_ddpm_files/libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.34">
+<link href="09_autoencoders_and_ddpm_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <title>Autoencoders and DDPM</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="09_autoencoders_and_ddpm_files/libs/revealjs/dist/theme/quarto-37f64f33d17d36c7c7406230333751da.css">
+  <link rel="stylesheet" href="09_autoencoders_and_ddpm_files/libs/revealjs/dist/theme/quarto-9df06d9b3e1683bd31835b8738a1bbfc.css">
   <link href="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="09_autoencoders_and_ddpm_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -231,7 +231,7 @@
 <section id="anomaly-detection-2" class="slide level2">
 <h2>Anomaly Detection</h2>
 <div id="35642459" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:371,&quot;referenced_widgets&quot;:[&quot;91cb262120b640dcb4d49951a9775c2f&quot;,&quot;e9675b56c3d24485969179a7b06e97f7&quot;,&quot;106f29fde12e48e7911e9ad8daa74238&quot;,&quot;a7142a68a35e43f494cbc222cd534a34&quot;,&quot;f8c27f75a68c46458e581c6e4ec4113d&quot;,&quot;33d07c3d29634cd6aa66c3db6d3f4f4c&quot;,&quot;d0996340ffbc4769b63e010d496789c8&quot;,&quot;25783082924e4188b902445981044f8d&quot;,&quot;108223a3c79743a7ae17240aab40783b&quot;,&quot;5992713f602948609997c9748c67b939&quot;,&quot;0e8f102d4da04732a6cb0d6e8cd018cf&quot;,&quot;c4b51bc3470d43d5bca24f6db1802562&quot;,&quot;b08c20567474405dbc10ebe9ebb193a8&quot;,&quot;1aafd93544dd4219bb99d584bd38cfc7&quot;,&quot;07cdc93c94d448c08c606c8c33ed27b7&quot;,&quot;9ea5dc7507fa47d2b9ddfba9dbe0db4e&quot;,&quot;6acba2eb6a664908b9067756aa49c726&quot;,&quot;50cfb97d824649cf81c3b7f0e7f8c902&quot;,&quot;60cc18fbc15d42309dfc74078b6b264b&quot;,&quot;6b839594b37b4d68abe14a4ac22e2857&quot;,&quot;b39a1e25388346889e4a1733fa190baf&quot;,&quot;87eb7e656ffd4e0e905b9e76db367094&quot;,&quot;4a15a69d1fb34b4abe33759660b09180&quot;,&quot;0e671043af2b4ccfa8152572b9f4140b&quot;,&quot;c65eb186a4cc4a728a9690c7cb496961&quot;,&quot;c7fbbdfe780a440baab343b5a16c38fc&quot;,&quot;534133cd68e2438c91a99ca1e4477b43&quot;,&quot;f914cbb644d94022ab6585833daf1f4d&quot;,&quot;5e0eda7ba5324940981132fa14658930&quot;,&quot;633402731d634696b18621ef8b9f57d1&quot;,&quot;a268b3608ee44cf79637f6e63bacdb1c&quot;,&quot;0745d7d97705471285713c5364bd3187&quot;,&quot;e3ffaa9ab91c44d694f3b6c8bce94635&quot;,&quot;191ced0f72fb47bf82214ae43de50efd&quot;,&quot;28841f6a14694a03b60e6f6eb1315069&quot;,&quot;e3d3f3a88911479da761b4c1993e48a6&quot;,&quot;444fd73ba9c04121acf9863ec0e4e88f&quot;,&quot;91063bf662c34852904d023b8f803906&quot;,&quot;7961a39842cd43eaa50f58c88de5f4c0&quot;,&quot;59a4732e21434df6b34ae602659d89a3&quot;,&quot;d95ba8d5b37e405a9dd81fee36e03575&quot;,&quot;6f711cbecdec4abbbe0c3325adcd4a0e&quot;,&quot;b2614db6bc794e228962031519450743&quot;,&quot;c23e403cc1764b9dac22ebc1b18beee0&quot;,&quot;366f579514ff49eeb76b69572c66ccad&quot;,&quot;449a6baa200640a088f8e7a1bea834b4&quot;,&quot;22954eee33294aea858990dda18e73b9&quot;,&quot;07d988be9a0a4924bf122328a44c4b30&quot;,&quot;8aafad5aea9c4815b4639d9599b70ad2&quot;,&quot;92f19c551b904aa0b925333d3eda73a4&quot;,&quot;626e13c7143b43128f65a8d3eea0de8d&quot;,&quot;f6b4da9135a848a0a39d5ff2eddab083&quot;,&quot;4d88c269b70e4a958f7a87175e4db8c5&quot;,&quot;a1ce0d32261a4e1698d32a5907f5ebac&quot;,&quot;26cda09f2cfe49a08bcd18f33d98a6d7&quot;,&quot;8dcf0d0dbe6e4516bc3df3b4d355b626&quot;,&quot;b5f75b64c00f441fa82f68ab5a5de810&quot;,&quot;1bbdb985a59b45c289c1461f1ba1a498&quot;,&quot;68bb1ceb4e9947cd9671521de88bc437&quot;,&quot;d6257bf0734e4b7680326dda4465074f&quot;,&quot;24ad1ff1c43442f9a9b3c6fcef7fa8a7&quot;,&quot;5ffb22156c164381a40c4f3a80c51f87&quot;,&quot;e3bd102d6c714a9ab52455e2ecde6efb&quot;,&quot;661e7cf364bd4ea9ac1ca520bebeb794&quot;,&quot;56660a0225304f6bbdbb84021eadaee3&quot;,&quot;2ec0b03df38244e9a83ac077923f898d&quot;,&quot;2335e2c516414e0495ca978f8ee4ac7b&quot;,&quot;a1316c00ef7b413395281bff7969e441&quot;,&quot;7528e51a7af246a5852f6b07bcb2c99a&quot;,&quot;728f5ac143fd4e2b8901b8ee73e27ee3&quot;,&quot;76b3721eb4a34cc1b05ac893686ed6d7&quot;,&quot;b992246ea0c0461a9195d62af9ee0d67&quot;,&quot;b1ffb9b1f43a47fa9a7c1643e9d9d8aa&quot;,&quot;34325a29bf934bb589d832ee4d8a8d53&quot;,&quot;8002df47b0b04537ab268ef04f7d2907&quot;,&quot;c3029c9065e44e20981a44fc9eca6bd9&quot;,&quot;ff4d1e9b2c3c48ea9c34fd4cb52f3d94&quot;]}}" data-outputid="d04081dd-e64c-4565-b65b-0e9f044fe1c8" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> torch</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset</span>
 <span id="cb1-3"><a href=""></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
 <span id="cb1-4"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -258,14 +258,14 @@
 <span id="cb1-25"><a href=""></a>    <span class="cf">return</span> image, label</span>
 <span id="cb1-26"><a href=""></a></span>
 <span id="cb1-27"><a href=""></a>train_anomalies <span class="op">=</span> MNISTAnomalies(train<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-28"><a href=""></a>test_anomalies <span class="op">=</span> MNISTAnomalies(train<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-28"><a href=""></a>test_anomalies <span class="op">=</span> MNISTAnomalies(train<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="anomaly-detection-3" class="slide level2">
 <h2>Anomaly Detection</h2>
 <p>Now let’s build our autoencoder.</p>
 <div id="629b928b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="7943f468-838d-4270-d44e-abd9c6909f38" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb2-2"><a href=""></a></span>
 <span id="cb2-3"><a href=""></a><span class="kw">class</span> Autoencoder(nn.Module):</span>
 <span id="cb2-4"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
@@ -288,7 +288,7 @@
 <span id="cb2-21"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.decoder(x)</span>
 <span id="cb2-22"><a href=""></a>    <span class="cf">return</span> x.view(b, c, h, w)</span>
 <span id="cb2-23"><a href=""></a></span>
-<span id="cb2-24"><a href=""></a><span class="bu">print</span>(Autoencoder())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-24"><a href=""></a><span class="bu">print</span>(Autoencoder())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -311,7 +311,7 @@
 <h2>Anomaly Detection</h2>
 <p>Now let’s train it.</p>
 <div id="7fb39250" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="63afd5ef-0a83-4c54-b9d7-93a1ffeeb8b1" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
 <span id="cb4-2"><a href=""></a><span class="im">import</span> sys</span>
 <span id="cb4-3"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
 <span id="cb4-4"><a href=""></a></span>
@@ -367,7 +367,7 @@
 <span id="cb4-54"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
 <span id="cb4-55"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
 <span id="cb4-56"><a href=""></a></span>
-<span id="cb4-57"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-57"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -410,7 +410,7 @@ Done!</code></pre>
 <h2>Anomaly Detection</h2>
 <p>Let’s check if it works.</p>
 <div id="98805476" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="8fb505b5-a840-4c22-d0a8-89df47ad27ef" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="kw">def</span> loss(real, pred):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="kw">def</span> loss(real, pred):</span>
 <span id="cb6-2"><a href=""></a>  <span class="cf">return</span> ((real<span class="op">-</span>pred)<span class="op">**</span><span class="dv">2</span>).mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb6-3"><a href=""></a></span>
 <span id="cb6-4"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(</span>
@@ -426,7 +426,7 @@ Done!</code></pre>
 <span id="cb6-14"><a href=""></a>  losses <span class="op">=</span> loss(X.view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">28</span><span class="op">*</span><span class="dv">28</span>), reconstructed.view(<span class="op">-</span><span class="dv">1</span>, <span class="dv">28</span><span class="op">*</span><span class="dv">28</span>))</span>
 <span id="cb6-15"><a href=""></a></span>
 <span id="cb6-16"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Reconstruction error of anomalies: </span><span class="sc">{</span>losses[y<span class="op">==</span><span class="dv">0</span>]<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb6-17"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Reconstruction error of typical data: </span><span class="sc">{</span>losses[y<span class="op">==</span><span class="dv">1</span>]<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-17"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Reconstruction error of typical data: </span><span class="sc">{</span>losses[y<span class="op">==</span><span class="dv">1</span>]<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reconstruction error of anomalies: 0.10304060578346252
 Reconstruction error of typical data: 0.0032625803723931313</code></pre>
@@ -440,7 +440,7 @@ Reconstruction error of typical data: 0.0032625803723931313</code></pre>
 <section id="anomaly-detection-7" class="slide level2">
 <h2>Anomaly Detection</h2>
 <div id="87d31203" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:86}}" data-outputid="50c57af9-bab9-4bb3-aae8-d8e2cfebe308" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb8-2"><a href=""></a></span>
 <span id="cb8-3"><a href=""></a><span class="kw">def</span> show(img):</span>
 <span id="cb8-4"><a href=""></a>  <span class="co">"""Function for displaying image"""</span></span>
@@ -457,7 +457,7 @@ Reconstruction error of typical data: 0.0032625803723931313</code></pre>
 <span id="cb8-15"><a href=""></a>  X, y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(test_dataloader))</span>
 <span id="cb8-16"><a href=""></a>  X, y <span class="op">=</span> X.to(device), y.to(device)</span>
 <span id="cb8-17"><a href=""></a>  reconstructed <span class="op">=</span> model(X)</span>
-<span id="cb8-18"><a href=""></a>  show(torch.concat([X, reconstructed], axis<span class="op">=</span><span class="dv">2</span>).transpose(<span class="dv">2</span>, <span class="dv">3</span>).reshape(<span class="dv">1</span>, <span class="dv">20</span><span class="op">*</span><span class="dv">28</span>, <span class="dv">2</span><span class="op">*</span><span class="dv">28</span>).transpose(<span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-18"><a href=""></a>  show(torch.concat([X, reconstructed], axis<span class="op">=</span><span class="dv">2</span>).transpose(<span class="dv">2</span>, <span class="dv">3</span>).reshape(<span class="dv">1</span>, <span class="dv">20</span><span class="op">*</span><span class="dv">28</span>, <span class="dv">2</span><span class="op">*</span><span class="dv">28</span>).transpose(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="09_autoencoders_and_ddpm_files/figure-revealjs/cell-7-output-1.png" class="r-stretch"></section>
@@ -469,7 +469,7 @@ Reconstruction error of typical data: 0.0032625803723931313</code></pre>
 <section id="denoising-images-1" class="slide level2">
 <h2>Denoising Images</h2>
 <div id="732ae5b5" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="im">import</span> torch</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb9-2"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset</span>
 <span id="cb9-3"><a href=""></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
 <span id="cb9-4"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -495,14 +495,14 @@ Reconstruction error of typical data: 0.0032625803723931313</code></pre>
 <span id="cb9-24"><a href=""></a>    <span class="cf">return</span> image, target</span>
 <span id="cb9-25"><a href=""></a></span>
 <span id="cb9-26"><a href=""></a>train <span class="op">=</span> MNISTNoise(train<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-27"><a href=""></a>test <span class="op">=</span> MNISTNoise(train<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-27"><a href=""></a>test <span class="op">=</span> MNISTNoise(train<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="denoising-images-2" class="slide level2">
 <h2>Denoising Images</h2>
 <p>Now we can train an autoencoder on this data, we will use the exact same architecture as we defined previously.</p>
 <div id="377f7cc1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="70bf2870-fb3c-4c0b-b884-811d665620e7" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
 <span id="cb10-2"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
 <span id="cb10-3"><a href=""></a><span class="im">import</span> sys</span>
 <span id="cb10-4"><a href=""></a></span>
@@ -584,7 +584,7 @@ Reconstruction error of typical data: 0.0032625803723931313</code></pre>
 <span id="cb10-80"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
 <span id="cb10-81"><a href=""></a>  eval_epoch(test_dataloader, model, loss_fn)</span>
 <span id="cb10-82"><a href=""></a></span>
-<span id="cb10-83"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-83"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -637,7 +637,7 @@ Done!</code></pre>
 <h2>Denoising Images</h2>
 <p>Let’s display and see if it works.</p>
 <div id="4ca9a937" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:111}}" data-outputid="35fd2e49-10dc-4d08-c690-ec661970f3dc" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(</span>
 <span id="cb12-2"><a href=""></a>  test,</span>
 <span id="cb12-3"><a href=""></a>  batch_size <span class="op">=</span> <span class="dv">20</span></span>
 <span id="cb12-4"><a href=""></a>)</span>
@@ -647,7 +647,7 @@ Done!</code></pre>
 <span id="cb12-8"><a href=""></a>  X <span class="op">=</span> X.to(device)</span>
 <span id="cb12-9"><a href=""></a>  pred <span class="op">=</span> model(X).cpu()</span>
 <span id="cb12-10"><a href=""></a>  X <span class="op">=</span> X.cpu()</span>
-<span id="cb12-11"><a href=""></a>  show(torch.concat([X, pred, y], axis<span class="op">=</span><span class="dv">2</span>).transpose(<span class="dv">2</span>, <span class="dv">3</span>).reshape(<span class="dv">1</span>, <span class="dv">20</span><span class="op">*</span><span class="dv">28</span>, <span class="dv">3</span><span class="op">*</span><span class="dv">28</span>).transpose(<span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-11"><a href=""></a>  show(torch.concat([X, pred, y], axis<span class="op">=</span><span class="dv">2</span>).transpose(<span class="dv">2</span>, <span class="dv">3</span>).reshape(<span class="dv">1</span>, <span class="dv">20</span><span class="op">*</span><span class="dv">28</span>, <span class="dv">3</span><span class="op">*</span><span class="dv">28</span>).transpose(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="09_autoencoders_and_ddpm_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
@@ -685,7 +685,7 @@ Done!</code></pre>
 <h2>DDPM</h2>
 <p>Let’s implement DDPM, we’ll train it on MNIST.</p>
 <div id="2d47fcc2" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="im">import</span> torch</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb13-2"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset</span>
 <span id="cb13-3"><a href=""></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset, concatenate_datasets</span>
 <span id="cb13-4"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -705,14 +705,14 @@ Done!</code></pre>
 <span id="cb13-18"><a href=""></a></span>
 <span id="cb13-19"><a href=""></a>    <span class="cf">return</span> image</span>
 <span id="cb13-20"><a href=""></a></span>
-<span id="cb13-21"><a href=""></a>data <span class="op">=</span> MNIST()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-21"><a href=""></a>data <span class="op">=</span> MNIST()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="ddpm-6" class="slide level2">
 <h2>DDPM</h2>
 <p>Now let’s define a class that is going to add noise to images, predict the added noise and generate images.</p>
 <div id="1556071f" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a><span class="kw">class</span> DDPM():</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a><span class="kw">class</span> DDPM():</span>
 <span id="cb14-2"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, model, image_dim, device, no_steps<span class="op">=</span><span class="dv">300</span>, min_beta<span class="op">=</span><span class="fl">0.0001</span>, max_beta<span class="op">=</span><span class="fl">0.02</span>):</span>
 <span id="cb14-3"><a href=""></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
 <span id="cb14-4"><a href=""></a>    <span class="va">self</span>.no_steps <span class="op">=</span> no_steps</span>
@@ -755,7 +755,7 @@ Done!</code></pre>
 <span id="cb14-41"><a href=""></a>        x[i] <span class="op">-=</span> torch.<span class="bu">min</span>(x[i])</span>
 <span id="cb14-42"><a href=""></a>        x[i] <span class="op">*=</span> <span class="dv">255</span> <span class="op">/</span> torch.<span class="bu">max</span>(x[i])</span>
 <span id="cb14-43"><a href=""></a></span>
-<span id="cb14-44"><a href=""></a>      <span class="cf">return</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-44"><a href=""></a>      <span class="cf">return</span> x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="ddpm-7" class="slide level2">
@@ -777,7 +777,7 @@ Done!</code></pre>
 <h2>DDPM</h2>
 <p>Let’s build our U-net.</p>
 <div id="e8947441" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="e8eb7188-c7d8-4fef-80b9-f1dbe2e35c91" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb15-2"><a href=""></a></span>
 <span id="cb15-3"><a href=""></a><span class="kw">class</span> UNet(nn.Module):</span>
 <span id="cb15-4"><a href=""></a>  <span class="kw">def</span> _make_fc(<span class="va">self</span>, dim_in, dim_out):</span>
@@ -956,7 +956,7 @@ Done!</code></pre>
 <span id="cb15-177"><a href=""></a></span>
 <span id="cb15-178"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.out_conv(up2)</span>
 <span id="cb15-179"><a href=""></a></span>
-<span id="cb15-180"><a href=""></a><span class="bu">print</span>(UNet())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-180"><a href=""></a><span class="bu">print</span>(UNet())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -1130,7 +1130,7 @@ Done!</code></pre>
 <h2>DDPM</h2>
 <p>We can now train the model.</p>
 <div id="cd29841a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="5ebaad75-3abe-46d0-d1eb-71524c3d5b4f" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
 <span id="cb17-2"><a href=""></a></span>
 <span id="cb17-3"><a href=""></a><span class="co"># Hyperparameters</span></span>
 <span id="cb17-4"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
@@ -1194,7 +1194,7 @@ Done!</code></pre>
 <span id="cb17-62"><a href=""></a>  train_epoch(dataloader, model, loss_fn, optimizer)</span>
 <span id="cb17-63"><a href=""></a></span>
 <span id="cb17-64"><a href=""></a>torch.save(model, <span class="st">'ddpm_unet.pth'</span>)</span>
-<span id="cb17-65"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-65"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -1267,7 +1267,7 @@ Done!</code></pre>
 <h2>DDPM</h2>
 <p>Le’s generate some images.</p>
 <div id="557e178b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:86}}" data-outputid="e940c2a3-e115-4078-9e8d-1326de259aa4" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb19-2"><a href=""></a></span>
 <span id="cb19-3"><a href=""></a><span class="kw">def</span> show(img):</span>
 <span id="cb19-4"><a href=""></a>  <span class="co">"""Function for displaying image"""</span></span>
@@ -1275,7 +1275,7 @@ Done!</code></pre>
 <span id="cb19-6"><a href=""></a>  plt.imshow(np.transpose(npimg, (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>)))</span>
 <span id="cb19-7"><a href=""></a>  plt.axis(<span class="st">'off'</span>)</span>
 <span id="cb19-8"><a href=""></a></span>
-<span id="cb19-9"><a href=""></a>show(ddpm.sample(n_samples<span class="op">=</span><span class="dv">10</span>).transpose(<span class="dv">2</span>, <span class="dv">3</span>).reshape(<span class="dv">1</span>, <span class="dv">10</span><span class="op">*</span><span class="dv">28</span>, <span class="dv">28</span>).transpose(<span class="dv">1</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-9"><a href=""></a>show(ddpm.sample(n_samples<span class="op">=</span><span class="dv">10</span>).transpose(<span class="dv">2</span>, <span class="dv">3</span>).reshape(<span class="dv">1</span>, <span class="dv">10</span><span class="op">*</span><span class="dv">28</span>, <span class="dv">28</span>).transpose(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="09_autoencoders_and_ddpm_files/figure-revealjs/cell-15-output-1.png" class="r-stretch"></section>
@@ -1475,7 +1475,7 @@ Done!</code></pre>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1549,13 +1549,14 @@ Done!</code></pre>
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

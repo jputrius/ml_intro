@@ -6,8 +6,8 @@
 <script src="06_natural_language_processing_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="06_natural_language_processing_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="06_natural_language_processing_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="06_natural_language_processing_files/libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.34">
+<link href="06_natural_language_processing_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <title>Chapter 6: Natural Language Processing</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="06_natural_language_processing_files/libs/revealjs/dist/theme/quarto-37f64f33d17d36c7c7406230333751da.css">
+  <link rel="stylesheet" href="06_natural_language_processing_files/libs/revealjs/dist/theme/quarto-9df06d9b3e1683bd31835b8738a1bbfc.css">
   <link href="06_natural_language_processing_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="06_natural_language_processing_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="06_natural_language_processing_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -250,10 +250,10 @@
 <p>Let’s use TF-IDF for <strong>sentiment analysis</strong>. Our input will be tweet on some specific stock or financial markets in general. The goal is to classify wether the sentiment is bearish (meaning pessimistic), bullish (meaning optimistic) or neutral.</p>
 <p>The dataset can be found <a href="https://huggingface.co/datasets/zeroshot/twitter-financial-news-sentiment">here</a>.</p>
 <div id="6adf3a25" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:351,&quot;referenced_widgets&quot;:[&quot;2990b5e56e204b04ab0297ef129f749b&quot;,&quot;b4fd1e98e0a1429ab4051de6e1230097&quot;,&quot;4989a9fd14a5416ca4dc0ac8f8ada4b1&quot;,&quot;cb55db8df1a44b19abfd3ec68bef3a1a&quot;,&quot;ce64bab8993b41dfadc1375b5b66f994&quot;,&quot;efc2f37f602b4cf6b681f9416a732e20&quot;,&quot;2b055c91fc854231a13197cb9ada40aa&quot;,&quot;57d255f2380d440b995e97ee8f1d4141&quot;,&quot;15ad7250e5b24da2bd81a2c89bd45b72&quot;,&quot;5be218ab7fd34430870e4130cebbfbb6&quot;,&quot;db471a0d5db54cf5b9d6cb6bacc76848&quot;,&quot;de40276b64314d4e8e4c40eae4eec18e&quot;,&quot;d413a5bb765d4dd78999bb7bc984c664&quot;,&quot;39b29e2aa4a24f7fbc49a5c16a00fbdc&quot;,&quot;4202d1662b6349028c32929b5031e086&quot;,&quot;f7855563e2ec4461b094be3f53b73015&quot;,&quot;8829eaf7b77443a794d893f88abb26bc&quot;,&quot;a849adecf5894e2ca694d71159146182&quot;,&quot;a889d7d9f151458eaae4ad5c5fbb0050&quot;,&quot;8f97eddcc40f458f82de666060c70650&quot;,&quot;ab9be7204e75494bb7d447edfc451d8a&quot;,&quot;d1454cfdba9d4948a44fb3c4c579ef00&quot;,&quot;4763af8410484a3fbd74977ab9e95cc3&quot;,&quot;945692102fe54239878780e1a72ccd7a&quot;,&quot;cc5853cf65794713bf718f31308e93c3&quot;,&quot;19173c0ee32245a6916c72b700b19c6b&quot;,&quot;6fa14e56224341dc87bf7b91e857d996&quot;,&quot;9f8cd581d95f472eafb5d312634b6360&quot;,&quot;b0ee68077f5442a98a6263da8d28db6f&quot;,&quot;302e984304174c369694a8ea90b06980&quot;,&quot;9fc7a77f0136403f9a870436a734774e&quot;,&quot;db7c995a369a44d8b285638c8f4c08d5&quot;,&quot;f0c175431fb54db9b2634241902af48f&quot;,&quot;4acf432320ad4d55a93b696878047a6c&quot;,&quot;3d90566c941142aab9c79c2d41571e60&quot;,&quot;efb15f862a794bc69ab6eb7aa72d2b97&quot;,&quot;7c3a34c77e22414e87ae488a01ac9193&quot;,&quot;1bf8eea8fa0c4611a555392d3e60d36b&quot;,&quot;c9b84b56989d48c58da3ecb90372b30b&quot;,&quot;3d92e8ec7e834a87ae8f48720e95b0e4&quot;,&quot;e0f52f6574cc47588bd11142df0a9a1f&quot;,&quot;64fa021d06504c1897166bd770de8c65&quot;,&quot;fc3a1d86947d4de58a3431595a2e3f6b&quot;,&quot;08e2e62fb73849cd8652fbd516906f8c&quot;,&quot;d10b3ff73c264775959ee61f46d79350&quot;,&quot;f0f230b4ba3d4b30aa1684613374730c&quot;,&quot;77a1c43466bd48e893b976dbe70ab476&quot;,&quot;1090ac965875411e9ee659ef7536cb34&quot;,&quot;af6da04c0d2f44e796bcc76f2f18dd5d&quot;,&quot;0b7350eecc95449c9ef126350f2945b4&quot;,&quot;c6cb01024a374394932076cbc7a08077&quot;,&quot;7f5f511d9159491dab3d2820991e2faa&quot;,&quot;593132bf0c3448648ba5cdf9f996f44c&quot;,&quot;cb854a7924184f6294ba02c5f75fd3e3&quot;,&quot;7db3a4ba8b4144d1895a890bba97c432&quot;,&quot;585e2c58d9ad4acd8479f9e40cb9eb81&quot;,&quot;ae9032e7aea04c67a0d25fca543c8819&quot;,&quot;68946fc2be48404e898b2b29b5de4d3a&quot;,&quot;4eee89a08ae44688969d02004f3ef266&quot;,&quot;ae584a56cdb841ffb321c6445b658ab7&quot;,&quot;0536714f783545ff85dbf5352a0b283e&quot;,&quot;68b5b64e79024ed8b6b95a110378d287&quot;,&quot;29178bee0ff64bda8790927481fd8db4&quot;,&quot;f796bc7de727493884fd5b7ac143466b&quot;,&quot;817ec2f0b9534594b4132549016a055b&quot;,&quot;21d1e9de3f7b48159f79fa24fe5664b4&quot;,&quot;77d52acf1dc24900a31f301d9dc45ca1&quot;,&quot;fab924503e3c43489f3283f8ed7abb2e&quot;,&quot;d075285778b24a9ba6e827a259d1eab1&quot;,&quot;8cff3a8fe3bb4b4780718d9b1ada0a40&quot;,&quot;f82a7c7d723d490d9ee56a1e90c85509&quot;,&quot;7f1c28331a454b96a6b3e07762b0ba70&quot;,&quot;d3a878b2f1884bee933a81ca455f7793&quot;,&quot;8678bfde74ce44cf9b410d959abe9db6&quot;,&quot;77d8054404c44692b35275a50851e7c9&quot;,&quot;1709652f8e864cfebb3e7f01ab475bd1&quot;,&quot;176d972fdeef4adfac584fc846543f4b&quot;]}}" data-outputid="90b3f2c5-3763-4c7a-e02c-f0ffb69e4419" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href=""></a></span>
 <span id="cb1-3"><a href=""></a>train <span class="op">=</span> pd.read_csv(<span class="st">"hf://datasets/zeroshot/twitter-financial-news-sentiment/sent_train.csv"</span>)</span>
-<span id="cb1-4"><a href=""></a>test <span class="op">=</span> pd.read_csv(<span class="st">"hf://datasets/zeroshot/twitter-financial-news-sentiment/sent_valid.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href=""></a>test <span class="op">=</span> pd.read_csv(<span class="st">"hf://datasets/zeroshot/twitter-financial-news-sentiment/sent_valid.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="tf-idf-6" class="slide level2">
@@ -264,7 +264,7 @@
 <section id="tf-idf-7" class="slide level2">
 <h2>TF-IDF</h2>
 <div id="7338e8e5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="51d515e5-d569-4d5c-852e-2538a0e5a8f1" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb2-2"><a href=""></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb2-3"><a href=""></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
 <span id="cb2-4"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
@@ -287,7 +287,7 @@
 <span id="cb2-21"><a href=""></a>pipeline <span class="op">=</span> make_pipeline()</span>
 <span id="cb2-22"><a href=""></a>pipeline.fit(X_train, y_train)</span>
 <span id="cb2-23"><a href=""></a>y_pred <span class="op">=</span> pipeline.predict(X_test)</span>
-<span id="cb2-24"><a href=""></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-24"><a href=""></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -339,7 +339,7 @@ weighted avg       0.81      0.79      0.80      2388
 <section id="embeddings-5" class="slide level2">
 <h2>Embeddings</h2>
 <div id="6fb146b4" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> spacy.lang.en <span class="im">import</span> English</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> spacy.lang.en <span class="im">import</span> English</span>
 <span id="cb4-2"><a href=""></a></span>
 <span id="cb4-3"><a href=""></a><span class="kw">class</span> Dictionary:</span>
 <span id="cb4-4"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, min_count<span class="op">=</span><span class="dv">10</span>, init_tokens<span class="op">=</span><span class="va">None</span>):</span>
@@ -393,7 +393,7 @@ weighted avg       0.81      0.79      0.80      2388
 <span id="cb4-52"><a href=""></a>  <span class="kw">def</span> idx_to_tokens(<span class="va">self</span>, indices, ignore_pad<span class="op">=</span><span class="va">True</span>):</span>
 <span id="cb4-53"><a href=""></a>    <span class="cf">if</span> ignore_pad:</span>
 <span id="cb4-54"><a href=""></a>      <span class="cf">return</span> [<span class="va">self</span>.i2t[idx] <span class="cf">for</span> idx <span class="kw">in</span> indices <span class="cf">if</span> idx <span class="op">!=</span> <span class="va">self</span>.pad_idx]</span>
-<span id="cb4-55"><a href=""></a>    <span class="cf">return</span> [<span class="va">self</span>.i2t[idx] <span class="cf">for</span> idx <span class="kw">in</span> indices]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-55"><a href=""></a>    <span class="cf">return</span> [<span class="va">self</span>.i2t[idx] <span class="cf">for</span> idx <span class="kw">in</span> indices]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="embeddings-6" class="slide level2">
@@ -409,7 +409,7 @@ weighted avg       0.81      0.79      0.80      2388
 <section id="embeddings-8" class="slide level2">
 <h2>Embeddings</h2>
 <div id="20ccaa7c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:81,&quot;referenced_widgets&quot;:[&quot;088a5add4c2b4c8bba79f2cb20c8687a&quot;,&quot;e78d63fe5da7490cae2e986f235bc446&quot;,&quot;d2859ec1aeb14cc594c5f65ab5b30f2f&quot;,&quot;0acbce8a74d848b18648de1eccaba0ad&quot;,&quot;81017da71b1b4f58b3a1d285b6f4aba7&quot;,&quot;a639d4cd177743cc9e4adde406cfc331&quot;,&quot;9d4b4a463ed242b9adec35e52553ecf8&quot;,&quot;8d22972b1593440bb66ab5581e731dc2&quot;,&quot;504c38a814f344a8aca46e8846ab38ab&quot;,&quot;75f3c3bbed464591aa6184167afaaa26&quot;,&quot;2fe6f90e23ce4baeaa1862e4d0c364e5&quot;,&quot;bde31e4861b24b9cbcaddacd0b981353&quot;,&quot;d863a2ec094547e3bf96038945b03ed1&quot;,&quot;f85c4ad4a78547118837e2fab19e584b&quot;,&quot;79256142853c45619f3ad924f957bb45&quot;,&quot;41c89cd86a4f45b397ddde557cf7828d&quot;,&quot;edadf1ef836b40798324beaeb0878539&quot;,&quot;ef76adb13a6a4ff1ae2608f69c081cc9&quot;,&quot;c2b3839430e443deb4d2e34b5f4d8821&quot;,&quot;9fa10d556cc74b288bbff7969bff6a85&quot;,&quot;399b259bf34343e9861f780a5c876942&quot;,&quot;0c55898ae30f4647a8f888f4b7536f04&quot;]}}" data-outputid="25607928-1937-4289-9019-d9f60a74d931" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">import</span> torch</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb5-2"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset, DataLoader</span>
 <span id="cb5-3"><a href=""></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
 <span id="cb5-4"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -468,7 +468,7 @@ weighted avg       0.81      0.79      0.80      2388
 <span id="cb5-57"><a href=""></a>  test_data,</span>
 <span id="cb5-58"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
 <span id="cb5-59"><a href=""></a>  shuffle<span class="op">=</span><span class="va">False</span></span>
-<span id="cb5-60"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-60"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="cnns-for-nlp" class="slide level2">
@@ -488,7 +488,7 @@ weighted avg       0.81      0.79      0.80      2388
 <section id="cnns-for-nlp-2" class="slide level2">
 <h2>CNNs For NLP</h2>
 <div id="a1be6be1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="9740c2be-301a-4144-dbf6-b2861d76e70d" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb6-2"><a href=""></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
 <span id="cb6-3"><a href=""></a></span>
 <span id="cb6-4"><a href=""></a><span class="kw">class</span> TextClassifier(nn.Module):</span>
@@ -527,7 +527,7 @@ weighted avg       0.81      0.79      0.80      2388
 <span id="cb6-37"><a href=""></a></span>
 <span id="cb6-38"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.linear_stack(x)</span>
 <span id="cb6-39"><a href=""></a></span>
-<span id="cb6-40"><a href=""></a><span class="bu">print</span>(TextClassifier(train_data.no_tokens, seq_length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-40"><a href=""></a><span class="bu">print</span>(TextClassifier(train_data.no_tokens, seq_length))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -549,7 +549,7 @@ weighted avg       0.81      0.79      0.80      2388
 <h2>CNNs for NLP</h2>
 <p>Let’s also copy over the code for training for one epoch from the last chapter.</p>
 <div id="d308ba3c" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm <span class="co"># This is a library that implements loading bars</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm <span class="co"># This is a library that implements loading bars</span></span>
 <span id="cb8-2"><a href=""></a><span class="im">import</span> sys</span>
 <span id="cb8-3"><a href=""></a></span>
 <span id="cb8-4"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
@@ -599,14 +599,14 @@ weighted avg       0.81      0.79      0.80      2388
 <span id="cb8-48"><a href=""></a>        total_samples <span class="op">+=</span> <span class="bu">len</span>(X)</span>
 <span id="cb8-49"><a href=""></a>        total_batches <span class="op">+=</span> <span class="dv">1</span></span>
 <span id="cb8-50"><a href=""></a></span>
-<span id="cb8-51"><a href=""></a>        ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item(), accuracy<span class="op">=</span>(total_correct<span class="op">/</span>total_samples).item())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-51"><a href=""></a>        ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item(), accuracy<span class="op">=</span>(total_correct<span class="op">/</span>total_samples).item())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="cnns-for-nlp-4" class="slide level2">
 <h2>CNNs For NLP</h2>
 <p>Let’s train the model.</p>
 <div id="36b032bc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="74a510e5-40f9-468e-fd85-f0b87748e510" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="co"># Hyperparameters</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="co"># Hyperparameters</span></span>
 <span id="cb9-2"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
 <span id="cb9-3"><a href=""></a>epochs <span class="op">=</span> <span class="dv">10</span></span>
 <span id="cb9-4"><a href=""></a></span>
@@ -624,7 +624,7 @@ weighted avg       0.81      0.79      0.80      2388
 <span id="cb9-16"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
 <span id="cb9-17"><a href=""></a>  eval_epoch(test_dataloader, model, loss_fn)</span>
 <span id="cb9-18"><a href=""></a></span>
-<span id="cb9-19"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-19"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -867,7 +867,7 @@ Done!</code></pre>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -941,13 +941,14 @@ Done!</code></pre>
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

@@ -6,8 +6,8 @@
 <script src="03_stochastic_gradient_descent_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="03_stochastic_gradient_descent_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="03_stochastic_gradient_descent_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="03_stochastic_gradient_descent_files/libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.34">
+<link href="03_stochastic_gradient_descent_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <title>Chapter 3: Stochastic Gradient Descent</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="03_stochastic_gradient_descent_files/libs/revealjs/dist/theme/quarto-37f64f33d17d36c7c7406230333751da.css">
+  <link rel="stylesheet" href="03_stochastic_gradient_descent_files/libs/revealjs/dist/theme/quarto-9df06d9b3e1683bd31835b8738a1bbfc.css">
   <link href="03_stochastic_gradient_descent_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="03_stochastic_gradient_descent_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="03_stochastic_gradient_descent_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -260,7 +260,7 @@ L(w_0, w_1) = \frac{1}{n} \sum_{i=1}^n (y_i - (w_0+w_1x))^2.
 <h2>Gradient Descent</h2>
 <p>Now we can write the code. First define loss and gradient</p>
 <div id="ffa6a4d5" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href=""></a></span>
 <span id="cb1-3"><a href=""></a><span class="kw">def</span> loss(w, y, x):</span>
 <span id="cb1-4"><a href=""></a>  <span class="cf">return</span> np.mean(np.square(y<span class="op">-</span>w[<span class="dv">0</span>]<span class="op">-</span>w[<span class="dv">1</span>]<span class="op">*</span>x))</span>
@@ -269,14 +269,14 @@ L(w_0, w_1) = \frac{1}{n} \sum_{i=1}^n (y_i - (w_0+w_1x))^2.
 <span id="cb1-7"><a href=""></a>  <span class="cf">return</span> np.array([</span>
 <span id="cb1-8"><a href=""></a>    <span class="op">-</span><span class="dv">2</span><span class="op">*</span>np.mean(y<span class="op">-</span>w[<span class="dv">0</span>]<span class="op">-</span>w[<span class="dv">1</span>]<span class="op">*</span>x),</span>
 <span id="cb1-9"><a href=""></a>    <span class="op">-</span><span class="dv">2</span><span class="op">*</span>np.mean(x<span class="op">*</span>(y<span class="op">-</span>w[<span class="dv">0</span>]<span class="op">-</span>w[<span class="dv">1</span>]<span class="op">*</span>x))</span>
-<span id="cb1-10"><a href=""></a>  ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href=""></a>  ])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="gradient-descent-9" class="slide level2">
 <h2>Gradient Descent</h2>
 <p>Now let’s see if we can learn what the input linear function is.</p>
 <div id="0a2ceec1" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="co"># Let's see if we can learn that w^0 = 2 and w^1 = 5</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="co"># Let's see if we can learn that w^0 = 2 and w^1 = 5</span></span>
 <span id="cb2-2"><a href=""></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">100</span>)</span>
 <span id="cb2-3"><a href=""></a>y <span class="op">=</span> <span class="dv">2</span><span class="op">+</span><span class="dv">5</span><span class="op">*</span>x</span>
 <span id="cb2-4"><a href=""></a></span>
@@ -287,7 +287,7 @@ L(w_0, w_1) = \frac{1}{n} \sum_{i=1}^n (y_i - (w_0+w_1x))^2.
 <span id="cb2-9"><a href=""></a><span class="cf">for</span> <span class="bu">iter</span> <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">200</span>):</span>
 <span id="cb2-10"><a href=""></a>  w <span class="op">=</span> w <span class="op">-</span> learning_rate<span class="op">*</span>gradient(w, y, x)</span>
 <span id="cb2-11"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Loss after training: </span><span class="sc">{</span>loss(w, y, x)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb2-12"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Learnt weights: </span><span class="sc">{</span>w<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-12"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Learnt weights: </span><span class="sc">{</span>w<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Initial loss: 12.501683501683504
 Loss after training: 4.935822348948857e-12
@@ -395,9 +395,9 @@ L(w) = \frac{1}{n}\sum_{j=1}^n -y_j\log(f(x_j, w))-(1-y_j)\log(1-f(x_j, w)),
 <li><p>You can generate some mock data for testing your implementation using sklearn:</p></li>
 </ol>
 <div id="2a2caedf" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
 <span id="cb4-2"><a href=""></a>X, y <span class="op">=</span> make_classification(n_samples<span class="op">=</span><span class="dv">10000</span>, n_features<span class="op">=</span><span class="dv">20</span>, n_informative<span class="op">=</span><span class="dv">10</span>, n_classes<span class="op">=</span><span class="dv">2</span>, n_redundant<span class="op">=</span><span class="dv">10</span>, random_state<span class="op">=</span><span class="dv">34</span>)</span>
-<span id="cb4-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"X shape: </span><span class="sc">{</span>X<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, y shape: </span><span class="sc">{</span>y<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"X shape: </span><span class="sc">{</span>X<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, y shape: </span><span class="sc">{</span>y<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>X shape: (10000, 20), y shape: (10000,)</code></pre>
 </div>
@@ -597,7 +597,7 @@ L(w) = \frac{1}{n}\sum_{j=1}^n -y_j\log(f(x_j, w))-(1-y_j)\log(1-f(x_j, w)),
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -671,13 +671,14 @@ L(w) = \frac{1}{n}\sum_{j=1}^n -y_j\log(f(x_j, w))-(1-y_j)\log(1-f(x_j, w)),
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

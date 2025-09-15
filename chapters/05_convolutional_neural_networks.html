@@ -6,8 +6,8 @@
 <script src="05_convolutional_neural_networks_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="05_convolutional_neural_networks_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="05_convolutional_neural_networks_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="05_convolutional_neural_networks_files/libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.34">
+<link href="05_convolutional_neural_networks_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <title>Chapter 5: Convolutional Neural Network</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="05_convolutional_neural_networks_files/libs/revealjs/dist/theme/quarto-37f64f33d17d36c7c7406230333751da.css">
+  <link rel="stylesheet" href="05_convolutional_neural_networks_files/libs/revealjs/dist/theme/quarto-9df06d9b3e1683bd31835b8738a1bbfc.css">
   <link href="05_convolutional_neural_networks_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="05_convolutional_neural_networks_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="05_convolutional_neural_networks_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -232,7 +232,7 @@
 <section id="loading-data-2" class="slide level2">
 <h2>Loading data</h2>
 <div id="db636723" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:406}}" data-outputid="f68ce3ba-8500-48f3-94db-9a4b9af43dc1" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> torch</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href=""></a><span class="im">from</span> torchvision <span class="im">import</span> datasets</span>
 <span id="cb1-3"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
 <span id="cb1-4"><a href=""></a><span class="im">from</span> torchvision.transforms <span class="im">import</span> ToTensor, Lambda</span>
@@ -264,16 +264,16 @@
 <span id="cb1-30"><a href=""></a>)</span>
 <span id="cb1-31"><a href=""></a></span>
 <span id="cb1-32"><a href=""></a>img, target <span class="op">=</span> train_data[<span class="dv">0</span>]</span>
-<span id="cb1-33"><a href=""></a>show(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-33"><a href=""></a>show(img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="05_convolutional_neural_networks_files/figure-revealjs/cell-2-output-1.png" class="r-stretch"></section>
 <section id="loading-data-3" class="slide level2">
 <h2>Loading data</h2>
 <div id="c206e1c3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="02e0d19d-46fe-42e2-f6eb-e967f1213eb5" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="bu">print</span>(target)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="bu">print</span>(target)</span>
 <span id="cb2-2"><a href=""></a>channels, height, width <span class="op">=</span> img.shape</span>
-<span id="cb2-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Dimensions of image: C:</span><span class="sc">{</span>channels<span class="sc">}</span><span class="ss">, H:</span><span class="sc">{</span>height<span class="sc">}</span><span class="ss">, W:</span><span class="sc">{</span>width<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Dimensions of image: C:</span><span class="sc">{</span>channels<span class="sc">}</span><span class="ss">, H:</span><span class="sc">{</span>height<span class="sc">}</span><span class="ss">, W:</span><span class="sc">{</span>width<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tensor([0., 0., 0., 0., 0., 0., 1., 0., 0., 0.])
 Dimensions of image: C:3, H:32, W:32</code></pre>
@@ -289,7 +289,7 @@ Dimensions of image: C:3, H:32, W:32</code></pre>
 <section id="building-the-model-1" class="slide level2">
 <h2>Building the model</h2>
 <div id="4e3fa95d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="bfbd9e6c-880c-47d8-ed10-80fd610d496c" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb4-2"><a href=""></a></span>
 <span id="cb4-3"><a href=""></a><span class="kw">class</span> NeuralNetwork(nn.Module):</span>
 <span id="cb4-4"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
@@ -307,7 +307,7 @@ Dimensions of image: C:3, H:32, W:32</code></pre>
 <span id="cb4-16"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.flatten(x)</span>
 <span id="cb4-17"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.linear_relu_stack(x)</span>
 <span id="cb4-18"><a href=""></a></span>
-<span id="cb4-19"><a href=""></a><span class="bu">print</span>(NeuralNetwork())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-19"><a href=""></a><span class="bu">print</span>(NeuralNetwork())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -328,7 +328,7 @@ Dimensions of image: C:3, H:32, W:32</code></pre>
 <h2>Dataloaders</h2>
 <p>Let’s define our dataloaders.</p>
 <div id="8b85b441" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">128</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">128</span></span>
 <span id="cb6-2"><a href=""></a></span>
 <span id="cb6-3"><a href=""></a>train_dataloader <span class="op">=</span> DataLoader(</span>
 <span id="cb6-4"><a href=""></a>  train_data,</span>
@@ -336,14 +336,14 @@ Dimensions of image: C:3, H:32, W:32</code></pre>
 <span id="cb6-6"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span> <span class="co"># Whether to shuffle the data every loop, useful for SGD</span></span>
 <span id="cb6-7"><a href=""></a>)</span>
 <span id="cb6-8"><a href=""></a></span>
-<span id="cb6-9"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(test_data, batch_size<span class="op">=</span>batch_size, shuffle<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-9"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(test_data, batch_size<span class="op">=</span>batch_size, shuffle<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="training-the-model" class="slide level2">
 <h2>Training the model</h2>
 <p>Let’s define functions to train the model for 1 epoch.</p>
 <div id="08d207d4" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm <span class="co"># This is a library that implements loading bars</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm <span class="co"># This is a library that implements loading bars</span></span>
 <span id="cb7-2"><a href=""></a><span class="im">import</span> sys</span>
 <span id="cb7-3"><a href=""></a></span>
 <span id="cb7-4"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
@@ -393,14 +393,14 @@ Dimensions of image: C:3, H:32, W:32</code></pre>
 <span id="cb7-48"><a href=""></a>        total_samples <span class="op">+=</span> <span class="bu">len</span>(X)</span>
 <span id="cb7-49"><a href=""></a>        total_batches <span class="op">+=</span> <span class="dv">1</span></span>
 <span id="cb7-50"><a href=""></a></span>
-<span id="cb7-51"><a href=""></a>        ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item(), accuracy<span class="op">=</span>(total_correct<span class="op">/</span>total_samples).item())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-51"><a href=""></a>        ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item(), accuracy<span class="op">=</span>(total_correct<span class="op">/</span>total_samples).item())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="training-the-model-1" class="slide level2">
 <h2>Training the model</h2>
 <p>Now all that there is left to do is to define the loss function and organize the training loop.</p>
 <div id="5f5eec37" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="01edd6ff-a2d4-435d-e50f-70fc77e9655e" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="co"># Use GPU if available</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="co"># Use GPU if available</span></span>
 <span id="cb8-2"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
 <span id="cb8-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
 <span id="cb8-4"><a href=""></a></span>
@@ -420,7 +420,7 @@ Dimensions of image: C:3, H:32, W:32</code></pre>
 <span id="cb8-18"><a href=""></a>  eval_epoch(test_dataloader, model, loss_fn)</span>
 <span id="cb8-19"><a href=""></a>  <span class="bu">print</span>(<span class="st">"-------------------------------"</span>)</span>
 <span id="cb8-20"><a href=""></a></span>
-<span id="cb8-21"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-21"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -448,9 +448,9 @@ Done!</code></pre>
 <h2>Training the model</h2>
 <p>We can also save the trained model to disk and load it as follows.</p>
 <div id="a09e151a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="8aec7fcb-7265-4830-c703-70038af3bd6b" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a>torch.save(model, <span class="st">'model.pth'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a>torch.save(model, <span class="st">'model.pth'</span>)</span>
 <span id="cb10-2"><a href=""></a>model1 <span class="op">=</span> torch.load(<span class="st">'model.pth'</span>, weights_only<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb10-3"><a href=""></a><span class="bu">print</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href=""></a><span class="bu">print</span>(model1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>NeuralNetwork(
   (flatten): Flatten(start_dim=1, end_dim=-1)
@@ -469,9 +469,9 @@ Done!</code></pre>
 <h2>Training the model</h2>
 <p>You can also save only the weights of the model and not the model structure as follows.</p>
 <div id="3202406c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="fe7fa842-09c6-477e-a6de-b73d0a71ad00" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a>torch.save(model.state_dict(), <span class="st">'model_weights.pth'</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a>torch.save(model.state_dict(), <span class="st">'model_weights.pth'</span>)</span>
 <span id="cb12-2"><a href=""></a>model1 <span class="op">=</span> NeuralNetwork()</span>
-<span id="cb12-3"><a href=""></a>model1.load_state_dict(torch.load(<span class="st">'model_weights.pth'</span>, weights_only<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href=""></a>model1.load_state_dict(torch.load(<span class="st">'model_weights.pth'</span>, weights_only<span class="op">=</span><span class="va">True</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>&lt;All keys matched successfully&gt;</code></pre>
 </div>
@@ -498,7 +498,7 @@ Done!</code></pre>
 <h2>Convolution</h2>
 <p>Let’s see how to apply the convolution operation in PyTorch.</p>
 <div id="05d11988" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:349}}" data-outputid="63d3a9df-aca0-474e-8f17-e479d7225760" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a><span class="im">import</span> torch</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb14-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb14-3"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb14-4"><a href=""></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
@@ -514,7 +514,7 @@ Done!</code></pre>
 <span id="cb14-14"><a href=""></a>img <span class="op">=</span> torch.from_numpy(np.asarray(img, dtype<span class="op">=</span><span class="st">"int32"</span>) <span class="op">/</span> <span class="dv">255</span>)</span>
 <span id="cb14-15"><a href=""></a></span>
 <span id="cb14-16"><a href=""></a><span class="bu">print</span>(<span class="st">"Input image:"</span>)</span>
-<span id="cb14-17"><a href=""></a>show(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-17"><a href=""></a>show(img)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -533,7 +533,7 @@ Done!</code></pre>
 <h2>Convolution</h2>
 <p>Let’s apply the edge detection filter.</p>
 <div id="9fd03109" class="cell" data-outputid="b5b62f99-bef1-460c-95a2-af85054d6a2b" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a>conv <span class="op">=</span> nn.Conv2d(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a>conv <span class="op">=</span> nn.Conv2d(</span>
 <span id="cb16-2"><a href=""></a>  in_channels<span class="op">=</span><span class="dv">1</span>, <span class="co"># How many channel our input has, we have a monochrome image so its 1 in our case</span></span>
 <span id="cb16-3"><a href=""></a>  out_channels<span class="op">=</span><span class="dv">1</span>, <span class="co"># How many filters to use</span></span>
 <span id="cb16-4"><a href=""></a>  kernel_size<span class="op">=</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="co"># Filter matrix size</span></span>
@@ -546,7 +546,7 @@ Done!</code></pre>
 <span id="cb16-11"><a href=""></a>).unsqueeze(<span class="dv">0</span>).unsqueeze(<span class="dv">0</span>) <span class="co"># The unsqueezes are there to have the correct dimensions</span></span>
 <span id="cb16-12"><a href=""></a>conv.weight <span class="op">=</span> nn.Parameter(filter_matrix) <span class="co"># Manually set the filter</span></span>
 <span id="cb16-13"><a href=""></a><span class="bu">print</span>(<span class="st">"Edge detection applied:"</span>)</span>
-<span id="cb16-14"><a href=""></a>show(conv(img.unsqueeze(<span class="dv">0</span>)).detach().numpy()[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-14"><a href=""></a>show(conv(img.unsqueeze(<span class="dv">0</span>)).detach().numpy()[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -565,7 +565,7 @@ Done!</code></pre>
 <h2>Convolutional Neural Networks</h2>
 <p>Let’s build a CNN.</p>
 <div id="1b1d1013" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="47950b54-fe7d-46e4-af9a-e8b5f7304c1d" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a><span class="kw">class</span> CNN(nn.Module):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a><span class="kw">class</span> CNN(nn.Module):</span>
 <span id="cb18-2"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb18-3"><a href=""></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
 <span id="cb18-4"><a href=""></a>    <span class="va">self</span>.convolution <span class="op">=</span> nn.Sequential(</span>
@@ -589,7 +589,7 @@ Done!</code></pre>
 <span id="cb18-22"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.flatten(x)</span>
 <span id="cb18-23"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.linear_relu_stack(x)</span>
 <span id="cb18-24"><a href=""></a></span>
-<span id="cb18-25"><a href=""></a><span class="bu">print</span>(CNN())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-25"><a href=""></a><span class="bu">print</span>(CNN())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -637,7 +637,7 @@ Done!</code></pre>
 <h2>Convolutional Neural Networks</h2>
 <p>Let’s train our CNN. We can copy paste the previous code.</p>
 <div id="36c207b5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="6b8c795b-763f-42f6-a425-ae41439f3fee" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href=""></a><span class="co"># Use GPU if available</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href=""></a><span class="co"># Use GPU if available</span></span>
 <span id="cb20-2"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
 <span id="cb20-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
 <span id="cb20-4"><a href=""></a></span>
@@ -657,7 +657,7 @@ Done!</code></pre>
 <span id="cb20-18"><a href=""></a>  eval_epoch(test_dataloader, model, loss_fn)</span>
 <span id="cb20-19"><a href=""></a>  <span class="bu">print</span>(<span class="st">"-------------------------------"</span>)</span>
 <span id="cb20-20"><a href=""></a></span>
-<span id="cb20-21"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-21"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -702,14 +702,14 @@ Done!</code></pre>
 <p>Torchvision ships with some pre trained models for image processing tasks, ResNet included.</p>
 <p>We are going to use ResNet18 which is the smallest version. You can see all available versions <a href="https://pytorch.org/vision/main/models/resnet.html">here</a>.</p>
 <div id="V6agFYXba9fP" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="ae744183-4a4a-40c5-f2e2-2db74235c68e" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href=""></a><span class="im">from</span> torchvision <span class="im">import</span> models</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href=""></a><span class="im">from</span> torchvision <span class="im">import</span> models</span>
 <span id="cb22-2"><a href=""></a></span>
 <span id="cb22-3"><a href=""></a>resnet <span class="op">=</span> models.resnet18(weights<span class="op">=</span><span class="st">"ResNet18_Weights.DEFAULT"</span>)</span>
 <span id="cb22-4"><a href=""></a></span>
 <span id="cb22-5"><a href=""></a><span class="co"># Change the output layer dimension</span></span>
 <span id="cb22-6"><a href=""></a>resnet.fc <span class="op">=</span> nn.Linear(resnet.fc.in_features, <span class="dv">10</span>)</span>
 <span id="cb22-7"><a href=""></a></span>
-<span id="cb22-8"><a href=""></a>resnet</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-8"><a href=""></a>resnet</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -808,7 +808,7 @@ Done!</code></pre>
 <h2>Fine tuning</h2>
 <p>We can again reuse the code for training.</p>
 <div id="bdl9HNkUbIWj" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="1ee31da1-39dd-4a43-eab4-e118a040ec2f" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href=""></a><span class="co"># Use GPU if available</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href=""></a><span class="co"># Use GPU if available</span></span>
 <span id="cb24-2"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
 <span id="cb24-3"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
 <span id="cb24-4"><a href=""></a></span>
@@ -827,7 +827,7 @@ Done!</code></pre>
 <span id="cb24-17"><a href=""></a>  train_epoch(train_dataloader, model, loss_fn, optimizer)</span>
 <span id="cb24-18"><a href=""></a>  eval_epoch(test_dataloader, model, loss_fn)</span>
 <span id="cb24-19"><a href=""></a></span>
-<span id="cb24-20"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-20"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -1043,7 +1043,7 @@ Done!</code></pre>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1117,13 +1117,14 @@ Done!</code></pre>
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

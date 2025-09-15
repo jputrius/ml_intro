@@ -6,8 +6,8 @@
 <script src="07_transformers_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="07_transformers_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="07_transformers_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="07_transformers_files/libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.34">
+<link href="07_transformers_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.24">
 
   <title>Chapter 7: Transformers</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="07_transformers_files/libs/revealjs/dist/theme/quarto-37f64f33d17d36c7c7406230333751da.css">
+  <link rel="stylesheet" href="07_transformers_files/libs/revealjs/dist/theme/quarto-9df06d9b3e1683bd31835b8738a1bbfc.css">
   <link href="07_transformers_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="07_transformers_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="07_transformers_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -304,7 +304,7 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <section id="transformers-1" class="slide level2">
 <h2>Transformers</h2>
 <div id="f699773d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="cc145697-b698-4afd-98a9-2c141f4670b6" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> torch</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb1-3"><a href=""></a></span>
 <span id="cb1-4"><a href=""></a><span class="kw">class</span> TransformerBlock(nn.Module):</span>
@@ -326,7 +326,7 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <span id="cb1-20"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.norm2(x <span class="op">+</span> <span class="va">self</span>.fc(x))</span>
 <span id="cb1-21"><a href=""></a>    <span class="cf">return</span> x</span>
 <span id="cb1-22"><a href=""></a></span>
-<span id="cb1-23"><a href=""></a><span class="bu">print</span>(TransformerBlock(<span class="dv">256</span>, <span class="dv">4</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-23"><a href=""></a><span class="bu">print</span>(TransformerBlock(<span class="dv">256</span>, <span class="dv">4</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -358,7 +358,7 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <section id="transformers-4" class="slide level2">
 <h2>Transformers</h2>
 <div id="f0ca1f39" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="4c7efb04-1596-4089-cac6-679ce2b15f29" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">class</span> Transformer(nn.Module):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">class</span> Transformer(nn.Module):</span>
 <span id="cb3-2"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, no_tokens, seq_length, pad_idx, embed_dim, no_heads, depth):</span>
 <span id="cb3-3"><a href=""></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
 <span id="cb3-4"><a href=""></a>    mask <span class="op">=</span> nn.Transformer.generate_square_subsequent_mask(seq_length)</span>
@@ -381,7 +381,7 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <span id="cb3-21"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.tblocks(x)</span>
 <span id="cb3-22"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.toprobs(x)</span>
 <span id="cb3-23"><a href=""></a></span>
-<span id="cb3-24"><a href=""></a><span class="bu">print</span>(Transformer(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-24"><a href=""></a><span class="bu">print</span>(Transformer(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -458,7 +458,7 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <section id="transformers-10" class="slide level2">
 <h2>Transformers</h2>
 <div id="c8b85dcc" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb5-3"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb5-4"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset, DataLoader</span>
@@ -530,14 +530,14 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <span id="cb5-70"><a href=""></a>  data,</span>
 <span id="cb5-71"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
 <span id="cb5-72"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span></span>
-<span id="cb5-73"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-73"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="transformers-11" class="slide level2">
 <h2>Transformers</h2>
 <p>Let’s create a function for training one epoch.</p>
 <div id="e578bf1d" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm <span class="co"># This is a library that implements loading bars</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm <span class="co"># This is a library that implements loading bars</span></span>
 <span id="cb6-2"><a href=""></a><span class="im">import</span> sys</span>
 <span id="cb6-3"><a href=""></a></span>
 <span id="cb6-4"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
@@ -565,14 +565,14 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <span id="cb6-26"><a href=""></a>      <span class="co"># Output stats</span></span>
 <span id="cb6-27"><a href=""></a>      total_loss <span class="op">+=</span> loss</span>
 <span id="cb6-28"><a href=""></a>      total_batches <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb6-29"><a href=""></a>      ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-29"><a href=""></a>      ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="transformers-12" class="slide level2">
 <h2>Transformers</h2>
 <p>Now we can train the model.</p>
 <div id="7fd62212" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="a5085495-289c-40c2-abc5-5ce8b0a80756" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="co"># Hyperparameters</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="co"># Hyperparameters</span></span>
 <span id="cb7-2"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
 <span id="cb7-3"><a href=""></a>epochs <span class="op">=</span> <span class="dv">20</span></span>
 <span id="cb7-4"><a href=""></a></span>
@@ -596,7 +596,7 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <span id="cb7-22"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
 <span id="cb7-23"><a href=""></a>  train_epoch(dataloader, model, loss_fn, optimizer)</span>
 <span id="cb7-24"><a href=""></a></span>
-<span id="cb7-25"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-25"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -673,7 +673,7 @@ Done!</code></pre>
 <section id="transformers-14" class="slide level2">
 <h2>Transformers</h2>
 <div id="3dc1f120" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="kw">def</span> sample(model, seed, temperature<span class="op">=</span><span class="fl">1.0</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="kw">def</span> sample(model, seed, temperature<span class="op">=</span><span class="fl">1.0</span>):</span>
 <span id="cb9-2"><a href=""></a>  <span class="cf">assert</span> <span class="bu">len</span>(seed) <span class="op">&gt;</span> <span class="dv">0</span></span>
 <span id="cb9-3"><a href=""></a>  model.<span class="bu">eval</span>()</span>
 <span id="cb9-4"><a href=""></a>  <span class="cf">with</span> torch.no_grad():</span>
@@ -701,7 +701,7 @@ Done!</code></pre>
 <span id="cb9-26"><a href=""></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'jū'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
 <span id="cb9-27"><a href=""></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'ja'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
 <span id="cb9-28"><a href=""></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'je'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
-<span id="cb9-29"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-29"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -916,7 +916,7 @@ jevdrohijas jeongirdas jevfropijas ječimonė jeompinė
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -990,13 +990,14 @@ jevdrohijas jeongirdas jevfropijas ječimonė jeompinė
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
