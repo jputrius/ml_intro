@@ -239,6 +239,21 @@
 \]</span></p>
 <p>We will use entropy when training decision trees.</p>
 </section>
+<section id="entropy-5" class="slide level2">
+<h2>Entropy</h2>
+<p>Also last time we used cross-entropy to train logistic regression.</p>
+<p>Suppose we have two finite discrete random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> taking the same values <span class="math inline">\(x_1, \dots, x_n\)</span>. Let’s say that the pmf of <span class="math inline">\(X\)</span> is <span class="math inline">\(p\)</span> and pmf of <span class="math inline">\(Y\)</span> is <span class="math inline">\(q\)</span>. Then cross-entropy is defined to be <span class="math display">\[
+  H(X, Y) = -\sum_{i=1}^n p(x_i) \log(q(x_i)).
+\]</span></p>
+<p>When <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have the same distribution cross-entropy is equal to regular entropy, if they do not have the same distribution then cross-entropy is strictly larger.</p>
+</section>
+<section id="entropy-6" class="slide level2">
+<h2>Entropy</h2>
+<p>Cross entropy measures how similar Y is to X. This is not the fully correct interpretation, but it is sufficient. The correct interpretation is a bit more subtle, you can read it <a href="https://en.wikipedia.org/wiki/Cross-entropy">here</a>.</p>
+<p>Also note that it is not symmetric, that is <span class="math display">\[
+H(X, Y) \ne H(Y, X)
+\]</span> in general.</p>
+</section>
 <section id="decision-trees" class="slide level2">
 <h2>Decision Trees</h2>
 <p>I’m sure you’ve all seen a decision tree before. They look something like this:</p>
@@ -264,6 +279,25 @@
 </section>
 <section id="decision-trees-4" class="slide level2">
 <h2>Decision Trees</h2>
+<p>How to train a decision tree for a regression problem?</p>
+<p>Suppose the vectors <span class="math inline">\((y_i, x_i),\)</span> <span class="math inline">\(i=1, \dots, m\)</span> represent our training data, where <span class="math inline">\(x_i = (x_{i1}, \dots, x_{in})\)</span> is a vector. So the input to our model is a <span class="math inline">\(n\)</span> dimensional vector <span class="math inline">\(x \in \mathbb{R}^n\)</span>. We will split the tree on conditions like <span class="math inline">\(x_j \le s\)</span> or <span class="math inline">\(x_{j} &gt; s,\)</span> where <span class="math inline">\(s\)</span> is some threshold, so the tree will partition the space <span class="math inline">\(\mathbb{R}^n\)</span> into high dimensional rectangles <span class="math inline">\(R_1, \dots R_l\)</span>.</p>
+<p>When inferencing, if <span class="math inline">\(x\)</span> lands in <span class="math inline">\(R_k\)</span> we will output the averge value <span class="math inline">\(\overline{y}_{R_k}\)</span> of all the <span class="math inline">\(y_i,\)</span> such that <span class="math inline">\(x_i\)</span> falls into <span class="math inline">\(R_k,\)</span> from the training data.</p>
+</section>
+<section id="decision-trees-5" class="slide level2">
+<h2>Decision Trees</h2>
+<p>To fit the tree, we again start from the root node and for the <span class="math inline">\(j\)</span>-th feature and threshold <span class="math inline">\(s\)</span> we define <span class="math display">\[
+  R_{l}(j, s) = \{x_i: x_{ij} \le s\} \text{ and } R_{r}(j, s) = \{x_i: x_{ij} &gt; s\}.
+\]</span></p>
+<p>Then we make the split on the feature and threshold that minimises <span class="math display">\[
+\sum_{x_i \in R_{l}(j, s)} (y_i - \overline{y}_{R_{l}(j, s)})^2 + \sum_{x_i \in R_{r}(j, s)} (y_i - \overline{y}_{R_{r}(j, s)})^2
+\]</span></p>
+</section>
+<section id="decision-trees-6" class="slide level2">
+<h2>Decision Trees</h2>
+<p>We then continue this process inductively. This again does not produce an optimal tree but it will be good enough for our purposes.</p>
+</section>
+<section id="decision-trees-7" class="slide level2">
+<h2>Decision Trees</h2>
 <p>We can train a decision tree using sklearn. We’ll use this <a href="https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic">dataset</a>.</p>
 <div id="a8ad0e42" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_breast_cancer</span>
@@ -285,7 +319,7 @@
 </div>
 
 </section>
-<section id="decision-trees-4-output" class="slide level2 output-location-slide"><h2>Decision Trees</h2><div class="cell output-location-slide" data-execution_count="1">
+<section id="decision-trees-7-output" class="slide level2 output-location-slide"><h2>Decision Trees</h2><div class="cell output-location-slide" data-execution_count="1">
 <div class="cell-output cell-output-stdout">
 <pre><code>              precision    recall  f1-score   support
 
@@ -334,11 +368,62 @@ weighted avg       0.94      0.94      0.94       171
 </div></section><section id="random-forest" class="slide level2">
 <h2>Random Forest</h2>
 <p>Different model types have different techniques for dealing with overfitting.</p>
-<p>In case of decision trees, one approach is to train several decision trees on randomly selected subsets of the features and training data. Then these trees are polled to generate the final prediction. This modelling technique is called <strong>Random Forest</strong>.</p>
+<p>One general idea is that instead of training one big model we train a bunch of small models and combine their results somehow.</p>
 </section>
 <section id="random-forest-1" class="slide level2">
 <h2>Random Forest</h2>
-<p>Decision Trees and Random Forest can also be used on regression problems. In a regression problem we are trying to predict a continuous variable given some inputs.</p>
+<p>The simplest idea along these lines is called <strong>bagging</strong> (bootstrap aggregating). We will use decision trees to illustrate but this works for any model architecture.</p>
+<p>The idea of bagging is that you train <span class="math inline">\(n\)</span> small decision trees on random subsets of the training data. To generate the final output you then poll the trained decision trees. In case of classification you do a majority vote and in case of regression you take the average.</p>
+</section>
+<section id="random-forest-2" class="slide level2">
+<h2>Random Forest</h2>
+<p>Bagging works because of the law of large numbers.</p>
+<p>For example, suppose you are in a market and you would like to know the weight of a cow but you do not have scales. What you could do is ask a bunch of random people what they think the cow weights and average the result. You will usually get an answer that is very close to the truth.</p>
+</section>
+<section id="random-forest-3" class="slide level2">
+<h2>Random Forest</h2>
+<p>For law of large numbers to work you need the predictions of your trained decision trees to be uncorrelated. This will not always be the case, because you are training on the same features.</p>
+<p>To make the predictions less correlated you can also train the decision trees on a random subset of features and not just on a random subset of the training data. This modelling technique is called <strong>Random Forest</strong>.</p>
+</section>
+<section id="random-forest-4" class="slide level2">
+<h2>Random Forest</h2>
+<p>There is also one more general idea called <strong>boosting</strong>.</p>
+<p>The idea of boosting is that you train a sequence of small models, where when you train the <span class="math inline">\(n\)</span>-th model you focus on the mistakes of the previous model.</p>
+</section>
+<section id="random-forest-5" class="slide level2">
+<h2>Random Forest</h2>
+<p>To illustrate, we will describe a boosting algorithm called AdaBoost (Adaptive Boosting) in the case of binary classification (for simplicity).</p>
+<p>Suppose the vectors <span class="math inline">\((y_i, x_i),\)</span> <span class="math inline">\(i=1, \dots, m\)</span> represent our training data, where <span class="math inline">\(x_i = (x_{i1}, \dots, x_{in})\)</span> is a vector. And instead of <span class="math inline">\(y_i\)</span> being either 0 or 1 it is either -1 or 1. If our models predict a positive number we will assign class 1 and otherwise we will assign class -1.</p>
+</section>
+<section id="random-forest-6" class="slide level2">
+<h2>Random Forest</h2>
+<p>We will be assigning weights to training samples in each training round of our algorithm. So let <span class="math inline">\(w_i^j\)</span> denote the weight assigned to the <span class="math inline">\(i\)</span>-th sample on the <span class="math inline">\(j\)</span>-th round. We will always have <span class="math inline">\(\sum_j w_i^j = 1.\)</span> On the first round we assign equal weights <span class="math inline">\(1/m\)</span>.</p>
+<p>Also let <span class="math inline">\(T^j\)</span> denote the tree trained during the <span class="math inline">\(j\)</span>-th round.</p>
+<p>After training compute the weighted classification error: <span class="math display">\[
+e^j = \sum_i w_i^j \mathbb{1}_{y_i \ne T^j(x_i)}.
+\]</span></p>
+</section>
+<section id="random-forest-7" class="slide level2">
+<h2>Random Forest</h2>
+<p>Now adjust the weights <span class="math display">\[
+    w^{j+1}_i =  \begin{cases}
+       w^{j}_i e^{- \alpha^j }/Z^j, \text{ if } T^j(x_i) = y_i, \\
+       w^{j}_i e^{\alpha^j } / Z^j, \text{ if } T^j(x_i) \ne y_i.
+    \end{cases},
+\]</span> where <span class="math display">\[
+    \alpha^j = \frac{1}{2} \ln \frac{1-e^j}{e^j}
+\]</span> and <span class="math inline">\(Z^j\)</span> is a number that makes the new weights sum to 1.</p>
+</section>
+<section id="random-forest-8" class="slide level2">
+<h2>Random Forest</h2>
+<p>So the weight of a sample increases if the model misclassified it and decreases if the model guessed correctly.</p>
+<p>The final model is then given by <span class="math display">\[
+    T = \sum_j \alpha^j T^j.
+\]</span></p>
+<p>In practice boosting usually results in a more accurate model, but random forrest is faster to train since you can parallelize the training of trees.</p>
+</section>
+<section id="random-forest-9" class="slide level2">
+<h2>Random Forest</h2>
 <p>Let’s train a Random Forest Regression model on California housing dataset that ships with sklearn.</p>
 <div id="261271dd" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_california_housing</span>
@@ -352,7 +437,7 @@ weighted avg       0.94      0.94      0.94       171
 </div>
 
 </section>
-<section id="random-forest-1-output" class="slide level2 output-location-slide"><h2>Random Forest</h2><div class="cell output-location-slide" data-execution_count="3">
+<section id="random-forest-9-output" class="slide level2 output-location-slide"><h2>Random Forest</h2><div class="cell output-location-slide" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
@@ -499,12 +584,12 @@ weighted avg       0.94      0.94      0.94       171
 
 </div>
 </div>
-</div></section><section id="random-forest-2" class="slide level2">
+</div></section><section id="random-forest-10" class="slide level2">
 <h2>Random Forest</h2>
 <p>We are given some information on a district and our goal is to predict the median house value in that district. The target variable is expressed in $100k.</p>
 <p>Normally, we would first do data exploration and cleaning, but since we talked about this in the last chapter, let’s jump straight into model code.</p>
 </section>
-<section id="random-forest-3" class="slide level2">
+<section id="random-forest-11" class="slide level2">
 <h2>Random Forest</h2>
 <div id="d26a7b57" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
@@ -534,7 +619,7 @@ weighted avg       0.94      0.94      0.94       171
 </div>
 
 </section>
-<section id="random-forest-3-output" class="slide level2 output-location-slide"><h2>Random Forest</h2><div class="cell output-location-slide" data-execution_count="4">
+<section id="random-forest-11-output" class="slide level2 output-location-slide"><h2>Random Forest</h2><div class="cell output-location-slide" data-execution_count="4">
 <div class="cell-output cell-output-display" data-execution_count="4">
 <style>#sk-container-id-1 {
   /* Definition of color scheme common for light and dark mode */
@@ -959,7 +1044,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                 ('model',
                  RandomForestRegressor(max_depth=3, max_features='sqrt'))])</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox"><label for="sk-estimator-id-2" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>SimpleImputer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.impute.SimpleImputer.html">?<span>Documentation for SimpleImputer</span></a></div></label><div class="sk-toggleable__content "><pre>SimpleImputer(strategy='median')</pre></div> </div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox"><label for="sk-estimator-id-3" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>StandardScaler</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.preprocessing.StandardScaler.html">?<span>Documentation for StandardScaler</span></a></div></label><div class="sk-toggleable__content "><pre>StandardScaler()</pre></div> </div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox"><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>RandomForestRegressor</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.RandomForestRegressor.html">?<span>Documentation for RandomForestRegressor</span></a></div></label><div class="sk-toggleable__content "><pre>RandomForestRegressor(max_depth=3, max_features='sqrt')</pre></div> </div></div></div></div></div></div>
 </div>
-</div></section><section id="random-forest-4" class="slide level2">
+</div></section><section id="random-forest-12" class="slide level2">
 <h2>Random Forest</h2>
 <p>We are going to use mean square error (MSE) to evaluate our model. It is computed as follows: <span class="math display">\[
 \text{MSE} = \frac{1}{n} \sum_{i=1}^n (y_i^{\text{true}}-y_i^{\text{pred}})^2
@@ -969,9 +1054,9 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <span id="cb6-2"><a href=""></a></span>
 <span id="cb6-3"><a href=""></a>pipeline.fit(X_train, y_train)</span>
 <span id="cb6-4"><a href=""></a>y_pred <span class="op">=</span> pipeline.predict(X_test)</span>
-<span id="cb6-5"><a href=""></a><span class="bu">print</span>(<span class="ss">f"MSE on train set: </span><span class="sc">{</span>mean_squared_error(y_test, y_pred)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-5"><a href=""></a><span class="bu">print</span>(<span class="ss">f"MSE on test set: </span><span class="sc">{</span>mean_squared_error(y_test, y_pred)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>MSE on train set: 0.6841335525164595</code></pre>
+<pre><code>MSE on test set: 0.7042428595732597</code></pre>
 </div>
 </div>
 </section>
@@ -982,7 +1067,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <li><code>n_estimators</code>: number of trees to fit;</li>
 <li><code>max_depth</code>: maximum depth of a fitted tree.</li>
 </ul>
-<p>There are more, you can see all of the in the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html">documentation</a>.</p>
+<p>There are more, you can see all of them in the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html">documentation</a>.</p>
 </section>
 <section id="hyperparameters-1" class="slide level2">
 <h2>Hyperparameters</h2>
@@ -1042,7 +1127,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <span id="cb9-15"><a href=""></a></span>
 <span id="cb9-16"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Best combination n_estimators=</span><span class="sc">{</span>best_n_estimators<span class="sc">}</span><span class="ss">, max_depth=</span><span class="sc">{</span>best_max_depth<span class="sc">}</span><span class="ss"> with MSE=</span><span class="sc">{</span>best_mse<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Best combination n_estimators=500, max_depth=5 with MSE=0.4958425838126335</code></pre>
+<pre><code>Best combination n_estimators=100, max_depth=5 with MSE=0.4985365734911642</code></pre>
 </div>
 </div>
 </section>
@@ -1060,28 +1145,46 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <h2>Validation</h2>
 <p>Note that its not set in stone which of the datasets are called validation and test. That is some people might switch the definitions around.</p>
 </section>
-<section id="extras" class="slide level2">
-<h2>Extras</h2>
-<p>There are many variations on the basic Random Forest idea. Here are some examples:</p>
-<ul>
-<li><a href="https://scikit-learn.org/stable/modules/ensemble.html#extremely-randomized-trees">ExtraTrees</a></li>
-<li><a href="https://xgboost.readthedocs.io/en/latest/">XGBoost</a></li>
-<li><a href="https://lightgbm.readthedocs.io/en/latest/">LightGBM</a></li>
-</ul>
+<section id="cross-validation" class="slide level2">
+<h2>Cross-validation</h2>
+<p>If you do not have a second data split for testing you can try to replace it using <strong>cross-validation</strong>.</p>
+<p>There are several techniques for doing cross-validation. We will describe <span class="math inline">\(K\)</span>-fold cross-validation.</p>
+<p>In <span class="math inline">\(K\)</span>-fold cross-validation you split your training data into <span class="math inline">\(k\)</span> parts. Now, in sequence, you take one of the parts to be the validation set and you train the model on the rest of the data. You then compute validation metrics on the validation part and then average these once you are done training <span class="math inline">\(k\)</span> times.</p>
+<p>Typical values for <span class="math inline">\(k\)</span> are 5 or 10.</p>
+</section>
+<section id="cross-validation-1" class="slide level2">
+<h2>Cross-validation</h2>
+<p>Here is how to perform cross validation in sklearn.</p>
+<div id="a02cf9c4" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb11-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-3"><a href=""></a></span>
+<span id="cb11-4"><a href=""></a>pipeline <span class="op">=</span> make_pipeline(n_estimators<span class="op">=</span><span class="dv">50</span>, max_depth<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb11-5"><a href=""></a>scores <span class="op">=</span> cross_val_score(pipeline, X_train, y_train, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">"neg_mean_squared_error"</span>)</span>
+<span id="cb11-6"><a href=""></a></span>
+<span id="cb11-7"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Cross validation result MSE=</span><span class="sc">{</span>np<span class="sc">.</span>mean(<span class="op">-</span><span class="dv">1</span><span class="op">*</span>scores)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cross validation result MSE=0.5037206177056912</code></pre>
+</div>
+</div>
+</section>
+<section id="cross-validation-2" class="slide level2">
+<h2>Cross-validation</h2>
+<p>If your model takes hours to train then cross-validation is not viable. So in practice it is usually best to split you dataset into 3 parts.</p>
 </section>
 <section id="practice-problem" class="slide level2">
 <h2>Practice problem</h2>
 <p>For practice, try creating a classification model for the <a href="https://www.kaggle.com/datasets/uciml/forest-cover-type-dataset">Forest cover types dataset</a>. It ships with sklearn.</p>
 <p>If you want to use Random Forest, you will need to use the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier">RandomForestClassifier</a> class from sklearn.</p>
 <p>Here is how to load the data:</p>
-<div id="d368cce8" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_covtype</span>
-<span id="cb11-2"><a href=""></a></span>
-<span id="cb11-3"><a href=""></a>data <span class="op">=</span> fetch_covtype()</span>
-<span id="cb11-4"><a href=""></a>df <span class="op">=</span> pd.DataFrame(data[<span class="st">"data"</span>], columns<span class="op">=</span>data[<span class="st">"feature_names"</span>])</span>
-<span id="cb11-5"><a href=""></a>df[<span class="st">"target"</span>] <span class="op">=</span> data[<span class="st">"target"</span>]</span>
-<span id="cb11-6"><a href=""></a>df.head(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div id="d368cce8" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_covtype</span>
+<span id="cb13-2"><a href=""></a></span>
+<span id="cb13-3"><a href=""></a>data <span class="op">=</span> fetch_covtype()</span>
+<span id="cb13-4"><a href=""></a>df <span class="op">=</span> pd.DataFrame(data[<span class="st">"data"</span>], columns<span class="op">=</span>data[<span class="st">"feature_names"</span>])</span>
+<span id="cb13-5"><a href=""></a>df[<span class="st">"target"</span>] <span class="op">=</span> data[<span class="st">"target"</span>]</span>
+<span id="cb13-6"><a href=""></a>df.head(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
