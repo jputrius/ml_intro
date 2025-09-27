@@ -9,7 +9,7 @@
 <link href="03_stochastic_gradient_descent_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.24">
 
-  <title>Chapter 3: Stochastic Gradient Descent</title>
+  <title>Stochastic Gradient Descent</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -192,7 +192,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Chapter 3: Stochastic Gradient Descent</h1>
+  <h1 class="title">Stochastic Gradient Descent</h1>
 
 <div class="quarto-title-authors">
 </div>
@@ -201,6 +201,36 @@
 <section id="introduction" class="slide level2">
 <h2>Introduction</h2>
 <p>In this chapter we will go over stochastic gradient descent (SGD). SGD is an optimization algorithm used to train (artificial) neural networks.</p>
+</section>
+<section id="derivatives" class="slide level2">
+<h2>Derivatives</h2>
+<p>Before we get into the main topic of today we would need to recall what (partial) derivatives are.</p>
+<p>If <span class="math inline">\(f: \mathbb{R} \rightarrow \mathbb{R}\)</span> is a differentiable function then its derivative is a function denoted <span class="math inline">\(f': \mathbb{R} \rightarrow \mathbb{R}\)</span> and computed as <span class="math display">\[
+  f'(x) = \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h}.
+\]</span></p>
+<p>In this course we will assume that all functions are differentiable everywhere where they are defined.</p>
+</section>
+<section id="derivatives-1" class="slide level2">
+<h2>Derivatives</h2>
+<p>The derivative represents the rate of change of the function. If the derivative is positive at a point then the function is increasing at that point and if the derivative is negative at a point it means that a function is decreasing at that point. The magnitude of the derivative shows how fast the function is changing.</p>
+<p>Also recall the chain rule of differentiation: <span class="math display">\[
+  (f(g(x)))' = f'(g(x))g'(x).
+\]</span></p>
+</section>
+<section id="derivatives-2" class="slide level2">
+<h2>Derivatives</h2>
+<p>If we have a multi-variable function <span class="math inline">\(f: \mathbb{R}^n \rightarrow \mathbb{R}\)</span> then we can compute the partial derivatives: <span class="math display">\[
+  \frac{\partial f}{\partial x_i}(x) = \lim_{h \rightarrow 0} \frac{f(x + he_i) - f(x)}{h},
+\]</span> here <span class="math inline">\(e_i \in \mathbb{R}^n\)</span> is a vector with <span class="math inline">\(0\)</span> in all components except the <span class="math inline">\(i\)</span>-th one where it has the value 1.</p>
+</section>
+<section id="derivatives-3" class="slide level2">
+<h2>Derivatives</h2>
+<p>The <span class="math inline">\(i\)</span>-th partial derivative represents the rate of change of the function along the <span class="math inline">\(i\)</span>-th axis.</p>
+<p>Combining all the partial derivatives into a vector we get the gradient: <span class="math display">\[\nabla f (x) = \left( \frac{\partial f}{\partial x_1}(x), \dots, \frac{\partial f}{\partial x_n}(x) \right),\]</span> the symbol <span class="math inline">\(\nabla\)</span> is read “del” (this symbol is <em>not</em> a letter in the Greek alphabet!).</p>
+</section>
+<section id="derivatives-4" class="slide level2">
+<h2>Derivatives</h2>
+<p>The way to think about the gradient is that to every point of <span class="math inline">\(\mathbb{R}^n\)</span> it attaches an arrow which points in the direction in which the function increases the fastest. The magnitude of the arrow shows how fast the function increases. Also <span class="math inline">\(-\nabla f\)</span> points in the direction in which the function decreases the fastest.</p>
 </section>
 <section id="gradient-descent" class="slide level2">
 <h2>Gradient Descent</h2>
@@ -219,27 +249,23 @@
 <h2>Gradient Descent</h2>
 <p>Note that the loss function is a function of weights only.</p>
 <p>Since we assumed that <span class="math inline">\(f\)</span> is differentiable we can apply the <strong>Gradient Descent</strong> (GD) algorithm.</p>
-<p>The idea behind GD is very simple. Since we assumed that <span class="math inline">\(f\)</span> is differentiable, then <span class="math inline">\(L\)</span> is also differentiable and its gradient <span class="math inline">\(\nabla L\)</span> (read as “del L”) is defined: <span class="math display">\[
+<p>The idea behind GD is very simple. Since we assumed that <span class="math inline">\(f\)</span> is differentiable, then <span class="math inline">\(L\)</span> is also differentiable and its gradient <span class="math inline">\(\nabla L\)</span> is defined: <span class="math display">\[
 \nabla L (w) = \left( \frac{\partial L}{\partial w_1}(w), \dots, \frac{\partial L}{\partial w_m}(w) \right),
 \]</span> where <span class="math inline">\(m\)</span> is dimension of <span class="math inline">\(w\)</span>.</p>
 </section>
 <section id="gradient-descent-3" class="slide level2">
 <h2>Gradient Descent</h2>
-<p>The gradient is a vector. The geometric interpretation of the gradient <span class="math inline">\(\nabla L\)</span> is that it points in the direction in which <span class="math inline">\(L\)</span> increases the most quickly at point <span class="math inline">\(w\)</span>. The magnitude of <span class="math inline">\(\nabla L\)</span> is the rate of increase of <span class="math inline">\(L\)</span> at <span class="math inline">\(w\)</span> in that direction. Then <span class="math inline">\(- \nabla L\)</span> is the direction of fastest decrease.</p>
-<p>The idea of GD is to minimize <span class="math inline">\(L\)</span> by making small steps in the direction <span class="math inline">\(-\nabla L.\)</span></p>
-</section>
-<section id="gradient-descent-4" class="slide level2">
-<h2>Gradient Descent</h2>
+<p>The idea of GD is to minimize <span class="math inline">\(L\)</span> by making small steps in the direction <span class="math inline">\(-\nabla L,\)</span> i.e.&nbsp;in the direction in which <span class="math inline">\(L\)</span> decreases the fastest.</p>
 <p>Define a parameter <span class="math inline">\(\eta\)</span> called <strong>learning rate</strong>. It has to be a small positive number. Suppose the initial approximation of the minimum is <span class="math inline">\(w^0\)</span>. Then in GD the <span class="math inline">\(w^{i+1}\)</span> approximation is computed from the <span class="math inline">\(w^i\)</span> approximation by using the simple formula <span class="math display">\[
 w^{i+1} = w^i - \eta \nabla L(w^i).
 \]</span></p>
 </section>
-<section id="gradient-descent-5" class="slide level2">
+<section id="gradient-descent-4" class="slide level2">
 <h2>Gradient Descent</h2>
 <p>Here is an illustration of GD, note that in the picture the loss function is called cost.</p>
 
 <img data-src="../images/GD.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="gradient-descent-6" class="slide level2">
+<section id="gradient-descent-5" class="slide level2">
 <h2>Gradient Descent</h2>
 <p>Lets implement GD in the case of simple linear regression. That is we will try to predict a continuous variable <span class="math inline">\(y\)</span> from one input variable <span class="math inline">\(x\)</span> where our <span class="math inline">\(f\)</span> will be <span class="math display">\[
 f(x; w_0, w_1) = w_0+w_1x.
@@ -248,7 +274,7 @@ f(x; w_0, w_1) = w_0+w_1x.
 L(w_0, w_1) = \frac{1}{n} \sum_{i=1}^n (y_i - (w_0+w_1x))^2.
 \]</span></p>
 </section>
-<section id="gradient-descent-7" class="slide level2">
+<section id="gradient-descent-6" class="slide level2">
 <h2>Gradient Descent</h2>
 <p>We need to compute <span class="math inline">\(\nabla L.\)</span> We get <span class="math display">\[
 \frac{\partial L(w_0, w_1)}{\partial w_0} = -\frac{2}{n} \sum_{i=1}^n (y_i - (w_0 + w_1 x_i))
@@ -256,7 +282,7 @@ L(w_0, w_1) = \frac{1}{n} \sum_{i=1}^n (y_i - (w_0+w_1x))^2.
 \frac{\partial L(w_0, w_1)}{\partial w_1} = -\frac{2}{n} \sum_{i=1}^n x_i(y_i - (w_0 + w_1 x_i)).
 \]</span></p>
 </section>
-<section id="gradient-descent-8" class="slide level2">
+<section id="gradient-descent-7" class="slide level2">
 <h2>Gradient Descent</h2>
 <p>Now we can write the code. First define loss and gradient</p>
 <div id="ffa6a4d5" class="cell" data-execution_count="1">
@@ -272,7 +298,7 @@ L(w_0, w_1) = \frac{1}{n} \sum_{i=1}^n (y_i - (w_0+w_1x))^2.
 <span id="cb1-10"><a href=""></a>  ])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="gradient-descent-9" class="slide level2">
+<section id="gradient-descent-8" class="slide level2">
 <h2>Gradient Descent</h2>
 <p>Now let’s see if we can learn what the input linear function is.</p>
 <div id="0a2ceec1" class="cell" data-execution_count="2">
@@ -326,7 +352,7 @@ H(X, Y) \ne H(Y, X)
 <section id="stochastic-gradient-descent-4" class="slide level2">
 <h2>Stochastic Gradient Descent</h2>
 <p>Getting back on topic, suppose our loss function has the following form <span class="math display">\[
-  L(w) = \sum_{j=1}^nL_j(w).
+  L(w) = \frac{1}{n}\sum_{j=1}^nL_j(w).
 \]</span></p>
 <p>If there are a lot of training samples or the model has a lot of weights, then computing the full gradient <span class="math inline">\(\nabla L\)</span> becomes very computationally expensive.</p>
 </section>
@@ -361,8 +387,24 @@ H(X, Y) \ne H(Y, X)
 </section>
 <section id="stochastic-gradient-descent-10" class="slide level2">
 <h2>Stochastic Gradient Descent</h2>
+<p>To understand why SGD is called “stochastic” we need to look at how it is analyzed mathematically. The formulation of the problem is as follows.</p>
+<p>Suppose we have a function <span class="math inline">\(L: \mathbb{R}^n \rightarrow \mathbb{R}\)</span> that is a random variable, for example <span class="math inline">\(L\)</span> depends on a parameter that is a random variable (in our case the random variable is the batch of data we show to the function). Also suppose we have a sequence <span class="math inline">\(L_1, L_2, L_3, \dots\)</span> of realizations of <span class="math inline">\(L\)</span>.</p>
+</section>
+<section id="stochastic-gradient-descent-11" class="slide level2">
+<h2>Stochastic Gradient Descent</h2>
+<p>The question is how do we come up with an algorithm to find a <span class="math inline">\(w \in \mathbb{R}^n\)</span> such that it would be a minimum of <span class="math inline">\(\mathbb{E}[L(w)]\)</span> if we have a restriction where at the <span class="math inline">\(T\)</span>-th timestep of optimization we only know the realizations <span class="math inline">\(L_1, L_2, \dots, L_T\)</span>?</p>
+</section>
+<section id="stochastic-gradient-descent-12" class="slide level2">
+<h2>Stochastic Gradient Descent</h2>
 <p>The main shortcoming of SGD is that the learning rate is fixed. Ideally we would like the learning rate to vary a bit, because when we are far away from the minimum we could take bigger steps to train more efficiently and when we are near the minimum we would like to take smaller steps to not overshoot.</p>
-<p>So one easy way to improve SGD is to add a mechanism for adjusting the learning rate automatically during training. Probably the most popular algorithm that implements it is <a href="https://arxiv.org/abs/1412.6980">Adam</a>.</p>
+<p>So one easy way to improve SGD is to add a mechanism for adjusting the learning rate automatically during training. Probably the most popular algorithm that implements this is <a href="https://arxiv.org/abs/1412.6980">Adam</a>.</p>
+</section>
+<section id="stuff-to-watch" class="slide level2">
+<h2>Stuff to watch</h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=IHZwWFHWa-w">Explanation of Gradient Descent</a></li>
+<li><a href="https://www.youtube.com/watch?v=vMh0zPT0tLI">Explanation of Stochastic Gradient Descent</a></li>
+</ul>
 </section>
 <section id="practice-task" class="slide level2">
 <h2>Practice task</h2>
