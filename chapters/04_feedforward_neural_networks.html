@@ -6,10 +6,10 @@
 <script src="04_feedforward_neural_networks_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="04_feedforward_neural_networks_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="04_feedforward_neural_networks_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="04_feedforward_neural_networks_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.24">
+<link href="04_feedforward_neural_networks_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.25">
 
-  <title>Chapter 4: Introduction to Feedforward Neural Networks</title>
+  <title>Introduction to Feedforward Neural Networks</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -192,7 +192,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Chapter 4: Introduction to Feedforward Neural Networks</h1>
+  <h1 class="title">Introduction to Feedforward Neural Networks</h1>
 
 <div class="quarto-title-authors">
 </div>
@@ -244,7 +244,7 @@ f(x) = \begin{cases}
 </section>
 <section id="feedforward-neural-networks-1" class="slide level2">
 <h2>Feedforward Neural Networks</h2>
-<p>In a feedforward NN perceptrons naturally form layers. Here is an illustration of a feedforward NN with 3 layers:</p>
+<p>Today we will cover an even simpler case - the neurons will form discrete layers in our feedforward NN. Here is an illustration of a feedforward NN with 3 layers:</p>
 
 <img data-src="../images/fnn.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="feedforward-neural-networks-2" class="slide level2">
@@ -284,10 +284,15 @@ N(x) = f^{[l]} \circ A^{[l]} \circ f^{[l-1]} \circ A^{[l-1]} \circ \dots \circ f
 </section>
 <section id="feedforward-neural-networks-7" class="slide level2">
 <h2>Feedforward Neural Networks</h2>
-<p>Suppose we have a classification problem with <span class="math inline">\(n\)</span> classes. Then usually the output of a feedforward NN is an <span class="math inline">\(n\)</span> dimensional vector.</p>
-<p>We would like the output vector to represent confidences of the classes, that is the components should be between 0 and 1 and sum to 1. This can be achieved by applying softmax to the output.</p>
+<p>What should the activation function of the output layer be?</p>
+<p>If we have a regression problem then we use an activation function that is suitable for the problem.</p>
 </section>
 <section id="feedforward-neural-networks-8" class="slide level2">
+<h2>Feedforward Neural Networks</h2>
+<p>Now suppose we have a classification problem with <span class="math inline">\(n &gt; 2\)</span> classes. Then usually the output of a feedforward NN is an <span class="math inline">\(n\)</span> dimensional vector. In this case the output layer is usually made to have no activation function (i.e.&nbsp;the activation function is the identity function).</p>
+<p>To transform this output to class confidences (a vector that has components that are between 0 and 1 and sum to 1) usually a softmax operation is applied.</p>
+</section>
+<section id="feedforward-neural-networks-9" class="slide level2">
 <h2>Feedforward Neural Networks</h2>
 <p>Softmax is a function from <span class="math inline">\(\mathbb{R}^n\)</span> to <span class="math inline">\(\mathbb{R}^n\)</span> whose <span class="math inline">\(i\)</span>-th component of the output is defined to be <span class="math display">\[
 \text{softmax}_i(x) = \frac{e^{x_i}}{\sum_{j=1}^n e^{x_j}}.
@@ -296,8 +301,8 @@ N(x) = f^{[l]} \circ A^{[l]} \circ f^{[l-1]} \circ A^{[l-1]} \circ \dots \circ f
 <section id="backpropagation" class="slide level2">
 <h2>Backpropagation</h2>
 <p>We can apply feedforward NNs to classification and regression problems the same way we did logistic regression.</p>
-<p>That is, we use a training dataset to define a loss function <span class="math inline">\(L\)</span> that depends on NN’s weights. We then train the model by minimizing <span class="math inline">\(L\)</span>, using SGD for example.</p>
-<p>In order to use SGD we need an efficient way to compute the partial derivatives of <span class="math inline">\(L\)</span> with respect to weights and biases. This is done using an algorithm called backpropagation.</p>
+<p>That is, we use a training dataset to define a loss function <span class="math inline">\(L\)</span> that depends on NN’s weights. We then train the model by minimizing <span class="math inline">\(L\)</span>, using SGD or Adam for example.</p>
+<p>In order to use SGD or Adam we need an efficient way to compute the partial derivatives of <span class="math inline">\(L\)</span> with respect to weights and biases. This is done using an algorithm called backpropagation.</p>
 </section>
 <section id="backpropagation-1" class="slide level2">
 <h2>Backpropagation</h2>
@@ -340,31 +345,34 @@ y \frac{\partial}{\partial W}(Wx)=\frac{\partial}{\partial W}(yWx)=y^Tx^T.
 <img data-src="../images/fnn.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="backpropagation-6" class="slide level2">
 <h2>Backpropagation</h2>
-<p>So we have two affine functions <span class="math inline">\(A^{[1]}\)</span> and <span class="math inline">\(A^{[2]}\)</span> and two activation functions <span class="math inline">\(f^{[1]}\)</span> and <span class="math inline">\(f^{[2]}.\)</span> The first pair is for the hidden layer, the second pair is for the output layer.</p>
+<p>So we have two affine functions <span class="math inline">\(A^{[1]}\)</span> and <span class="math inline">\(A^{[2]}\)</span> and two activation functions <span class="math inline">\(f^{[1]}\)</span> and <span class="math inline">\(f^{[2]}\)</span> (in practice <span class="math inline">\(f^{[2]}\)</span> is usually the identity function if number of classes is gereater than 2). The first pair is for the hidden layer, the second pair is for the output layer.</p>
 <p>We can compute the output of the model using <span class="math display">\[
 N(x) = f^{[2]} \circ A^{[2]} \circ f^{[1]} \circ A^{[1]}(x).
-\]</span></p>
-<p>To compute the confidences of the classes we can apply softmax to <span class="math inline">\(N(x),\)</span> i.e. <span class="math display">\[
-\text{confidences}(x) = \text{softmax} \circ N(x).
 \]</span></p>
 </section>
 <section id="backpropagation-7" class="slide level2">
 <h2>Backpropagation</h2>
-<p>We are going to use cross-entropy for loss. Also, in implementations, cross-entropy and softmax are usually combined because the derivatives are much nicer than computing the derivatives of cross-entropy and softmax separately.</p>
+<p>To compute the confidences of the classes we can apply softmax to <span class="math inline">\(N(x),\)</span> i.e. <span class="math display">\[
+\text{confidences}(x) = \text{softmax} \circ N(x).
+\]</span></p>
 </section>
 <section id="backpropagation-8" class="slide level2">
+<h2>Backpropagation</h2>
+<p>We are going to use cross-entropy for loss. Also, in implementations, cross-entropy and softmax are usually combined because the derivatives are much nicer than computing the derivatives of cross-entropy and softmax separately.</p>
+</section>
+<section id="backpropagation-9" class="slide level2">
 <h2>Backpropagation</h2>
 <p>Suppose vectors <span class="math inline">\(\{y, x\} = \{y^i, x^i\}_{i=1}^{n}\)</span> represent the training data. So the vectors <span class="math inline">\(y^i\)</span> have 0 in all components except one where it has the value 1. Suppose the dimension of <span class="math inline">\(y^i\)</span> is <span class="math inline">\(m\)</span>. Then our loss function will be <span class="math display">\[
 L(W; N(x)) = \frac{1}{n} \sum_{i=1}^{n} - \log \frac{\langle y^i, e^{N(x^i; W)} \rangle}{\sum_{j=1}^n e^{N(x^i; W)_j}}
 \]</span></p>
 </section>
-<section id="backpropagation-9" class="slide level2">
+<section id="backpropagation-10" class="slide level2">
 <h2>Backpropagation</h2>
 <p>Then the Jacobian of <span class="math inline">\(L(W; y_{pred})\)</span> with respect to <span class="math inline">\(y_{pred}\)</span> can be computed as <span class="math display">\[
   \frac{\partial L(W; y_{pred})}{\partial y_{pred}} = \frac{1}{n} \sum_{i=1}^n \text{softmax}(y_{pred}^i) - y^i,
 \]</span> where the Jacobian is a vector of same dimension as <span class="math inline">\(y^i\)</span> and the sum is componentwise. We interpret this vector as a row vector (we need to do this for matrix multiplication to be defined properly in later formulas).</p>
 </section>
-<section id="backpropagation-10" class="slide level2">
+<section id="backpropagation-11" class="slide level2">
 <h2>Backpropagation</h2>
 <p>In order to train our NN we need to compute <span class="math display">\[
 \frac{\partial L(W)}{\partial W^{[1]}}, \ \frac{\partial L(W)}{\partial b^{[1]}}, \ \frac{\partial L(W)}{\partial W^{[2]}}, \ \frac{\partial L(W)}{\partial b^{[2]}}.
@@ -373,22 +381,22 @@ L(W; N(x)) = \frac{1}{n} \sum_{i=1}^{n} - \log \frac{\langle y^i, e^{N(x^i; W)} 
 y \frac{\partial}{\partial W}(Wx)=y^Tx^T.
 \]</span></p>
 </section>
-<section id="backpropagation-11" class="slide level2">
+<section id="backpropagation-12" class="slide level2">
 <h2>Backpropagation</h2>
 <p>We compute</p>
 
 <img data-src="../images/backprop1.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="backpropagation-12" class="slide level2">
+<section id="backpropagation-13" class="slide level2">
 <h2>Backpropagation</h2>
 <p>Then</p>
 
 <img data-src="../images/backprop2.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="backpropagation-13" class="slide level2">
+<section id="backpropagation-14" class="slide level2">
 <h2>Backpropagation</h2>
 <p>Similarly</p>
 
 <img data-src="../images/backprop3.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="backpropagation-14" class="slide level2">
+<section id="backpropagation-15" class="slide level2">
 <h2>Backpropagation</h2>
 <p>Also</p>
 <div class="quarto-figure quarto-figure-center">
@@ -403,7 +411,7 @@ y \frac{\partial}{\partial W}(Wx)=y^Tx^T.
 </figure>
 </div>
 </section>
-<section id="backpropagation-15" class="slide level2">
+<section id="backpropagation-16" class="slide level2">
 <h2>Backpropagation</h2>
 <p>So the full backpropagation algorithm consists of two steps:</p>
 <ol type="1">
@@ -416,6 +424,50 @@ y \frac{\partial}{\partial W}(Wx)=y^Tx^T.
 <li><p>Backward pass: Use the values from step one and derived formulas to compute the partial derivatives in terms of weights and biases.</p></li>
 </ol>
 <p>Once you have the partial derivatives you can, for example, plug them into SGD to minimize the loss and train the model.</p>
+</section>
+<section id="vanishing-gradient-problem" class="slide level2">
+<h2>Vanishing gradient problem</h2>
+<p>In practice, you gain more performance gains by increasing the number of layers instead of increasing the number of weights in existing layers.</p>
+<p>However, training NNs with a lot of layers requires you to use extra tricks because of the vanishing gradient problem.</p>
+</section>
+<section id="vanishing-gradient-problem-1" class="slide level2">
+<h2>Vanishing gradient problem</h2>
+<p>Suppose you have a super deep neural network and you used a logistic function as an activation function for the hidden layers. The logistic function has the derivative <span class="math display">\[
+  \left(\frac{1}{1+e^{-x}}\right)'=\frac{e^{-x}}{(1+e^{-x})^2}.
+\]</span> This function’s range is <span class="math inline">\((0, 0.25)\)</span>.</p>
+<p>So, when performing backpropagation you will have multiplied your values by a number <span class="math inline">\(&lt; 0.25\)</span> a bunch of times by the time you get to computing the partial derivatives of weights in the early layers of your model.</p>
+</section>
+<section id="vanishing-gradient-problem-2" class="slide level2">
+<h2>Vanishing gradient problem</h2>
+<p>In consequence, the gradients of the early layers will be exponentially smaller than the gradients of the later levels and the model will have problems utilizing those early layers when learning.</p>
+<p>This is an example of the vanishing gradient problem. You might also encounter the opposite problem - the exploding gradient problem.</p>
+</section>
+<section id="vanishing-gradient-problem-3" class="slide level2">
+<h2>Vanishing gradient problem</h2>
+<p>This is why ReLU is popular - the output of its derivative is either 0 or 1, so it doesn’t cause vanishing gradients. It also sparses out the matrices when computing the gradients.</p>
+<p>However, ReLU has its own problems. For example, since the output of the derivative is 0 when input is negative, it might happen that some perceptrons become inactive for all inputs in the training set and then the gradient for those percetrons’ weights are always 0 - the perceptrons “die”.</p>
+</section>
+<section id="vanishing-gradient-problem-4" class="slide level2">
+<h2>Vanishing gradient problem</h2>
+<p>There are other tricks for addressing the vanishing / exploding gradient problem. We will cover them in later chapters.</p>
+</section>
+<section id="universal-approximation-theorem" class="slide level2">
+<h2>Universal Approximation Theorem</h2>
+<p>In practice more layers leads to better models, but in theory only one hidden layer is enough, this is because of the Universal Approximation Theorem.</p>
+<p>This theorem states that for every continuous function defined on a compact (bounded and closed) subset of <span class="math inline">\(\mathbb{R}^n\)</span> taking values in <span class="math inline">\(\mathbb{R}^m\)</span> you can find a neural network with one hidden layer that approximates your target function as good as you want as long as the activation function you are using is continuous and not a polynomial.</p>
+<p>I.e. one hidden layer is enough to learn any continuous function.</p>
+</section>
+<section id="universal-approximation-theorem-1" class="slide level2">
+<h2>Universal Approximation Theorem</h2>
+<p>Note that the name of the theorem is clickbait, because you can do the same thing using a polynomial (Stone–Weierstrass theorem) or a piece-wise affine function (reason why graphing libraries work).</p>
+<p>The feature of neural networks that is interesting and useful is that they tend to generalize well to data that was not seen during training, while polynomials or piece-wise affine functions don’t.</p>
+</section>
+<section id="stuff-to-watch" class="slide level2">
+<h2>Stuff to watch</h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=Ilg3gGewQ5U">Explanation of backpropagation</a></li>
+<li><a href="https://www.youtube.com/watch?v=NNBftbvBRTw">Explanation of the proof of Universal Approximation Theorem</a></li>
+</ul>
 </section>
 <section id="practice-task" class="slide level2">
 <h2>Practice task</h2>
