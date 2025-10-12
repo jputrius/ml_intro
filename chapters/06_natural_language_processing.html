@@ -605,7 +605,7 @@ weighted avg       0.81      0.79      0.80      2388
 <section id="cnns-for-nlp-4" class="slide level2">
 <h2>CNNs For NLP</h2>
 <p>Let’s train the model.</p>
-<div id="36b032bc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="74a510e5-40f9-468e-fd85-f0b87748e510" data-execution_count="8">
+<div id="36b032bc" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="74a510e5-40f9-468e-fd85-f0b87748e510" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="co"># Hyperparameters</span></span>
 <span id="cb9-2"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
 <span id="cb9-3"><a href=""></a>epochs <span class="op">=</span> <span class="dv">10</span></span>
@@ -628,49 +628,49 @@ weighted avg       0.81      0.79      0.80      2388
 </div>
 
 </section>
-<section id="cnns-for-nlp-4-output" class="slide level2 output-location-slide"><h2>CNNs For NLP</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="74a510e5-40f9-468e-fd85-f0b87748e510" data-execution_count="8">
+<section id="cnns-for-nlp-4-output" class="slide level2 output-location-slide"><h2>CNNs For NLP</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="74a510e5-40f9-468e-fd85-f0b87748e510" data-execution_count="10">
 <div class="cell-output cell-output-stdout">
 <pre><code>Using cuda device
 Epoch 1
 -------------------------------
-Train: 100%|██████████| 299/299 [00:01&lt;00:00, 151.84batch/s, average_batch_loss=0.789]
-Val: 100%|██████████| 75/75 [00:00&lt;00:00, 207.76batch/s, accuracy=0.715, average_batch_loss=0.694]
+Train: 100%|██████████| 299/299 [00:01&lt;00:00, 154.68batch/s, average_batch_loss=1.09]
+Val: 100%|██████████| 75/75 [00:00&lt;00:00, 208.33batch/s, accuracy=0.195, average_batch_loss=1.07]
 Epoch 2
 -------------------------------
-Train: 100%|██████████| 299/299 [00:01&lt;00:00, 151.71batch/s, average_batch_loss=0.617]
-Val: 100%|██████████| 75/75 [00:00&lt;00:00, 206.01batch/s, accuracy=0.744, average_batch_loss=0.642]
+Train: 100%|██████████| 299/299 [00:01&lt;00:00, 151.43batch/s, average_batch_loss=0.847]
+Val: 100%|██████████| 75/75 [00:00&lt;00:00, 207.31batch/s, accuracy=0.727, average_batch_loss=0.692]
 Epoch 3
 -------------------------------
-Train: 100%|██████████| 299/299 [00:01&lt;00:00, 151.85batch/s, average_batch_loss=0.518]
-Val: 100%|██████████| 75/75 [00:00&lt;00:00, 205.37batch/s, accuracy=0.755, average_batch_loss=0.609]
+Train: 100%|██████████| 299/299 [00:01&lt;00:00, 152.18batch/s, average_batch_loss=0.578]
+Val: 100%|██████████| 75/75 [00:00&lt;00:00, 203.95batch/s, accuracy=0.76, average_batch_loss=0.623] 
 Epoch 4
 -------------------------------
-Train: 100%|██████████| 299/299 [00:01&lt;00:00, 152.20batch/s, average_batch_loss=0.424]
-Val: 100%|██████████| 75/75 [00:00&lt;00:00, 187.48batch/s, accuracy=0.783, average_batch_loss=0.569]
+Train: 100%|██████████| 299/299 [00:01&lt;00:00, 152.41batch/s, average_batch_loss=0.462]
+Val: 100%|██████████| 75/75 [00:00&lt;00:00, 194.78batch/s, accuracy=0.778, average_batch_loss=0.578]
 Epoch 5
 -------------------------------
-Train: 100%|██████████| 299/299 [00:02&lt;00:00, 145.95batch/s, average_batch_loss=0.312]
-Val: 100%|██████████| 75/75 [00:00&lt;00:00, 192.65batch/s, accuracy=0.788, average_batch_loss=0.562]
+Train: 100%|██████████| 299/299 [00:01&lt;00:00, 151.11batch/s, average_batch_loss=0.34] 
+Val: 100%|██████████| 75/75 [00:00&lt;00:00, 205.35batch/s, accuracy=0.788, average_batch_loss=0.55] 
 Epoch 6
 -------------------------------
-Train: 100%|██████████| 299/299 [00:02&lt;00:00, 144.46batch/s, average_batch_loss=0.224]
-Val: 100%|██████████| 75/75 [00:00&lt;00:00, 184.45batch/s, accuracy=0.788, average_batch_loss=0.547]
+Train: 100%|██████████| 299/299 [00:01&lt;00:00, 152.08batch/s, average_batch_loss=0.244]
+Val: 100%|██████████| 75/75 [00:00&lt;00:00, 207.09batch/s, accuracy=0.8, average_batch_loss=0.532]  
 Epoch 7
 -------------------------------
-Train: 100%|██████████| 299/299 [00:02&lt;00:00, 144.14batch/s, average_batch_loss=0.161]
-Val: 100%|██████████| 75/75 [00:00&lt;00:00, 203.91batch/s, accuracy=0.794, average_batch_loss=0.532]
+Train: 100%|██████████| 299/299 [00:01&lt;00:00, 154.58batch/s, average_batch_loss=0.174]
+Val: 100%|██████████| 75/75 [00:00&lt;00:00, 198.13batch/s, accuracy=0.799, average_batch_loss=0.531]
 Epoch 8
 -------------------------------
-Train: 100%|██████████| 299/299 [00:01&lt;00:00, 150.69batch/s, average_batch_loss=0.118]
-Val: 100%|██████████| 75/75 [00:00&lt;00:00, 196.36batch/s, accuracy=0.796, average_batch_loss=0.536]
+Train: 100%|██████████| 299/299 [00:01&lt;00:00, 151.20batch/s, average_batch_loss=0.127]
+Val: 100%|██████████| 75/75 [00:00&lt;00:00, 184.74batch/s, accuracy=0.796, average_batch_loss=0.554]
 Epoch 9
 -------------------------------
-Train: 100%|██████████| 299/299 [00:02&lt;00:00, 135.23batch/s, average_batch_loss=0.087] 
-Val: 100%|██████████| 75/75 [00:00&lt;00:00, 184.24batch/s, accuracy=0.799, average_batch_loss=0.563]
+Train: 100%|██████████| 299/299 [00:02&lt;00:00, 149.35batch/s, average_batch_loss=0.0946]
+Val: 100%|██████████| 75/75 [00:00&lt;00:00, 206.97batch/s, accuracy=0.807, average_batch_loss=0.539]
 Epoch 10
 -------------------------------
-Train: 100%|██████████| 299/299 [00:02&lt;00:00, 143.02batch/s, average_batch_loss=0.0645]
-Val: 100%|██████████| 75/75 [00:00&lt;00:00, 184.60batch/s, accuracy=0.801, average_batch_loss=0.578]
+Train: 100%|██████████| 299/299 [00:01&lt;00:00, 153.92batch/s, average_batch_loss=0.0711]
+Val: 100%|██████████| 75/75 [00:00&lt;00:00, 209.89batch/s, accuracy=0.791, average_batch_loss=0.539]
 Done!</code></pre>
 </div>
 </div></section><section id="practice-task" class="slide level2">
