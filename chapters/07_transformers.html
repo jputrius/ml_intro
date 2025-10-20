@@ -9,7 +9,7 @@
 <link href="07_transformers_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.8.25">
 
-  <title>Chapter 7: Transformers</title>
+  <title>Transformers</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -192,7 +192,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Chapter 7: Transformers</h1>
+  <h1 class="title">Transformers</h1>
 
 <div class="quarto-title-authors">
 </div>
@@ -202,6 +202,24 @@
 <h2>Introduction</h2>
 <p>In this chapter we cover transformers.</p>
 <p>Transformers are currently the state of the art for natural language processing (NLP) tasks. For example, large language models are basically just huge transformers (with some extra tricks).</p>
+</section>
+<section id="cosine-similarity" class="slide level2">
+<h2>Cosine similarity</h2>
+<p>Let’s first do a little detour.</p>
+<p>In school you learn the cosine formula: <span class="math display">\[
+  \cos \theta = \frac{\langle x, y \rangle}{\lVert x \rVert \lVert y \rVert},
+\]</span> where <span class="math inline">\(x, y \in \mathbb{R}^n\)</span> are non-zero vectors and <span class="math inline">\(\theta\)</span> is an angle between them.</p>
+</section>
+<section id="cosine-similarity-1" class="slide level2">
+<h2>Cosine similarity</h2>
+<p>Data science people call this cosine similarity and it is used to measure the similarity between vectors.</p>
+<p>Cosine similarity measures the similarity of two vectors not taking into account their length. If two vectors point roughly in the same direction their cosine similarity is close to 1, if they point in roughly opposite directions their cosine similarity is close to -1.</p>
+</section>
+<section id="cosine-similarity-2" class="slide level2">
+<h2>Cosine similarity</h2>
+<p>We can also not divide out by the vectors’ length. What we are left with is <span class="math display">\[
+  \langle x, y \rangle.
+\]</span> TLDR, we can use the scalar product to get a rough (and increadibly cheap to compute) measure of how similar two vectors are. We will use this idea in self-attention.</p>
 </section>
 <section id="self-attention" class="slide level2">
 <h2>Self-attention</h2>
@@ -353,9 +371,21 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <section id="transformers-3" class="slide level2">
 <h2>Transformers</h2>
 <p>Self-attention layers are permutation invariant, i.e.&nbsp;if we shuffle up the order of the input <span class="math inline">\(x_i\)</span> the output <span class="math inline">\(y_i\)</span> remain the same except also shuffled. For NLP, we would like our model to be sensitive to word order. To achieve this to each token embedding we are also going to add a positional embedding.</p>
-<p>Let’s build a transformer model.</p>
 </section>
 <section id="transformers-4" class="slide level2">
+<h2>Transformers</h2>
+<p>Positional embeddings work as follows.</p>
+<p>Suppose our model’s maximum input sequence length is 100. Then to each of the 100 possible positions we assign a vector of the same dimension as our token embeddingings. In this way we get positional embeddings.</p>
+<p>We then (literally) add these positional embeddings to our token embeddings and feed this to our transformer. So now the transformer will be aware of positional information in our text sequence.</p>
+</section>
+<section id="transformers-5" class="slide level2">
+<h2>Transformers</h2>
+<p>We are going to let the model learn what positional embedding to use on its own.</p>
+<p>Alternatively, you can choose to hard code a positional embedding. For example, you can use the sinusoidal embeddings defined in section 3.5 of this <a href="https://arxiv.org/abs/1706.03762">paper</a>.</p>
+<p>From what I can tell, it does not really matter what positional embeddings you choose to use, as long as they are there (and if you choose to hardcode the values should make atleast some intuitive sense).</p>
+<p>Let’s build a transformer model.</p>
+</section>
+<section id="transformers-6" class="slide level2">
 <h2>Transformers</h2>
 <div id="f0ca1f39" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="4c7efb04-1596-4089-cac6-679ce2b15f29" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">class</span> Transformer(nn.Module):</span>
@@ -366,26 +396,25 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <span id="cb3-6"><a href=""></a>    <span class="va">self</span>.token_embedding <span class="op">=</span> nn.Embedding(embedding_dim<span class="op">=</span>embed_dim, num_embeddings<span class="op">=</span>no_tokens)</span>
 <span id="cb3-7"><a href=""></a>    <span class="va">self</span>.pos_embedding <span class="op">=</span> nn.Embedding(embedding_dim<span class="op">=</span>embed_dim, num_embeddings<span class="op">=</span>seq_length)</span>
 <span id="cb3-8"><a href=""></a></span>
-<span id="cb3-9"><a href=""></a>    tblocks <span class="op">=</span> []</span>
-<span id="cb3-10"><a href=""></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(depth):</span>
-<span id="cb3-11"><a href=""></a>      tblocks.append(TransformerBlock(embed_dim<span class="op">=</span>embed_dim, no_heads<span class="op">=</span>no_heads, attn_mask<span class="op">=</span>mask))</span>
-<span id="cb3-12"><a href=""></a>    <span class="va">self</span>.tblocks <span class="op">=</span> nn.Sequential(<span class="op">*</span>tblocks)</span>
-<span id="cb3-13"><a href=""></a></span>
-<span id="cb3-14"><a href=""></a>    <span class="va">self</span>.toprobs <span class="op">=</span> nn.Linear(embed_dim, no_tokens)</span>
-<span id="cb3-15"><a href=""></a></span>
-<span id="cb3-16"><a href=""></a>  <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
-<span id="cb3-17"><a href=""></a>    tokens <span class="op">=</span> <span class="va">self</span>.token_embedding(x)</span>
-<span id="cb3-18"><a href=""></a>    b, n, e <span class="op">=</span> tokens.size()</span>
-<span id="cb3-19"><a href=""></a>    positions <span class="op">=</span> <span class="va">self</span>.pos_embedding(torch.arange(n, device<span class="op">=</span>tokens.device))[<span class="va">None</span>, :, :].expand(b, n, e)</span>
-<span id="cb3-20"><a href=""></a>    x <span class="op">=</span> tokens <span class="op">+</span> positions</span>
-<span id="cb3-21"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.tblocks(x)</span>
-<span id="cb3-22"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.toprobs(x)</span>
-<span id="cb3-23"><a href=""></a></span>
-<span id="cb3-24"><a href=""></a><span class="bu">print</span>(Transformer(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-9"><a href=""></a>    <span class="va">self</span>.tblocks <span class="op">=</span> nn.Sequential(<span class="op">*</span>[</span>
+<span id="cb3-10"><a href=""></a>      TransformerBlock(embed_dim<span class="op">=</span>embed_dim, no_heads<span class="op">=</span>no_heads, attn_mask<span class="op">=</span>mask) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(depth)</span>
+<span id="cb3-11"><a href=""></a>    ])</span>
+<span id="cb3-12"><a href=""></a></span>
+<span id="cb3-13"><a href=""></a>    <span class="va">self</span>.toprobs <span class="op">=</span> nn.Linear(embed_dim, no_tokens)</span>
+<span id="cb3-14"><a href=""></a></span>
+<span id="cb3-15"><a href=""></a>  <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb3-16"><a href=""></a>    tokens <span class="op">=</span> <span class="va">self</span>.token_embedding(x)</span>
+<span id="cb3-17"><a href=""></a>    b, n, e <span class="op">=</span> tokens.size()</span>
+<span id="cb3-18"><a href=""></a>    positions <span class="op">=</span> <span class="va">self</span>.pos_embedding(torch.arange(n, device<span class="op">=</span>tokens.device))[<span class="va">None</span>, :, :].expand(b, n, e)</span>
+<span id="cb3-19"><a href=""></a>    x <span class="op">=</span> tokens <span class="op">+</span> positions</span>
+<span id="cb3-20"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.tblocks(x)</span>
+<span id="cb3-21"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.toprobs(x)</span>
+<span id="cb3-22"><a href=""></a></span>
+<span id="cb3-23"><a href=""></a><span class="bu">print</span>(Transformer(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
-<section id="transformers-4-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="4c7efb04-1596-4089-cac6-679ce2b15f29" data-execution_count="2">
+<section id="transformers-6-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="4c7efb04-1596-4089-cac6-679ce2b15f29" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>Transformer(
   (token_embedding): Embedding(10, 10)
@@ -431,33 +460,33 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
   (toprobs): Linear(in_features=10, out_features=10, bias=True)
 )</code></pre>
 </div>
-</div></section><section id="transformers-5" class="slide level2">
+</div></section><section id="transformers-7" class="slide level2">
 <h2>Transformers</h2>
 <p>Let’s apply our transformer to text generation. Let’s generate text the way large language models do it.</p>
 <p>Given a sequence of tokens our model is going to predict the next token. We can use this to generate text token by token by feeding the model its output as input.</p>
 </section>
-<section id="transformers-6" class="slide level2">
+<section id="transformers-8" class="slide level2">
 <h2>Transformers</h2>
 <p>To speed up training we are actually going to ask the model to predict the input sequence, but shifted to the right. I.e. the model is still learning to predict the next token, but now we can use the whole sequence for training instead of just the last token.</p>
 </section>
-<section id="transformers-7" class="slide level2">
+<section id="transformers-9" class="slide level2">
 <h2>Transformers</h2>
 <p>Since we are giving the whole sequence to the model we need to make sure that it is not able to peek ahead when predicting the next token. This is done by adding a mask to the attention layers’ weights. Then, when computing the output of the attention layer the model is only able to use the current and previous tokens.</p>
 </section>
-<section id="transformers-8" class="slide level2">
+<section id="transformers-10" class="slide level2">
 <h2>Transformers</h2>
 <p>This idea is summarized in the following diagram, which was taken from this <a href="https://peterbloem.nl/blog/transformers">blogpost</a>.</p>
 
 <img data-src="../images/masked-attention.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="transformers-9" class="slide level2">
+<section id="transformers-11" class="slide level2">
 <h2>Transformers</h2>
 <p>We have already added this mask when building our transformer model.</p>
 <p>For the actual task, we are going to feed a list of lithuanian names to the model and ask it to generate more names letter by letter.</p>
 <p>Let’s build a dataset class that is going to return tokenized names and also the same names shifted one letter to the right for training.</p>
 </section>
-<section id="transformers-10" class="slide level2">
+<section id="transformers-12" class="slide level2">
 <h2>Transformers</h2>
-<div id="c8b85dcc" class="cell" data-execution_count="4">
+<div id="c8b85dcc" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb5-3"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -533,10 +562,10 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <span id="cb5-73"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="transformers-11" class="slide level2">
+<section id="transformers-13" class="slide level2">
 <h2>Transformers</h2>
 <p>Let’s create a function for training one epoch.</p>
-<div id="e578bf1d" class="cell" data-execution_count="5">
+<div id="e578bf1d" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm <span class="co"># This is a library that implements loading bars</span></span>
 <span id="cb6-2"><a href=""></a><span class="im">import</span> sys</span>
 <span id="cb6-3"><a href=""></a></span>
@@ -568,10 +597,10 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <span id="cb6-29"><a href=""></a>      ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="transformers-12" class="slide level2">
+<section id="transformers-14" class="slide level2">
 <h2>Transformers</h2>
 <p>Now we can train the model.</p>
-<div id="7fd62212" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="a5085495-289c-40c2-abc5-5ce8b0a80756" data-execution_count="21">
+<div id="7fd62212" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="a5085495-289c-40c2-abc5-5ce8b0a80756" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="co"># Hyperparameters</span></span>
 <span id="cb7-2"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
 <span id="cb7-3"><a href=""></a>epochs <span class="op">=</span> <span class="dv">20</span></span>
@@ -600,79 +629,79 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 </div>
 
 </section>
-<section id="transformers-12-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="a5085495-289c-40c2-abc5-5ce8b0a80756" data-execution_count="21">
+<section id="transformers-14-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="a5085495-289c-40c2-abc5-5ce8b0a80756" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>Using cuda device
 Epoch 1
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 214.43batch/s, average_batch_loss=0.816]
+Train: 100%|██████████| 194/194 [00:01&lt;00:00, 189.09batch/s, average_batch_loss=0.811]
 Epoch 2
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 211.03batch/s, average_batch_loss=0.703]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 223.14batch/s, average_batch_loss=0.701]
 Epoch 3
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 227.83batch/s, average_batch_loss=0.673]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 227.64batch/s, average_batch_loss=0.672]
 Epoch 4
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 233.20batch/s, average_batch_loss=0.658]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 197.21batch/s, average_batch_loss=0.657]
 Epoch 5
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 214.30batch/s, average_batch_loss=0.648]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 202.50batch/s, average_batch_loss=0.647]
 Epoch 6
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 227.10batch/s, average_batch_loss=0.64] 
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 228.24batch/s, average_batch_loss=0.64] 
 Epoch 7
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 225.38batch/s, average_batch_loss=0.635]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 228.04batch/s, average_batch_loss=0.634]
 Epoch 8
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 207.40batch/s, average_batch_loss=0.63] 
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 195.61batch/s, average_batch_loss=0.63] 
 Epoch 9
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 196.02batch/s, average_batch_loss=0.626]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 231.96batch/s, average_batch_loss=0.626]
 Epoch 10
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 223.32batch/s, average_batch_loss=0.624]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 218.73batch/s, average_batch_loss=0.623]
 Epoch 11
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 231.81batch/s, average_batch_loss=0.621]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 229.74batch/s, average_batch_loss=0.622]
 Epoch 12
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 232.91batch/s, average_batch_loss=0.62] 
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 227.11batch/s, average_batch_loss=0.62] 
 Epoch 13
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 228.96batch/s, average_batch_loss=0.618]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 223.69batch/s, average_batch_loss=0.618]
 Epoch 14
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 230.13batch/s, average_batch_loss=0.616]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 232.81batch/s, average_batch_loss=0.616]
 Epoch 15
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 224.80batch/s, average_batch_loss=0.615]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 231.78batch/s, average_batch_loss=0.615]
 Epoch 16
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 214.27batch/s, average_batch_loss=0.614]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 242.37batch/s, average_batch_loss=0.614]
 Epoch 17
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 213.94batch/s, average_batch_loss=0.613]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 231.59batch/s, average_batch_loss=0.613]
 Epoch 18
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 231.70batch/s, average_batch_loss=0.612]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 237.32batch/s, average_batch_loss=0.612]
 Epoch 19
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 222.33batch/s, average_batch_loss=0.612]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 235.41batch/s, average_batch_loss=0.611]
 Epoch 20
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 220.21batch/s, average_batch_loss=0.612]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 241.25batch/s, average_batch_loss=0.611]
 Done!</code></pre>
 </div>
-</div></section><section id="transformers-13" class="slide level2">
+</div></section><section id="transformers-15" class="slide level2">
 <h2>Transformers</h2>
 <p>Now let’s sample from the model.</p>
 <p>For comparison, you can try generating random sequences of characters from the lithuanian alphabet to see that these results are quite good.</p>
 </section>
-<section id="transformers-14" class="slide level2">
+<section id="transformers-16" class="slide level2">
 <h2>Transformers</h2>
-<div id="3dc1f120" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d" data-execution_count="22">
+<div id="3dc1f120" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="kw">def</span> sample(model, seed, temperature<span class="op">=</span><span class="fl">1.0</span>):</span>
 <span id="cb9-2"><a href=""></a>  <span class="cf">assert</span> <span class="bu">len</span>(seed) <span class="op">&gt;</span> <span class="dv">0</span></span>
 <span id="cb9-3"><a href=""></a>  model.<span class="bu">eval</span>()</span>
@@ -705,12 +734,12 @@ Done!</code></pre>
 </div>
 
 </section>
-<section id="transformers-14-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d" data-execution_count="22">
+<section id="transformers-16-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d" data-execution_count="11">
 <div class="cell-output cell-output-stdout">
-<pre><code>joelmantė jopvydas johelas jozavinė joherdas
-jūrija jūkija jūfraja jūšrija jūratijus
-jačius jaolgvinė jaūgvidė jaomintė jaūdronė
-jevdrohijas jeongirdas jevfropijas ječimonė jeompinė
+<pre><code>joevkardė joefrinas joefrandas jogeras joektas
+jūrakė jūragintė jūregailė jūragimė jūdra
+jažvydijus jažberius jaberotė jaūmelinė jaūvydė
+jeūkonė jeforūnas jevčius ječius ježvydija
 </code></pre>
 </div>
 </div></section><section id="extras" class="slide level2">
@@ -719,6 +748,14 @@ jevdrohijas jeongirdas jevfropijas ječimonė jeompinė
 <ul>
 <li><a href="https://huggingface.co/google-bert/bert-base-uncased">BERT</a></li>
 <li><a href="https://huggingface.co/openai-community/gpt2">GPT-2</a></li>
+</ul>
+</section>
+<section id="what-to-read-and-watch" class="slide level2">
+<h2>What to read and watch</h2>
+<ul>
+<li><a href="https://peterbloem.nl/blog/transformers">Read this excellent article on transformers!</a></li>
+<li>I would add a video that explains transformers here, except I have not found one that doesn’t suck, so read the above article instead.</li>
+<li><a href="https://arxiv.org/abs/1706.03762">The paper that introduced transformers</a></li>
 </ul>
 </section>
 <section id="practice-task" class="slide level2">
