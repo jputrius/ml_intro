@@ -271,7 +271,7 @@
 </section>
 <section id="self-attention-7" class="slide level2">
 <h2>Self-attention</h2>
-<p>These three distinct roles are called query, key and value. In actual self-attention three different <span class="math inline">\(k\)</span> by <span class="math inline">\(k\)</span> matrices <span class="math inline">\(Q\)</span>, <span class="math inline">\(K\)</span> and <span class="math inline">\(V\)</span> are used to preprocess the <span class="math inline">\(x_i\)</span> before computing <span class="math inline">\(y_i.\)</span> This gives extra flexibility and also weights for the model to learn.</p>
+<p>These three distinct roles are called query, key and value. In actual self-attention three different <span class="math inline">\(n\)</span> by <span class="math inline">\(n\)</span> matrices <span class="math inline">\(Q\)</span>, <span class="math inline">\(K\)</span> and <span class="math inline">\(V\)</span> are used to preprocess the <span class="math inline">\(x_i\)</span> before computing <span class="math inline">\(y_i.\)</span> This gives extra flexibility and also weights for the model to learn.</p>
 <p>So the formulas now are: <span class="math display">\[
   q_i = Qx_i, \ k_i = Kx_i, \ v_i = Vx_i,
 \]</span> <span class="math display">\[
@@ -325,26 +325,28 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
 <span id="cb1-3"><a href=""></a></span>
-<span id="cb1-4"><a href=""></a><span class="kw">class</span> TransformerBlock(nn.Module):</span>
-<span id="cb1-5"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, embed_dim, no_heads, attn_mask, fc_dim<span class="op">=</span><span class="dv">2048</span>):</span>
-<span id="cb1-6"><a href=""></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb1-7"><a href=""></a>    <span class="va">self</span>.mask <span class="op">=</span> attn_mask</span>
-<span id="cb1-8"><a href=""></a>    <span class="va">self</span>.attention <span class="op">=</span> nn.MultiheadAttention(embed_dim<span class="op">=</span>embed_dim, num_heads<span class="op">=</span>no_heads, batch_first<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-9"><a href=""></a>    <span class="va">self</span>.norm1 <span class="op">=</span> nn.LayerNorm(embed_dim)</span>
-<span id="cb1-10"><a href=""></a>    <span class="va">self</span>.fc <span class="op">=</span> nn.Sequential(</span>
-<span id="cb1-11"><a href=""></a>      nn.Linear(embed_dim, fc_dim),</span>
-<span id="cb1-12"><a href=""></a>      nn.ReLU(),</span>
-<span id="cb1-13"><a href=""></a>      nn.Linear(fc_dim, embed_dim)</span>
-<span id="cb1-14"><a href=""></a>    )</span>
-<span id="cb1-15"><a href=""></a>    <span class="va">self</span>.norm2 <span class="op">=</span> nn.LayerNorm(embed_dim)</span>
-<span id="cb1-16"><a href=""></a></span>
-<span id="cb1-17"><a href=""></a>  <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
-<span id="cb1-18"><a href=""></a>    att, _ <span class="op">=</span> <span class="va">self</span>.attention(x, x, x, is_causal<span class="op">=</span><span class="va">True</span>, attn_mask<span class="op">=</span><span class="va">self</span>.mask.to(x.device))</span>
-<span id="cb1-19"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.norm1(x <span class="op">+</span> att)</span>
-<span id="cb1-20"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.norm2(x <span class="op">+</span> <span class="va">self</span>.fc(x))</span>
-<span id="cb1-21"><a href=""></a>    <span class="cf">return</span> x</span>
-<span id="cb1-22"><a href=""></a></span>
-<span id="cb1-23"><a href=""></a><span class="bu">print</span>(TransformerBlock(<span class="dv">256</span>, <span class="dv">4</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb1-5"><a href=""></a></span>
+<span id="cb1-6"><a href=""></a><span class="kw">class</span> TransformerBlock(nn.Module):</span>
+<span id="cb1-7"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, embed_dim, no_heads, seq_length, fc_dim<span class="op">=</span><span class="dv">2048</span>):</span>
+<span id="cb1-8"><a href=""></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb1-9"><a href=""></a>    <span class="va">self</span>.mask <span class="op">=</span> nn.Transformer.generate_square_subsequent_mask(seq_length).to(device)</span>
+<span id="cb1-10"><a href=""></a>    <span class="va">self</span>.attention <span class="op">=</span> nn.MultiheadAttention(embed_dim<span class="op">=</span>embed_dim, num_heads<span class="op">=</span>no_heads, batch_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-11"><a href=""></a>    <span class="va">self</span>.norm1 <span class="op">=</span> nn.LayerNorm(embed_dim)</span>
+<span id="cb1-12"><a href=""></a>    <span class="va">self</span>.fc <span class="op">=</span> nn.Sequential(</span>
+<span id="cb1-13"><a href=""></a>      nn.Linear(embed_dim, fc_dim),</span>
+<span id="cb1-14"><a href=""></a>      nn.ReLU(),</span>
+<span id="cb1-15"><a href=""></a>      nn.Linear(fc_dim, embed_dim)</span>
+<span id="cb1-16"><a href=""></a>    )</span>
+<span id="cb1-17"><a href=""></a>    <span class="va">self</span>.norm2 <span class="op">=</span> nn.LayerNorm(embed_dim)</span>
+<span id="cb1-18"><a href=""></a></span>
+<span id="cb1-19"><a href=""></a>  <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb1-20"><a href=""></a>    att, _ <span class="op">=</span> <span class="va">self</span>.attention(x, x, x, is_causal<span class="op">=</span><span class="va">True</span>, attn_mask<span class="op">=</span><span class="va">self</span>.mask)</span>
+<span id="cb1-21"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.norm1(x <span class="op">+</span> att)</span>
+<span id="cb1-22"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.norm2(x <span class="op">+</span> <span class="va">self</span>.fc(x))</span>
+<span id="cb1-23"><a href=""></a>    <span class="cf">return</span> x</span>
+<span id="cb1-24"><a href=""></a></span>
+<span id="cb1-25"><a href=""></a><span class="bu">print</span>(TransformerBlock(<span class="dv">256</span>, <span class="dv">4</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -391,26 +393,25 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">class</span> Transformer(nn.Module):</span>
 <span id="cb3-2"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, no_tokens, seq_length, pad_idx, embed_dim, no_heads, depth):</span>
 <span id="cb3-3"><a href=""></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb3-4"><a href=""></a>    mask <span class="op">=</span> nn.Transformer.generate_square_subsequent_mask(seq_length)</span>
-<span id="cb3-5"><a href=""></a></span>
-<span id="cb3-6"><a href=""></a>    <span class="va">self</span>.token_embedding <span class="op">=</span> nn.Embedding(embedding_dim<span class="op">=</span>embed_dim, num_embeddings<span class="op">=</span>no_tokens)</span>
-<span id="cb3-7"><a href=""></a>    <span class="va">self</span>.pos_embedding <span class="op">=</span> nn.Embedding(embedding_dim<span class="op">=</span>embed_dim, num_embeddings<span class="op">=</span>seq_length)</span>
-<span id="cb3-8"><a href=""></a></span>
-<span id="cb3-9"><a href=""></a>    <span class="va">self</span>.tblocks <span class="op">=</span> nn.Sequential(<span class="op">*</span>[</span>
-<span id="cb3-10"><a href=""></a>      TransformerBlock(embed_dim<span class="op">=</span>embed_dim, no_heads<span class="op">=</span>no_heads, attn_mask<span class="op">=</span>mask) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(depth)</span>
-<span id="cb3-11"><a href=""></a>    ])</span>
-<span id="cb3-12"><a href=""></a></span>
-<span id="cb3-13"><a href=""></a>    <span class="va">self</span>.toprobs <span class="op">=</span> nn.Linear(embed_dim, no_tokens)</span>
-<span id="cb3-14"><a href=""></a></span>
-<span id="cb3-15"><a href=""></a>  <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
-<span id="cb3-16"><a href=""></a>    tokens <span class="op">=</span> <span class="va">self</span>.token_embedding(x)</span>
-<span id="cb3-17"><a href=""></a>    b, n, e <span class="op">=</span> tokens.size()</span>
-<span id="cb3-18"><a href=""></a>    positions <span class="op">=</span> <span class="va">self</span>.pos_embedding(torch.arange(n, device<span class="op">=</span>tokens.device))[<span class="va">None</span>, :, :].expand(b, n, e)</span>
-<span id="cb3-19"><a href=""></a>    x <span class="op">=</span> tokens <span class="op">+</span> positions</span>
-<span id="cb3-20"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.tblocks(x)</span>
-<span id="cb3-21"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.toprobs(x)</span>
-<span id="cb3-22"><a href=""></a></span>
-<span id="cb3-23"><a href=""></a><span class="bu">print</span>(Transformer(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-4"><a href=""></a></span>
+<span id="cb3-5"><a href=""></a>    <span class="va">self</span>.token_embedding <span class="op">=</span> nn.Embedding(embedding_dim<span class="op">=</span>embed_dim, num_embeddings<span class="op">=</span>no_tokens)</span>
+<span id="cb3-6"><a href=""></a>    <span class="va">self</span>.pos_embedding <span class="op">=</span> nn.Embedding(embedding_dim<span class="op">=</span>embed_dim, num_embeddings<span class="op">=</span>seq_length)</span>
+<span id="cb3-7"><a href=""></a></span>
+<span id="cb3-8"><a href=""></a>    <span class="va">self</span>.tblocks <span class="op">=</span> nn.Sequential(<span class="op">*</span>[</span>
+<span id="cb3-9"><a href=""></a>      TransformerBlock(embed_dim<span class="op">=</span>embed_dim, no_heads<span class="op">=</span>no_heads, seq_length<span class="op">=</span>seq_length) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(depth)</span>
+<span id="cb3-10"><a href=""></a>    ])</span>
+<span id="cb3-11"><a href=""></a></span>
+<span id="cb3-12"><a href=""></a>    <span class="va">self</span>.toprobs <span class="op">=</span> nn.Linear(embed_dim, no_tokens)</span>
+<span id="cb3-13"><a href=""></a></span>
+<span id="cb3-14"><a href=""></a>  <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb3-15"><a href=""></a>    tokens <span class="op">=</span> <span class="va">self</span>.token_embedding(x)</span>
+<span id="cb3-16"><a href=""></a>    b, n, e <span class="op">=</span> tokens.size()</span>
+<span id="cb3-17"><a href=""></a>    positions <span class="op">=</span> <span class="va">self</span>.pos_embedding(torch.arange(n, device<span class="op">=</span>tokens.device)).unsqueeze(<span class="dv">0</span>).expand(b, n, e)</span>
+<span id="cb3-18"><a href=""></a>    x <span class="op">=</span> tokens <span class="op">+</span> positions</span>
+<span id="cb3-19"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.tblocks(x)</span>
+<span id="cb3-20"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.toprobs(x)</span>
+<span id="cb3-21"><a href=""></a></span>
+<span id="cb3-22"><a href=""></a><span class="bu">print</span>(Transformer(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -603,7 +604,7 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <div id="7fd62212" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="a5085495-289c-40c2-abc5-5ce8b0a80756" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="co"># Hyperparameters</span></span>
 <span id="cb7-2"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
-<span id="cb7-3"><a href=""></a>epochs <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb7-3"><a href=""></a>epochs <span class="op">=</span> <span class="dv">15</span></span>
 <span id="cb7-4"><a href=""></a></span>
 <span id="cb7-5"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
 <span id="cb7-6"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
@@ -634,64 +635,49 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <pre><code>Using cuda device
 Epoch 1
 -------------------------------
-Train: 100%|██████████| 194/194 [00:01&lt;00:00, 189.09batch/s, average_batch_loss=0.811]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 206.14batch/s, average_batch_loss=0.821]
 Epoch 2
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 223.14batch/s, average_batch_loss=0.701]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 222.98batch/s, average_batch_loss=0.703]
 Epoch 3
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 227.64batch/s, average_batch_loss=0.672]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 244.79batch/s, average_batch_loss=0.674]
 Epoch 4
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 197.21batch/s, average_batch_loss=0.657]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 241.68batch/s, average_batch_loss=0.658]
 Epoch 5
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 202.50batch/s, average_batch_loss=0.647]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 239.32batch/s, average_batch_loss=0.648]
 Epoch 6
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 228.24batch/s, average_batch_loss=0.64] 
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 223.91batch/s, average_batch_loss=0.64] 
 Epoch 7
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 228.04batch/s, average_batch_loss=0.634]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 241.12batch/s, average_batch_loss=0.635]
 Epoch 8
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 195.61batch/s, average_batch_loss=0.63] 
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 218.26batch/s, average_batch_loss=0.63] 
 Epoch 9
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 231.96batch/s, average_batch_loss=0.626]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 214.11batch/s, average_batch_loss=0.627]
 Epoch 10
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 218.73batch/s, average_batch_loss=0.623]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 245.23batch/s, average_batch_loss=0.624]
 Epoch 11
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 229.74batch/s, average_batch_loss=0.622]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 236.23batch/s, average_batch_loss=0.621]
 Epoch 12
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 227.11batch/s, average_batch_loss=0.62] 
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 231.35batch/s, average_batch_loss=0.619]
 Epoch 13
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 223.69batch/s, average_batch_loss=0.618]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 226.38batch/s, average_batch_loss=0.618]
 Epoch 14
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 232.81batch/s, average_batch_loss=0.616]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 237.05batch/s, average_batch_loss=0.617]
 Epoch 15
 -------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 231.78batch/s, average_batch_loss=0.615]
-Epoch 16
--------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 242.37batch/s, average_batch_loss=0.614]
-Epoch 17
--------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 231.59batch/s, average_batch_loss=0.613]
-Epoch 18
--------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 237.32batch/s, average_batch_loss=0.612]
-Epoch 19
--------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 235.41batch/s, average_batch_loss=0.611]
-Epoch 20
--------------------------------
-Train: 100%|██████████| 194/194 [00:00&lt;00:00, 241.25batch/s, average_batch_loss=0.611]
+Train: 100%|██████████| 194/194 [00:00&lt;00:00, 242.47batch/s, average_batch_loss=0.616]
 Done!</code></pre>
 </div>
 </div></section><section id="transformers-15" class="slide level2">
@@ -701,7 +687,7 @@ Done!</code></pre>
 </section>
 <section id="transformers-16" class="slide level2">
 <h2>Transformers</h2>
-<div id="3dc1f120" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d" data-execution_count="11">
+<div id="3dc1f120" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="kw">def</span> sample(model, seed, temperature<span class="op">=</span><span class="fl">1.0</span>):</span>
 <span id="cb9-2"><a href=""></a>  <span class="cf">assert</span> <span class="bu">len</span>(seed) <span class="op">&gt;</span> <span class="dv">0</span></span>
 <span id="cb9-3"><a href=""></a>  model.<span class="bu">eval</span>()</span>
@@ -734,12 +720,12 @@ Done!</code></pre>
 </div>
 
 </section>
-<section id="transformers-16-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d" data-execution_count="11">
+<section id="transformers-16-output" class="slide level2 output-location-slide"><h2>Transformers</h2><div class="cell output-location-slide" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d" data-execution_count="6">
 <div class="cell-output cell-output-stdout">
-<pre><code>joevkardė joefrinas joefrandas jogeras joektas
-jūrakė jūragintė jūregailė jūragimė jūdra
-jažvydijus jažberius jaberotė jaūmelinė jaūvydė
-jeūkonė jeforūnas jevčius ječius ježvydija
+<pre><code>joprynas jorandė joegrinas jokverinas jorčenis
+jūrda jūksi jūčė jūredas jūridas
+jaronius jakolentis jažuolijus jarčius jachilė
+ježvyštė jerontija jeočynilė jebrona jevgorinas
 </code></pre>
 </div>
 </div></section><section id="extras" class="slide level2">
@@ -760,8 +746,10 @@ jeūkonė jeforūnas jevčius ječius ježvydija
 </section>
 <section id="practice-task" class="slide level2">
 <h2>Practice task</h2>
-<p>Try building a transformer model for sentiment analysis on this <a href="https://github.com/jputrius/ml_intro/tree/main/data/reviewpolarity">dataset</a>.</p>
-<p>Also try to figure out how to finetune some pretrained huggingface transformer, for example this <a href="https://huggingface.co/distilbert">one</a>. Here is a <a href="https://huggingface.co/docs/transformers/en/training">guide</a>.</p>
+<ol type="1">
+<li><p>Remove the causal mask from the transformer block and try training the model for name generation. What happens? Why does it happen?</p></li>
+<li><p>Finetune a pretrained huggingface transformer to do sentiment analysis on this <a href="https://github.com/jputrius/ml_intro/tree/main/data/reviewpolarity">dataset</a>. For example, you can use <a href="https://huggingface.co/distilbert">DistilBERT</a>. Here is a <a href="https://huggingface.co/docs/transformers/en/training">guide</a>.</p></li>
+</ol>
 
 </section>
     </div>

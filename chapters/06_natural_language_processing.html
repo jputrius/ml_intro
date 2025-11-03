@@ -408,67 +408,66 @@ weighted avg       0.80      0.80      0.79      2388
 </section>
 <section id="embeddings-8" class="slide level2">
 <h2>Embeddings</h2>
-<div id="20ccaa7c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:81,&quot;referenced_widgets&quot;:[&quot;088a5add4c2b4c8bba79f2cb20c8687a&quot;,&quot;e78d63fe5da7490cae2e986f235bc446&quot;,&quot;d2859ec1aeb14cc594c5f65ab5b30f2f&quot;,&quot;0acbce8a74d848b18648de1eccaba0ad&quot;,&quot;81017da71b1b4f58b3a1d285b6f4aba7&quot;,&quot;a639d4cd177743cc9e4adde406cfc331&quot;,&quot;9d4b4a463ed242b9adec35e52553ecf8&quot;,&quot;8d22972b1593440bb66ab5581e731dc2&quot;,&quot;504c38a814f344a8aca46e8846ab38ab&quot;,&quot;75f3c3bbed464591aa6184167afaaa26&quot;,&quot;2fe6f90e23ce4baeaa1862e4d0c364e5&quot;,&quot;bde31e4861b24b9cbcaddacd0b981353&quot;,&quot;d863a2ec094547e3bf96038945b03ed1&quot;,&quot;f85c4ad4a78547118837e2fab19e584b&quot;,&quot;79256142853c45619f3ad924f957bb45&quot;,&quot;41c89cd86a4f45b397ddde557cf7828d&quot;,&quot;edadf1ef836b40798324beaeb0878539&quot;,&quot;ef76adb13a6a4ff1ae2608f69c081cc9&quot;,&quot;c2b3839430e443deb4d2e34b5f4d8821&quot;,&quot;9fa10d556cc74b288bbff7969bff6a85&quot;,&quot;399b259bf34343e9861f780a5c876942&quot;,&quot;0c55898ae30f4647a8f888f4b7536f04&quot;]}}" data-outputid="25607928-1937-4289-9019-d9f60a74d931" data-execution_count="4">
+<div id="20ccaa7c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:81,&quot;referenced_widgets&quot;:[&quot;088a5add4c2b4c8bba79f2cb20c8687a&quot;,&quot;e78d63fe5da7490cae2e986f235bc446&quot;,&quot;d2859ec1aeb14cc594c5f65ab5b30f2f&quot;,&quot;0acbce8a74d848b18648de1eccaba0ad&quot;,&quot;81017da71b1b4f58b3a1d285b6f4aba7&quot;,&quot;a639d4cd177743cc9e4adde406cfc331&quot;,&quot;9d4b4a463ed242b9adec35e52553ecf8&quot;,&quot;8d22972b1593440bb66ab5581e731dc2&quot;,&quot;504c38a814f344a8aca46e8846ab38ab&quot;,&quot;75f3c3bbed464591aa6184167afaaa26&quot;,&quot;2fe6f90e23ce4baeaa1862e4d0c364e5&quot;,&quot;bde31e4861b24b9cbcaddacd0b981353&quot;,&quot;d863a2ec094547e3bf96038945b03ed1&quot;,&quot;f85c4ad4a78547118837e2fab19e584b&quot;,&quot;79256142853c45619f3ad924f957bb45&quot;,&quot;41c89cd86a4f45b397ddde557cf7828d&quot;,&quot;edadf1ef836b40798324beaeb0878539&quot;,&quot;ef76adb13a6a4ff1ae2608f69c081cc9&quot;,&quot;c2b3839430e443deb4d2e34b5f4d8821&quot;,&quot;9fa10d556cc74b288bbff7969bff6a85&quot;,&quot;399b259bf34343e9861f780a5c876942&quot;,&quot;0c55898ae30f4647a8f888f4b7536f04&quot;]}}" data-outputid="25607928-1937-4289-9019-d9f60a74d931">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">import</span> torch</span>
 <span id="cb5-2"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset, DataLoader</span>
-<span id="cb5-3"><a href=""></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
-<span id="cb5-4"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb5-5"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb5-6"><a href=""></a></span>
-<span id="cb5-7"><a href=""></a><span class="kw">class</span> Tweets(Dataset):</span>
-<span id="cb5-8"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, seq_length, train<span class="op">=</span><span class="va">False</span>, dictionary<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb5-9"><a href=""></a>    <span class="va">self</span>.seq_length <span class="op">=</span> seq_length</span>
-<span id="cb5-10"><a href=""></a></span>
-<span id="cb5-11"><a href=""></a>    <span class="cf">if</span> train:</span>
-<span id="cb5-12"><a href=""></a>      <span class="va">self</span>.dataset <span class="op">=</span> pd.read_csv(<span class="st">"hf://datasets/zeroshot/twitter-financial-news-sentiment/sent_train.csv"</span>)</span>
-<span id="cb5-13"><a href=""></a>    <span class="cf">else</span>:</span>
-<span id="cb5-14"><a href=""></a>      <span class="va">self</span>.dataset <span class="op">=</span> pd.read_csv(<span class="st">"hf://datasets/zeroshot/twitter-financial-news-sentiment/sent_valid.csv"</span>)</span>
-<span id="cb5-15"><a href=""></a></span>
-<span id="cb5-16"><a href=""></a>    <span class="cf">if</span> dictionary <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb5-17"><a href=""></a>      <span class="va">self</span>.dictionary <span class="op">=</span> Dictionary()</span>
-<span id="cb5-18"><a href=""></a>      <span class="va">self</span>.dictionary.build(<span class="va">self</span>.dataset[<span class="st">"text"</span>])</span>
-<span id="cb5-19"><a href=""></a>    <span class="cf">else</span>:</span>
-<span id="cb5-20"><a href=""></a>      <span class="va">self</span>.dictionary <span class="op">=</span> dictionary</span>
-<span id="cb5-21"><a href=""></a></span>
-<span id="cb5-22"><a href=""></a>    <span class="va">self</span>.no_tokens <span class="op">=</span> <span class="va">self</span>.dictionary.no_tokens</span>
-<span id="cb5-23"><a href=""></a></span>
-<span id="cb5-24"><a href=""></a>  <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
-<span id="cb5-25"><a href=""></a>    <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.dataset)</span>
-<span id="cb5-26"><a href=""></a></span>
-<span id="cb5-27"><a href=""></a>  <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
-<span id="cb5-28"><a href=""></a>    tokens <span class="op">=</span> <span class="va">self</span>.dictionary.string_to_idx(<span class="va">self</span>.dataset.iloc[idx][<span class="st">"text"</span>], seq_length<span class="op">=</span><span class="va">self</span>.seq_length)</span>
-<span id="cb5-29"><a href=""></a>    tokens <span class="op">=</span> torch.LongTensor(tokens)</span>
-<span id="cb5-30"><a href=""></a></span>
-<span id="cb5-31"><a href=""></a>    label <span class="op">=</span> <span class="va">self</span>.dataset.iloc[idx][<span class="st">"label"</span>]</span>
-<span id="cb5-32"><a href=""></a>    label <span class="op">=</span> torch.zeros(<span class="dv">3</span>, dtype<span class="op">=</span>torch.<span class="bu">float</span>).scatter_(<span class="dv">0</span>, torch.tensor(label), value<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb5-33"><a href=""></a></span>
-<span id="cb5-34"><a href=""></a>    <span class="cf">return</span> tokens, label</span>
-<span id="cb5-35"><a href=""></a></span>
-<span id="cb5-36"><a href=""></a>seq_length <span class="op">=</span> <span class="dv">50</span></span>
-<span id="cb5-37"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">32</span></span>
-<span id="cb5-38"><a href=""></a></span>
-<span id="cb5-39"><a href=""></a>train_data <span class="op">=</span> Tweets(</span>
-<span id="cb5-40"><a href=""></a>  seq_length<span class="op">=</span>seq_length,</span>
-<span id="cb5-41"><a href=""></a>  train<span class="op">=</span><span class="va">True</span></span>
-<span id="cb5-42"><a href=""></a>)</span>
-<span id="cb5-43"><a href=""></a></span>
-<span id="cb5-44"><a href=""></a>test_data <span class="op">=</span> Tweets(</span>
-<span id="cb5-45"><a href=""></a>  seq_length<span class="op">=</span>seq_length,</span>
-<span id="cb5-46"><a href=""></a>  train<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb5-47"><a href=""></a>  dictionary<span class="op">=</span>train_data.dictionary</span>
-<span id="cb5-48"><a href=""></a>)</span>
-<span id="cb5-49"><a href=""></a></span>
-<span id="cb5-50"><a href=""></a>train_dataloader <span class="op">=</span> DataLoader(</span>
-<span id="cb5-51"><a href=""></a>  train_data,</span>
-<span id="cb5-52"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
-<span id="cb5-53"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span></span>
-<span id="cb5-54"><a href=""></a>)</span>
-<span id="cb5-55"><a href=""></a></span>
-<span id="cb5-56"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(</span>
-<span id="cb5-57"><a href=""></a>  test_data,</span>
-<span id="cb5-58"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
-<span id="cb5-59"><a href=""></a>  shuffle<span class="op">=</span><span class="va">False</span></span>
-<span id="cb5-60"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-3"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-4"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-5"><a href=""></a></span>
+<span id="cb5-6"><a href=""></a><span class="kw">class</span> Tweets(Dataset):</span>
+<span id="cb5-7"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, seq_length, train<span class="op">=</span><span class="va">False</span>, dictionary<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb5-8"><a href=""></a>    <span class="va">self</span>.seq_length <span class="op">=</span> seq_length</span>
+<span id="cb5-9"><a href=""></a></span>
+<span id="cb5-10"><a href=""></a>    <span class="cf">if</span> train:</span>
+<span id="cb5-11"><a href=""></a>      <span class="va">self</span>.dataset <span class="op">=</span> pd.read_csv(<span class="st">"hf://datasets/zeroshot/twitter-financial-news-sentiment/sent_train.csv"</span>)</span>
+<span id="cb5-12"><a href=""></a>    <span class="cf">else</span>:</span>
+<span id="cb5-13"><a href=""></a>      <span class="va">self</span>.dataset <span class="op">=</span> pd.read_csv(<span class="st">"hf://datasets/zeroshot/twitter-financial-news-sentiment/sent_valid.csv"</span>)</span>
+<span id="cb5-14"><a href=""></a></span>
+<span id="cb5-15"><a href=""></a>    <span class="cf">if</span> dictionary <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb5-16"><a href=""></a>      <span class="va">self</span>.dictionary <span class="op">=</span> Dictionary()</span>
+<span id="cb5-17"><a href=""></a>      <span class="va">self</span>.dictionary.build(<span class="va">self</span>.dataset[<span class="st">"text"</span>])</span>
+<span id="cb5-18"><a href=""></a>    <span class="cf">else</span>:</span>
+<span id="cb5-19"><a href=""></a>      <span class="va">self</span>.dictionary <span class="op">=</span> dictionary</span>
+<span id="cb5-20"><a href=""></a></span>
+<span id="cb5-21"><a href=""></a>    <span class="va">self</span>.no_tokens <span class="op">=</span> <span class="va">self</span>.dictionary.no_tokens</span>
+<span id="cb5-22"><a href=""></a></span>
+<span id="cb5-23"><a href=""></a>  <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
+<span id="cb5-24"><a href=""></a>    <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.dataset)</span>
+<span id="cb5-25"><a href=""></a></span>
+<span id="cb5-26"><a href=""></a>  <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
+<span id="cb5-27"><a href=""></a>    tokens <span class="op">=</span> <span class="va">self</span>.dictionary.string_to_idx(<span class="va">self</span>.dataset.iloc[idx][<span class="st">"text"</span>], seq_length<span class="op">=</span><span class="va">self</span>.seq_length)</span>
+<span id="cb5-28"><a href=""></a>    tokens <span class="op">=</span> torch.LongTensor(tokens)</span>
+<span id="cb5-29"><a href=""></a></span>
+<span id="cb5-30"><a href=""></a>    label <span class="op">=</span> <span class="va">self</span>.dataset.iloc[idx][<span class="st">"label"</span>]</span>
+<span id="cb5-31"><a href=""></a>    label <span class="op">=</span> torch.zeros(<span class="dv">3</span>, dtype<span class="op">=</span>torch.<span class="bu">float</span>).scatter_(<span class="dv">0</span>, torch.tensor(label), value<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-32"><a href=""></a></span>
+<span id="cb5-33"><a href=""></a>    <span class="cf">return</span> tokens, label</span>
+<span id="cb5-34"><a href=""></a></span>
+<span id="cb5-35"><a href=""></a>seq_length <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb5-36"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">32</span></span>
+<span id="cb5-37"><a href=""></a></span>
+<span id="cb5-38"><a href=""></a>train_data <span class="op">=</span> Tweets(</span>
+<span id="cb5-39"><a href=""></a>  seq_length<span class="op">=</span>seq_length,</span>
+<span id="cb5-40"><a href=""></a>  train<span class="op">=</span><span class="va">True</span></span>
+<span id="cb5-41"><a href=""></a>)</span>
+<span id="cb5-42"><a href=""></a></span>
+<span id="cb5-43"><a href=""></a>test_data <span class="op">=</span> Tweets(</span>
+<span id="cb5-44"><a href=""></a>  seq_length<span class="op">=</span>seq_length,</span>
+<span id="cb5-45"><a href=""></a>  train<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb5-46"><a href=""></a>  dictionary<span class="op">=</span>train_data.dictionary</span>
+<span id="cb5-47"><a href=""></a>)</span>
+<span id="cb5-48"><a href=""></a></span>
+<span id="cb5-49"><a href=""></a>train_dataloader <span class="op">=</span> DataLoader(</span>
+<span id="cb5-50"><a href=""></a>  train_data,</span>
+<span id="cb5-51"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
+<span id="cb5-52"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span></span>
+<span id="cb5-53"><a href=""></a>)</span>
+<span id="cb5-54"><a href=""></a></span>
+<span id="cb5-55"><a href=""></a>test_dataloader <span class="op">=</span> DataLoader(</span>
+<span id="cb5-56"><a href=""></a>  test_data,</span>
+<span id="cb5-57"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
+<span id="cb5-58"><a href=""></a>  shuffle<span class="op">=</span><span class="va">False</span></span>
+<span id="cb5-59"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="cnns-for-nlp" class="slide level2">
@@ -712,6 +711,12 @@ weighted avg       0.81      0.82      0.81      2388
 </code></pre>
 </div>
 </div>
+</section>
+<section id="stuff-to-watch" class="slide level2">
+<h2>Stuff to watch</h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=hVM8qGRTaOA&amp;t=54s">Good video going over text encoding strategies</a></li>
+</ul>
 </section>
 <section id="practice-task" class="slide level2">
 <h2>Practice Task</h2>
