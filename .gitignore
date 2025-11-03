@@ -4,6 +4,8 @@
 /.vscode/
 /chapters/*.pth
 /chapters/data/
+/chapters/checkpoints/
+/chapters/.ipynb_checkpoints/*
 /.ipynb_checkpoints/*
 /*/.ipynb_checkpoints/*
 **/*.quarto_ipynb
