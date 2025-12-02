@@ -234,13 +234,13 @@
 <section id="support-vector-machines-7" class="slide level2">
 <h2>Support vector machines</h2>
 <p>The distance between <span class="math inline">\(H_+\)</span> and <span class="math inline">\(H_-\)</span> is given by <span class="math display">\[
-  \frac{2}{\sqrt{\theta_0^2+\theta_1^2+\dots+\theta_n^2}}.
+  \frac{2}{\sqrt{\theta_1^2+\dots+\theta_n^2}}.
 \]</span></p>
 </section>
 <section id="support-vector-machines-8" class="slide level2">
 <h2>Support vector machines</h2>
 <p>So what we need to do is to minimize <span class="math display">\[
-  \frac{\theta_0^2+\theta_1^2+\dots+\theta_n^2}{2}
+  \frac{\theta_1^2+\dots+\theta_n^2}{2}
 \]</span> given the constraints <span class="math display">\[
   y_i(\langle \theta, x_i \rangle + \theta_0) \ge 1,
 \]</span> where <span class="math inline">\((x_i, y_i)\)</span> is our training data.</p>
@@ -258,7 +258,7 @@
 <section id="support-vector-machines-11" class="slide level2">
 <h2>Support vector machines</h2>
 <p>You then minimize <span class="math display">\[
-  \frac{\theta_0^2+\theta_1^2+\dots+\theta_n^2}{2} + C\sum_{i=1}^M \xi_i
+  \frac{\theta_1^2+\dots+\theta_n^2}{2} + C\sum_{i=1}^M \xi_i
 \]</span> given the constraints <span class="math display">\[
   y_i(\theta x_i^T + \theta_0) \ge 1 - \xi_i \text{ and } \xi_i \ge 0.
 \]</span> Here <span class="math inline">\(C &gt; 0\)</span> is a hyperparameter and <span class="math inline">\(M\)</span> is the amount of training samples you have.</p>
