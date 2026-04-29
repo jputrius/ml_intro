@@ -1,14 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 body {
   display: flex;
   padding-top: 5rem;
   place-content: center;
   font-family: Roboto;
-  background-color: #FFFDF6;
+  background-color: #fffdf6;
 }
 
-h1 {
+h1,
+h3 {
   width: 100%;
   text-align: center;
 }

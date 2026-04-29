@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="01_singular_value_decomposition_files/libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="01_singular_value_decomposition_files/libs/clipboard/clipboard.min.js"></script>
 <script src="01_singular_value_decomposition_files/libs/quarto-html/tabby.min.js"></script>
 <script src="01_singular_value_decomposition_files/libs/quarto-html/popper.min.js"></script>
 <script src="01_singular_value_decomposition_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="01_singular_value_decomposition_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="01_singular_value_decomposition_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="01_singular_value_decomposition_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.26">
+<link href="01_singular_value_decomposition_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <title>Singular Value Decomposition</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="01_singular_value_decomposition_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="01_singular_value_decomposition_files/libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -94,7 +97,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="01_singular_value_decomposition_files/libs/revealjs/dist/theme/quarto-9df06d9b3e1683bd31835b8738a1bbfc.css">
+  <link rel="stylesheet" href="01_singular_value_decomposition_files/libs/revealjs/dist/theme/quarto-be1dd51e35b708bfe8d09eef73f8da7b.css">
   <link href="01_singular_value_decomposition_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="01_singular_value_decomposition_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="01_singular_value_decomposition_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -186,6 +189,9 @@
       margin-right: 0; 
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -200,9 +206,13 @@
 </section>
 <section id="introduction" class="slide level2">
 <h2>Introduction</h2>
-<p>In this chapter we will look at singular value decomposition and its applications to data science problems.</p>
+<p>In this chapter we will look at singular value decomposition (SVD), which is a variant of Jordan decomposition that you can apply to matrices that are not necessarily square. We will then look at how we can apply SVD to data science problems. This will also be an excellent opportunity to recall some linear algebra that we will need later on.</p>
 </section>
 <section id="matrices" class="slide level2">
+<h2>Matrices</h2>
+<p>First, let’s recall what a matrix and its eigenvalues are.</p>
+</section>
+<section id="matrices-1" class="slide level2">
 <h2>Matrices</h2>
 <p>Matrices are tables that contain numbers. Here are some examples of matrices: <span class="math display">\[
   \begin{pmatrix}
@@ -219,9 +229,13 @@ e \\
 \frac{1+\sqrt{5}}{2}
 \end{pmatrix}
 \]</span></p>
-<p>When we say that <span class="math inline">\(A\)</span> is an <span class="math inline">\(n \times m\)</span> matrix we mean that <span class="math inline">\(A\)</span> has <span class="math inline">\(n\)</span> rows and <span class="math inline">\(m\)</span> columns. It is also commonly written <span class="math inline">\(A = (a_{ij})\)</span> to denote that the matrix <span class="math inline">\(A\)</span> has the entry <span class="math inline">\(a_{ij}\)</span> in the <span class="math inline">\(i\)</span>-th row and <span class="math inline">\(j\)</span>-th column. In this course all matrices will have real entries.</p>
+<p>When we say that <span class="math inline">\(A\)</span> is an <span class="math inline">\(n \times m\)</span> matrix we mean that <span class="math inline">\(A\)</span> has <span class="math inline">\(n\)</span> rows and <span class="math inline">\(m\)</span> columns. It is also commonly written <span class="math inline">\(A = (a_{ij})\)</span> to denote that the matrix <span class="math inline">\(A\)</span> has the entry <span class="math inline">\(a_{ij}\)</span> in the <span class="math inline">\(i\)</span>-th row and <span class="math inline">\(j\)</span>-th column.</p>
 </section>
-<section id="matrices-1" class="slide level2">
+<section id="matrices-2" class="slide level2">
+<h2>Matrices</h2>
+<p>In this course all matrices will have real entries. Although the material that we will cover today can easily be generalized to matrices that have complex entries.</p>
+</section>
+<section id="matrices-3" class="slide level2">
 <h2>Matrices</h2>
 <p>Matrices have standard arithmetic operations defined on them. Matrix addition and multiplication by scalar are defined component wise. For example: <span class="math display">\[
   \begin{pmatrix}
@@ -245,13 +259,13 @@ e \\
 \end{pmatrix}.
 \]</span></p>
 </section>
-<section id="matrices-2" class="slide level2">
+<section id="matrices-4" class="slide level2">
 <h2>Matrices</h2>
 <p>If <span class="math inline">\(A=(a_{ij})\)</span> is an <span class="math inline">\(n \times m\)</span> matrix and <span class="math inline">\(B=(b_{ij})\)</span> is an <span class="math inline">\(m \times l\)</span> matrix, then their multiplication <span class="math inline">\(AB=C\)</span> is defined, where <span class="math inline">\(C=(c_{ij})\)</span> is a <span class="math inline">\(n \times l\)</span> matrix whose coeficients are given by <span class="math display">\[
   c_{ij} = \sum_{k=1}^m a_{ik}b_{kj}.
 \]</span></p>
 </section>
-<section id="matrices-3" class="slide level2">
+<section id="matrices-5" class="slide level2">
 <h2>Matrices</h2>
 <p>For example: <span class="math display">\[\begin{equation*}
 \begin{split}
@@ -269,11 +283,11 @@ e \\
 \end{split}
 \end{equation*}\]</span></p>
 </section>
-<section id="matrices-4" class="slide level2">
+<section id="matrices-6" class="slide level2">
 <h2>Matrices</h2>
 <p>Matrix multiplication is <strong>not</strong> commutative! That is, if both <span class="math inline">\(AB\)</span> and <span class="math inline">\(BA\)</span> are defined, then, in general, <span class="math inline">\(AB \ne BA\)</span> (of course there are matrices that do commute).</p>
 </section>
-<section id="matrices-5" class="slide level2">
+<section id="matrices-7" class="slide level2">
 <h2>Matrices</h2>
 <p>For example, <span class="math display">\[
   \begin{pmatrix}
@@ -310,12 +324,12 @@ e \\
   \end{pmatrix}.
 \]</span></p>
 </section>
-<section id="matrices-6" class="slide level2">
+<section id="matrices-8" class="slide level2">
 <h2>Matrices</h2>
 <p>A matrix is called square if it has the same number of rows and columns.</p>
 <p>Suppose <span class="math inline">\(A\)</span> is a <span class="math inline">\(n \times n\)</span> square matrix. If there exists a <span class="math inline">\(n \times n\)</span> square matrix <span class="math inline">\(B\)</span> such that <span class="math inline">\(AB=BA=I,\)</span> then <span class="math inline">\(B\)</span> is called the inverse of <span class="math inline">\(A\)</span> and is denoted by <span class="math inline">\(A^{-1}\)</span>.</p>
 </section>
-<section id="matrices-7" class="slide level2">
+<section id="matrices-9" class="slide level2">
 <h2>Matrices</h2>
 <p>Here <span class="math inline">\(I\)</span> is the unit matrix, i.e.&nbsp;a matrix whose only non-zero entries are ones on the diagonal: <span class="math display">\[
   I = \begin{pmatrix}
@@ -327,13 +341,13 @@ e \\
 \]</span></p>
 <p>Note that <span class="math inline">\((A^{-1})^{-1} = A\)</span> and <span class="math inline">\((AB)^{-1}=B^{-1}A^{-1}.\)</span></p>
 </section>
-<section id="matrices-8" class="slide level2">
+<section id="matrices-10" class="slide level2">
 <h2>Matrices</h2>
 <p>A matrix has an inverse if and only if the determinant of <span class="math inline">\(A\)</span> is non-zero.</p>
 <p>The determinant <span class="math inline">\(\det\)</span> is a function which to each square matrix associates a number.</p>
 <p>There is a general formula for the determinant of <span class="math inline">\(n \times n\)</span> matrix but it is rather clunky so the determinant is usually defined inductively as follows.</p>
 </section>
-<section id="matrices-9" class="slide level2">
+<section id="matrices-11" class="slide level2">
 <h2>Matrices</h2>
 <p>First of all a <span class="math inline">\(1 \times 1\)</span> matrix <span class="math inline">\(A\)</span> has only one entry <span class="math inline">\(a_{11}\)</span>, so <span class="math inline">\(\det(A)=a_{11}\)</span>.</p>
 <p>Then for a <span class="math inline">\(2 \times 2\)</span> matrix we have the formula <span class="math display">\[
@@ -343,7 +357,7 @@ a_{21} &amp; a_{22}
 \end{pmatrix} = a_{11}a_{22}-a_{12}a_{21}
 \]</span>.</p>
 </section>
-<section id="matrices-10" class="slide level2">
+<section id="matrices-12" class="slide level2">
 <h2>Matrices</h2>
 <p>For a <span class="math inline">\(3 \times 3\)</span> matrix we have <span class="math display">\[\begin{equation*}
 \begin{split}
@@ -368,7 +382,7 @@ a_{31} &amp; a_{32}
 \end{equation*}\]</span></p>
 <p>And then you continue inductively by writing down similar formulas.</p>
 </section>
-<section id="matrices-11" class="slide level2">
+<section id="matrices-13" class="slide level2">
 <h2>Matrices</h2>
 <p>A matrix of the form <span class="math display">\[
   \begin{pmatrix}
@@ -379,7 +393,7 @@ a_{n}
 \end{pmatrix}
 \]</span> is called an <span class="math inline">\(n\)</span> dimensional column vector. In this course when we say “vector” we mean a column vector. Column vectors form a linear space <span class="math inline">\(\mathbb{R}^n.\)</span></p>
 </section>
-<section id="matrices-12" class="slide level2">
+<section id="matrices-14" class="slide level2">
 <h2>Matrices</h2>
 <p>There are also row vectors. They are matrices of the form <span class="math display">\[
 (a_1, a_2, \dots, a_n).
@@ -441,70 +455,105 @@ Eigenvalues of A: [-0.37228132  5.37228132]</code></pre>
 </div>
 </div>
 </section>
+<section id="spectral-theorem" class="slide level2">
+<h2>Spectral theorem</h2>
+<p>In this course we will denote the standard inner product as <span class="math inline">\(\langle . , . \rangle\)</span>, that is <span class="math display">\[
+\langle u , v \rangle = u_1v_1 + \dots + u_n v_n.
+\]</span> Note that <span class="math display">\[
+  u^T v = v^T u = \langle u , v \rangle.
+\]</span> Where <span class="math inline">\(u^T v\)</span> and <span class="math inline">\(v^T u\)</span> is just matrix multiplication. We will use these expressions for the scalar product often as well.</p>
+</section>
+<section id="spectral-theorem-1" class="slide level2">
+<h2>Spectral theorem</h2>
+<p>If <span class="math inline">\(A\)</span> is a square matrix, then <span class="math display">\[
+\langle Au , v \rangle = v^TAu = (A^Tv)^Tu = \langle u , A^Tv \rangle.
+\]</span> So if <span class="math inline">\(A = A^T\)</span> then <span class="math display">\[
+\langle Au , v \rangle = \langle u , Av \rangle.
+\]</span></p>
+</section>
+<section id="spectral-theorem-2" class="slide level2">
+<h2>Spectral theorem</h2>
+<p>Real matrices such that <span class="math inline">\(A = A^T\)</span> are called symmetric. Symmetric matrices are special because the spectral theorem holds for them.</p>
+<p>The spectral theorem says that if <span class="math inline">\(A\)</span> is a symmetric <span class="math inline">\(n \times n\)</span> matrix then all of its eigenvalues are real and there exists a basis of <span class="math inline">\(\mathbb{R}^n\)</span> made up of eigenvectors of <span class="math inline">\(A\)</span>.</p>
+</section>
+<section id="spectral-theorem-3" class="slide level2">
+<h2>Spectral theorem</h2>
+<p>The spectral theorem is equivalent to <span class="math inline">\(A\)</span> having a decomposition <span class="math display">\[
+A = U \text{diag}(\lambda_1, \dots, \lambda_n) U^T,
+\]</span> where <span class="math inline">\(U\)</span> is <span class="math inline">\(n \times n\)</span> orthogonal matrix, that is <span class="math inline">\(U U^T = I\)</span>, <span class="math inline">\(\lambda_1, \dots, \lambda_n\)</span> the eigenvalues of <span class="math inline">\(A\)</span> and</p>
+</section>
+<section id="spectral-theorem-4" class="slide level2">
+<h2>Spectral theorem</h2>
+<p><span class="math display">\[
+\text{diag}(\lambda_1, \dots, \lambda_n) = \begin{pmatrix}
+\lambda_1 &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; \lambda_2 &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \lambda_n \end{pmatrix}.
+\]</span> So a symmetric matrix is always diagonalizable.</p>
+</section>
 <section id="singular-value-decomposition" class="slide level2">
 <h2>Singular Value Decomposition</h2>
-<p>Every real <span class="math inline">\(n \times m\)</span> matrix <span class="math inline">\(A\)</span> has a (non-unique) <strong>Singular Value Decomposition</strong> (SVD): <span class="math display">\[
-  A = U M V^T,
-\]</span> where <span class="math inline">\(U\)</span> is a <span class="math inline">\(n \times n\)</span> matrix, <span class="math inline">\(M\)</span> is a <span class="math inline">\(n \times m\)</span> matrix and <span class="math inline">\(V\)</span> is a <span class="math inline">\(m \times m\)</span> matrix. Matrices <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are orthogonal, i.e.&nbsp;<span class="math inline">\(UU^T=I\)</span> and <span class="math inline">\(VV^T=I\)</span> and <span class="math inline">\(M\)</span> is a diagonal matrix with non-negative entires.</p>
-<p>Algorithms for computing SVD can be found on <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition#Calculating_the_SVD">wikipedia</a>.</p>
+<p>Most matrices encountered in practice will not be square or symmetric. It turns out that a similar decomposition to above holds for all matrices (not just square symmetric ones).</p>
 </section>
 <section id="singular-value-decomposition-1" class="slide level2">
 <h2>Singular Value Decomposition</h2>
-<ul>
-<li>Example: <span class="math display">\[
-A = \begin{pmatrix}
-1 &amp; 0 &amp; 0 &amp; 0 &amp; 2\\
-0 &amp; 0 &amp; 3 &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
-0 &amp; 2 &amp; 0 &amp; 0 &amp; 0
-\end{pmatrix},
-\]</span></li>
-</ul>
+<p>Every real <span class="math inline">\(n \times m\)</span> matrix <span class="math inline">\(M\)</span> has a (non-unique) Singular Value Decomposition (SVD): <span class="math display">\[
+  M = U \Sigma V^T,
+\]</span> where <span class="math inline">\(U\)</span> is a <span class="math inline">\(n \times n\)</span> matrix, <span class="math inline">\(\Sigma\)</span> is a <span class="math inline">\(n \times m\)</span> matrix and <span class="math inline">\(V\)</span> is a <span class="math inline">\(m \times m\)</span> matrix. Matrices <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are orthogonal and <span class="math inline">\(\Sigma\)</span> is a diagonal matrix with non-negative entires.</p>
 </section>
 <section id="singular-value-decomposition-2" class="slide level2">
 <h2>Singular Value Decomposition</h2>
-<p>then <span class="math display">\[
-U = \begin{pmatrix}
-0 &amp; -1 &amp; 0 &amp; 0\\
--1 &amp; 0 &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; -1\\
-0 &amp; 0 &amp; -1 &amp; 0
-\end{pmatrix}, \
-M = \begin{pmatrix}
-3 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
-0 &amp; \sqrt{5} &amp; 0 &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; 2 &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
-\end{pmatrix}
+<p>The non-zero entries of <span class="math inline">\(\Sigma\)</span> are the square roots of the eigenvalues of the square matrix <span class="math inline">\(M^TM,\)</span> they are called the <strong>singular values</strong> of <span class="math inline">\(M,\)</span> hence the name of the decomposition.</p>
+<p>Note that the eigenvalues of <span class="math inline">\(M^TM\)</span> must be non-negative for <span class="math inline">\(\Sigma\)</span> to be defined. However, this is not terribly hard to prove.</p>
+<p>Let <span class="math inline">\(\lambda\)</span> be an eigenvalue of <span class="math inline">\(M^TM\)</span> and <span class="math inline">\(u\)</span> be a unit eigenvector. Then <span class="math display">\[
+\lambda = \lambda u^Tu = u^TM^TMu = (Mu)^TMu = \langle Mu, Mu \rangle \ge 0.
 \]</span></p>
 </section>
 <section id="singular-value-decomposition-3" class="slide level2">
 <h2>Singular Value Decomposition</h2>
-<p>and <span class="math display">\[
-V^T = \begin{pmatrix}
-0 &amp; 0 &amp; -1 &amp; 0 &amp; 0\\
--\sqrt{0.2} &amp; 0 &amp; 0 &amp; 0 &amp; -\sqrt{0.8}\\
-0 &amp; -1 &amp; 0 &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; 1 &amp; 0\\
--\sqrt{0.8} &amp; 0 &amp; 0 &amp; 0 &amp; \sqrt{0.2}
-\end{pmatrix}.
-\]</span></p>
+<p>Talking about algorithms used to compute SVD would take us too far afield into the territory of numerical methods. However, you can find some of these algorithms on <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition#Calculating_the_SVD">wikipedia</a>.</p>
+<p>However, let’s prove that SVD must exist for all real matrices using the spectral theorem.</p>
 </section>
 <section id="singular-value-decomposition-4" class="slide level2">
 <h2>Singular Value Decomposition</h2>
-<p>The non-zero entries of <span class="math inline">\(M\)</span> are the square roots of the eigenvalues of the square matrix <span class="math inline">\(AA^T,\)</span> they are called the <strong>singular values</strong> of <span class="math inline">\(A,\)</span> hence the name of the decomposition.</p>
-<p>Note that the eigenvalues of <span class="math inline">\(AA^T\)</span> must be real and non-negative, because <span class="math inline">\(AA^T\)</span> is self-adjoint (with respect to the usual Euclidean norm) and positive semi-definite. Hence, singular values are well defined.</p>
+<p>Suppose <span class="math inline">\(\lambda_1, \dots, \lambda_k &gt; 0\)</span> are the non-zero eigenvalues of <span class="math inline">\(M^TM.\)</span> Then, using the spectral theorem, we can write <span class="math display">\[
+M^TM = VDV^T
+\]</span> for some orthogonal <span class="math inline">\(V\)</span> and diagonal <span class="math inline">\(D\)</span>, where the first diagonal entries of <span class="math inline">\(D\)</span> are <span class="math inline">\(\lambda_1, \dots, \lambda_k\)</span> and the rest are <span class="math inline">\(0\)</span>. It is not terribly hard to prove that <span class="math inline">\(k \le \min (n, m).\)</span> By the way <span class="math inline">\(V\)</span> and <span class="math inline">\(D\)</span> are <span class="math inline">\(m \times m\)</span> matrices.</p>
 </section>
 <section id="singular-value-decomposition-5" class="slide level2">
 <h2>Singular Value Decomposition</h2>
-<p>Usually SVD is chosen so that the non-zero values of <span class="math inline">\(M\)</span> would be arranged from largest to smallest.</p>
-<p>Let <span class="math inline">\(k = \min(n, m).\)</span> Then, in applications, only the first <span class="math inline">\(k\)</span> columns of <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are kept. Denote by <span class="math inline">\(U_k,\)</span> <span class="math inline">\(M_k\)</span> and <span class="math inline">\(V_k\)</span> the truncated <span class="math inline">\(U,\)</span> <span class="math inline">\(M\)</span> and <span class="math inline">\(V\)</span>. Then we still have <span class="math inline">\(A = U_k M_k V^T_k.\)</span> Performing this truncation saves a lot of space.</p>
+<p>Then write <span class="math display">\[
+  U = MV(\Sigma^{-1})^T,
+\]</span> where <span class="math inline">\((\Sigma^{-1})^T\)</span> is a diagonal <span class="math inline">\(m \times n\)</span> matrix with the first diagonal entries being <span class="math inline">\(\sqrt{\lambda_1}^{-1}, \dots, \sqrt{\lambda_n}^{-1}\)</span> and the rest <span class="math inline">\(0\)</span>. Call <span class="math inline">\(\Sigma\)</span> the diagonal <span class="math inline">\(n \times m\)</span> matrix with the first diagonal entries being <span class="math inline">\(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_n}\)</span> and the rest <span class="math inline">\(0\)</span>.</p>
+<p>Then <span class="math display">\[
+U\Sigma V^T = MV(\Sigma^{-1})^T\Sigma V^T = MV I V^T = M.
+\]</span></p>
 </section>
 <section id="singular-value-decomposition-6" class="slide level2">
+<h2>Singular Value Decomposition</h2>
+<p>So what is left to prove is that <span class="math inline">\(U\)</span> is orthogonal. To that end, <span class="math display">\[\begin{equation*}
+\begin{split}
+&amp;U^TU = (MV(\Sigma^{-1})^T)^TMV(\Sigma^{-1})^T = \\
+&amp;\Sigma^{-1} V^T M^T MV(\Sigma^{-1})^T = \Sigma^{-1} D (\Sigma^{-1})^T = I.
+\end{split}
+\end{equation*}\]</span></p>
+</section>
+<section id="singular-value-decomposition-7" class="slide level2">
+<h2>Singular Value Decomposition</h2>
+<p>Usually SVD is chosen so that the non-zero values of <span class="math inline">\(\Sigma\)</span> would be arranged from largest to smallest.</p>
+<p>Let <span class="math inline">\(k = \min(n, m).\)</span> Then, in applications, only the first <span class="math inline">\(k\)</span> columns of <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are kept. Denote by <span class="math inline">\(U_k,\)</span> <span class="math inline">\(\Sigma_k\)</span> and <span class="math inline">\(V_k\)</span> the truncated <span class="math inline">\(U,\)</span> <span class="math inline">\(\Sigma\)</span> and <span class="math inline">\(V\)</span>. Then we still have <span class="math inline">\(M = U_k \Sigma_k V^T_k.\)</span> Performing this truncation saves a lot of space.</p>
+</section>
+<section id="singular-value-decomposition-8" class="slide level2">
 <h2>Singular Value Decomposition</h2>
 <p>Here is a picture that illustrates this truncation (taken from <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition#/media/File:Reduced_Singular_Value_Decompositions.svg">wikipedia</a>)</p>
 
 <img data-src="../images/reduced_svd.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="singular-value-decomposition-9" class="slide level2">
+<h2>Singular Value Decomposition</h2>
+<p>Now let’s discuss how SVD is applied in data science.</p>
+<p>Basically you can use SVD to compute other useful things. Let’s see two examples.</p>
+</section>
 <section id="linear-regression" class="slide level2">
 <h2>Linear Regression</h2>
 <p>SVD can be used to fit linear regression.</p>
@@ -535,14 +584,14 @@ y_n
 <p>One approach to fitting a linear regression model to this data is to find <span class="math inline">\(\beta\)</span> that minimizes <span class="math display">\[
   \left\lVert X\beta-Y \right\rVert^2.
 \]</span></p>
-<p>This is called least-squares estimate. It can easily be shown that such a <span class="math inline">\(\beta\)</span> is equal to <span class="math display">\[(X^TX)^{-1}X^TY.\]</span></p>
+<p>This is called least-squares estimate. It can be shown that such a <span class="math inline">\(\beta\)</span> is equal to <span class="math display">\[(X^TX)^{-1}X^TY.\]</span></p>
 </section>
 <section id="linear-regression-3" class="slide level2">
 <h2>Linear Regression</h2>
 <p>Usually, in implementations of linear regression, <span class="math inline">\(\beta\)</span> is computed using SVD.</p>
-<p>Let <span class="math inline">\(X=UMV^T\)</span> be the SVD of <span class="math inline">\(X.\)</span> Then, <span class="math display">\[\begin{equation*}
+<p>Let <span class="math inline">\(X=U\Sigma V^T\)</span> be the SVD of <span class="math inline">\(X.\)</span> Then, <span class="math display">\[\begin{equation*}
 \begin{split}
-  &amp;\beta = VM^{-1}U^TY.
+  &amp;\beta = V\Sigma ^{-1}U^TY.
 \end{split}
 \end{equation*}\]</span></p>
 </section>
@@ -559,15 +608,15 @@ y_n
 <span id="cb3-7"><a href=""></a>n, m <span class="op">=</span> X.shape</span>
 <span id="cb3-8"><a href=""></a>X_with_ones <span class="op">=</span> np.insert(X, <span class="dv">0</span>, <span class="fl">1.</span>, axis<span class="op">=</span><span class="dv">1</span>) <span class="co"># Add ones to dataset </span></span>
 <span id="cb3-9"><a href=""></a></span>
-<span id="cb3-10"><a href=""></a>U, M, V <span class="op">=</span> np.linalg.svd(X_with_ones, full_matrices<span class="op">=</span><span class="va">False</span>) <span class="co"># Note that V is already transposed</span></span>
-<span id="cb3-11"><a href=""></a>beta <span class="op">=</span> ((V.T <span class="op">*</span> np.reciprocal(M)) <span class="op">@</span> U.T) <span class="op">@</span> Y.T</span>
+<span id="cb3-10"><a href=""></a>U, S, V <span class="op">=</span> np.linalg.svd(X_with_ones, full_matrices<span class="op">=</span><span class="va">False</span>) <span class="co"># Note that V is already transposed</span></span>
+<span id="cb3-11"><a href=""></a>beta <span class="op">=</span> ((V.T <span class="op">*</span> np.reciprocal(S)) <span class="op">@</span> U.T) <span class="op">@</span> Y.T</span>
 <span id="cb3-12"><a href=""></a>Y_svd <span class="op">=</span> X_with_ones <span class="op">@</span> beta.T</span>
 <span id="cb3-13"><a href=""></a></span>
 <span id="cb3-14"><a href=""></a><span class="bu">print</span>(<span class="ss">f"MSE with our fit: </span><span class="sc">{</span>mean_squared_error(Y, Y_svd)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-15"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Dims X_with_ones: </span><span class="sc">{</span>X_with_ones<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, U: </span><span class="sc">{</span>U<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, M: </span><span class="sc">{</span>M<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, V: </span><span class="sc">{</span>V<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-15"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Dims X_with_ones: </span><span class="sc">{</span>X_with_ones<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, U: </span><span class="sc">{</span>U<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, S: </span><span class="sc">{</span>S<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, V: </span><span class="sc">{</span>V<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>MSE with our fit: 2859.6963475867506
-Dims X_with_ones: (442, 11), U: (442, 11), M: (11,), V: (11, 11).</code></pre>
+Dims X_with_ones: (442, 11), U: (442, 11), S: (11,), V: (11, 11).</code></pre>
 </div>
 </div>
 </section>
@@ -593,36 +642,83 @@ MSE between our fit and sklearn: 6.325051042998488e-27</code></pre>
 <section id="principal-component-analysis" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>Principal Component Analysis (PCA) is a technique for reducing the dimensionality of data.</p>
-<p>Suppose you have <span class="math inline">\(n\)</span> samples of <span class="math inline">\(m\)</span> variables. PCA allows you to compress those <span class="math inline">\(m\)</span> variables into let’s say <span class="math inline">\(k\)</span> variables, where <span class="math inline">\(k &lt; m\)</span>. Hopefully, this compression also removes noise from your dataset.</p>
+<p>Suppose you have <span class="math inline">\(n\)</span> samples of <span class="math inline">\(m\)</span> variables. PCA allows you to compress those <span class="math inline">\(m\)</span> variables into let’s say <span class="math inline">\(k\)</span> variables, where <span class="math inline">\(k &lt; m\)</span>.</p>
 </section>
 <section id="principal-component-analysis-1" class="slide level2">
 <h2>Principal Component Analysis</h2>
-<p>If you have <span class="math inline">\(n\)</span> samples of <span class="math inline">\(m\)</span> variables you can place them into a <span class="math inline">\(n\)</span> by <span class="math inline">\(m\)</span> matrix.</p>
-<p>You can perform PCA as follows:</p>
-<ol type="1">
-<li>Centralize your variables, that is from each observation of your variable subtract the sample mean of that variable (so that the sample mean of the variable becomes 0).</li>
-<li>Form a matrix <span class="math inline">\(A\)</span> where rows represent samples and columns represent variables.</li>
-<li>Compute SVD of <span class="math inline">\(A = UMV^T.\)</span></li>
-</ol>
+<p>Suppose you have <span class="math inline">\(m\)</span> random variables <span class="math inline">\(X_1, X_2, \dots X_m\)</span> that have mean zero. If the random variables are correlated then the variance of their linear combination <span class="math display">\[
+\text{Var}(\sum_{i=1}^m u_i X_i) = \sum_{i=1}^m u_i^2 \text{Var} ( X_i ) + \sum_{i \ne j} u_i u_j \text{Cov}(X_1, X_j)
+\]</span> is a non trivial function of the coefficient vector <span class="math inline">\(u = (u_1, \dots, u_n)^T.\)</span></p>
 </section>
 <section id="principal-component-analysis-2" class="slide level2">
 <h2>Principal Component Analysis</h2>
-<ol start="4" type="1">
-<li>Keep only first <span class="math inline">\(k\)</span> singular values and truncate <span class="math inline">\(U\)</span> keeping only the first <span class="math inline">\(k\)</span> columns.</li>
-<li>Multiply the truncated <span class="math inline">\(U\)</span> and <span class="math inline">\(M\)</span> together, you will get a matrix with <span class="math inline">\(n\)</span> rows and <span class="math inline">\(k\)</span> columns. The rows still represent samples and columns represent the compressed variables.</li>
-</ol>
+<p>The idea of PCA is to find a unit length vector <span class="math inline">\(u_1 = (u_{11}, \dots, u_{1n})^T\)</span> such that the variance of <span class="math inline">\(u_1^T X\)</span> would be the largest possible. Here <span class="math inline">\(X = (X_1, X_2, \dots, X_n)^T\)</span> is a random vector.</p>
+<p>Next, you find a second unit vector <span class="math inline">\(u_2 = (u_{21}, \dots, u_{2n})^T\)</span> such that <span class="math inline">\(u_2\)</span> would be orthogonal to <span class="math inline">\(u_1\)</span> and the variance of <span class="math inline">\(u_2^T X\)</span> would be the largest possible among such vectors.</p>
+<p>Then you continue finding <span class="math inline">\(u_3, \dots, u_n\)</span> iteratively the same way. That is PCA finds orthogonal “directions” in your data along which the variances are the largest.</p>
 </section>
 <section id="principal-component-analysis-3" class="slide level2">
 <h2>Principal Component Analysis</h2>
+<p>Now, suppose you have <span class="math inline">\(n\)</span> samples of <span class="math inline">\(m\)</span> variables and the sample means of your variables are 0. Also, put your data into a <span class="math inline">\(n \times m\)</span> matrix <span class="math inline">\(A\)</span>. And let <span class="math display">\[
+  A = U \Sigma V^T
+\]</span> be SVD of <span class="math inline">\(A\)</span>.</p>
+</section>
+<section id="principal-component-analysis-4" class="slide level2">
+<h2>Principal Component Analysis</h2>
+<p>Let <span class="math inline">\(u\)</span> be a unit vector. Then the sample variance in the direction of <span class="math inline">\(u\)</span> is proportional to <span class="math display">\[
+u^TA^TAu,
+\]</span> that is if <span class="math inline">\(u = (u_1, \dots, u_n)^T\)</span>, then the sample variance of <span class="math display">\[
+\sum_{i=1}^m u_i X_i
+\]</span> is proportional to the above.</p>
+</section>
+<section id="principal-component-analysis-5" class="slide level2">
+<h2>Principal Component Analysis</h2>
+<p>To perform PCA we need to find <span class="math display">\[
+\underset{u^T u = 1}{\text{argmax}} \ u^TA^TAu = \underset{u^T u = 1}{\text{argmax}} \ u^T V \Sigma^T \Sigma V^T u.
+\]</span> Since <span class="math inline">\(V\)</span> is orthogonal then <span class="math inline">\(v = V^T u\)</span> is also a unit length vector, so above is equivalent to <span class="math display">\[
+\underset{v^T v = 1}{\text{argmax}} \ v^T \Sigma^T \Sigma v.
+\]</span></p>
+</section>
+<section id="principal-component-analysis-6" class="slide level2">
+<h2>Principal Component Analysis</h2>
+<p>The largest value of the above expression is the square of the largest entry of <span class="math inline">\(\Sigma\)</span>, if we assume this to be first entry, then <span class="math inline">\(v = (1, 0, \dots, 0)^T\)</span> and <span class="math inline">\(u = Vv\)</span> is equal to the first column of <span class="math inline">\(V\)</span>.</p>
+<p>Similarly, the other directions will correspond to other singular values of <span class="math inline">\(A\)</span> and will be the other columns of <span class="math inline">\(V\)</span>. To transform our variables to the new variables that maximize variances we need to compute <span class="math display">\[
+AV = U \Sigma V^T V = U \Sigma.
+\]</span></p>
+</section>
+<section id="principal-component-analysis-7" class="slide level2">
+<h2>Principal Component Analysis</h2>
+<p>To perform data compression we do not keep all of the directions. We keep only first <span class="math inline">\(k &lt; m\)</span> ones that correspond to the largest singular values of <span class="math inline">\(A\)</span>. To do this we keep only first <span class="math inline">\(k\)</span> singular values and keep only the first <span class="math inline">\(k\)</span> columns of <span class="math inline">\(U\)</span>. That is we truncate <span class="math inline">\(U\)</span> and <span class="math inline">\(\Sigma\)</span> to get <span class="math inline">\(U_k\)</span> and <span class="math inline">\(\Sigma_k\)</span>. Then our new compressed variables will be in the matrix <span class="math display">\[
+  U_k \Sigma_k.
+\]</span></p>
+</section>
+<section id="principal-component-analysis-8" class="slide level2">
+<h2>Principal Component Analysis</h2>
+<p>To summarize, suppose you have <span class="math inline">\(n\)</span> samples of <span class="math inline">\(m\)</span> variables.</p>
+<p>Then, you can perform PCA as follows:</p>
+<ol type="1">
+<li>Centralize your variables, that is from each observation of your variable subtract the sample mean of that variable (so that the sample mean of the variable becomes 0).</li>
+<li>Form a matrix <span class="math inline">\(A\)</span> where rows represent samples and columns represent variables.</li>
+<li>Compute SVD of <span class="math inline">\(A = U \Sigma V^T.\)</span></li>
+</ol>
+</section>
+<section id="principal-component-analysis-9" class="slide level2">
+<h2>Principal Component Analysis</h2>
+<ol start="4" type="1">
+<li>Keep only first <span class="math inline">\(k\)</span> singular values and truncate <span class="math inline">\(U\)</span> keeping only the first <span class="math inline">\(k\)</span> columns. In this way you get <span class="math inline">\(U_k\)</span> and <span class="math inline">\(\Sigma_k\)</span>.</li>
+<li>Multiply <span class="math inline">\(U_k\)</span> and <span class="math inline">\(\Sigma_k\)</span> together, you will get a matrix with <span class="math inline">\(n\)</span> rows and <span class="math inline">\(k\)</span> columns. The rows still represent samples and columns represent the compressed variables.</li>
+</ol>
+</section>
+<section id="principal-component-analysis-10" class="slide level2">
+<h2>Principal Component Analysis</h2>
 
 <img data-src="../images/svd-and-rank-k-approximations-l.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="principal-component-analysis-4" class="slide level2">
+<section id="principal-component-analysis-11" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>One typical use of PCA is to visualize high dimensional data. Reduce the dimension of your samples to 2 and then you can visualize your dataset using a scatter plot.</p>
 <p><code>sklearn</code> has an implementation of PCA, which also performs step 1 automatically, i.e.&nbsp;you do not have to provide centralized data.</p>
 <p>Let’s visualize the iris dataset using PCA. Iris dataset contains measurement samples of three types of flowers.</p>
 </section>
-<section id="principal-component-analysis-5" class="slide level2">
+<section id="principal-component-analysis-12" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <div id="dd821493" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
@@ -640,113 +736,249 @@ MSE between our fit and sklearn: 6.325051042998488e-27</code></pre>
 
 </div>
 <img data-src="01_singular_value_decomposition_files/figure-revealjs/cell-5-output-1.png" class="r-stretch"></section>
-<section id="principal-component-analysis-6" class="slide level2">
+<section id="principal-component-analysis-13" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>There is another similar way to compute PCA.</p>
 <p>Let’s say that our data is placed in a matrix <span class="math inline">\(A\)</span> (rows represent samples, columns represent variables). For simplicities sake, let’s assume that our variables are centered (so the mean of each column of <span class="math inline">\(A\)</span> is <span class="math inline">\(0\)</span>).</p>
-<p>Now compute a singular value decomposition of <span class="math inline">\(A = UMV^T,\)</span> where the regular space saving truncation is applied. Now truncate <span class="math inline">\(V\)</span> by keeping only the first <span class="math inline">\(k\)</span> columns (so you are keeping the first <span class="math inline">\(k\)</span> rows of <span class="math inline">\(V^T\)</span>). Denote the truncated matrix by <span class="math inline">\(V_k.\)</span></p>
+<p>Now compute a singular value decomposition of <span class="math inline">\(A = U \Sigma V^T,\)</span> where the regular space saving truncation is applied. Now truncate <span class="math inline">\(V\)</span> by keeping only the first <span class="math inline">\(k\)</span> columns (so you are keeping the first <span class="math inline">\(k\)</span> rows of <span class="math inline">\(V^T\)</span>). Denote the truncated matrix by <span class="math inline">\(V_k.\)</span></p>
 </section>
-<section id="principal-component-analysis-7" class="slide level2">
+<section id="principal-component-analysis-14" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>Now multiplying <span class="math inline">\(A\)</span> by <span class="math inline">\(V_k\)</span> you will get the same result as the previous procedure of computing PCA.</p>
 <p>This is how PCA is implemented in <code>sklearn</code>.</p>
 <p>The advantage of this approach is that the truncated matrix <span class="math inline">\(V_k\)</span> defines a map from the full space <span class="math inline">\(\mathbb{R}^m\)</span> to the compressed space <span class="math inline">\(\mathbb{R}^k.\)</span> You can use this map to compress samples of data that were not used when fitting the PCA model (“fitting” here means computing <span class="math inline">\(V_k\)</span>). You do this by forming a row vector out of your sample and multiplying it with <span class="math inline">\(V_k\)</span>.</p>
 </section>
-<section id="principal-component-analysis-8" class="slide level2">
+<section id="principal-component-analysis-15" class="slide level2">
 <h2>Principal Component Analysis</h2>
-<p>You can also decompress a sample of data by mutiplying with <span class="math inline">\(V_k^T\)</span>.</p>
+<p>You can also decompress a sample of data by multiplying with <span class="math inline">\(V_k^T\)</span>.</p>
 <p>Note that this compression is lossy. That is, if you compress and then decompress you will get a vector that is different from the original.</p>
 </section>
-<section id="anomaly-detection" class="slide level2">
-<h2>Anomaly detection</h2>
-<p>Lossy compression (such as PCA) can be used to detect anomalies in your dataset.</p>
-<p>Suppose you have a procedure that compresses and decompresses data. Suppose your data is represented by vectors from <span class="math inline">\(\mathbb{R}^n\)</span> and the compressed data is represented by vectors from <span class="math inline">\(\mathbb{R}^k,\)</span> where <span class="math inline">\(k &lt; n\)</span>. Then the compression procedure can be expressed by some function <span class="math inline">\(C: \mathbb{R}^n \rightarrow \mathbb{R}^k\)</span> and the decompression procedure can be exrpessed by some function <span class="math inline">\(D: \mathbb{R}^k \rightarrow \mathbb{R}^n.\)</span></p>
+<section id="principal-component-analysis-16" class="slide level2">
+<h2>Principal Component Analysis</h2>
+<p>To reiterate, directions corresponding to largest singular values are used for data compression.</p>
+<p>For example, suppose that in your model you would like to use some of the variables <span class="math inline">\(X_1, \dots, X_m.\)</span> Also, suppose that they are highly correlated, so using all of them might be a waste of effort. How do you choose which ones to use? Well perform PCA on them and use the compressed variables instead, then you will not have to choose.</p>
 </section>
-<section id="anomaly-detection-1" class="slide level2">
-<h2>Anomaly detection</h2>
-<p>Define the reconstruction error by <span class="math display">\[
-E(u) = \frac{1}{n}\left\lVert u-D(C(u)) \right\rVert^2.
-\]</span> Note that there are different ways for defining reconstruction error, this is just an example.</p>
-<p>Now you fit your compression procedure on typical samples of your data. Then the reconstruction error of non-anomalies will be on average lower then the reconstruction error of anomalies. So you can use this fact to detect anomalies.</p>
+<section id="principal-component-analysis-17" class="slide level2">
+<h2>Principal Component Analysis</h2>
+<p>Directions that correspond to small singular values are also useful. Suppose that you have some direction <span class="math inline">\(u = (u_1, \dots, u_n)^T\)</span> that corresponds to an almost zero principal value. Then the variance of <span class="math display">\[
+u_1 X_1 + \dots + u_n X_n
+\]</span> will be almost zero. That is, the expression is an almost constant random variable.</p>
 </section>
-<section id="anomaly-detection-2" class="slide level2">
-<h2>Anomaly detection</h2>
-<p>Let’s implement this idea using PCA. We are going to use images of faces for typical examples of data and we are going to turn some faces sideways to get anomalies.</p>
-<div id="d71e57eb" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_olivetti_faces</span>
-<span id="cb8-2"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb8-3"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb8-4"><a href=""></a></span>
-<span id="cb8-5"><a href=""></a><span class="kw">def</span> show(img):</span>
-<span id="cb8-6"><a href=""></a>  <span class="co">"""Function for displaying image"""</span></span>
-<span id="cb8-7"><a href=""></a>  plt.imshow(img.squeeze(), cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
-<span id="cb8-8"><a href=""></a>  plt.axis(<span class="st">'off'</span>)</span>
-<span id="cb8-9"><a href=""></a></span>
-<span id="cb8-10"><a href=""></a>olivetti_faces <span class="op">=</span> fetch_olivetti_faces()[<span class="st">"images"</span>]</span>
-<span id="cb8-11"><a href=""></a>anomalies <span class="op">=</span> olivetti_faces[:<span class="dv">5</span>]</span>
-<span id="cb8-12"><a href=""></a>anomalies <span class="op">=</span> anomalies.transpose(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
-<span id="cb8-13"><a href=""></a>typical_data <span class="op">=</span> olivetti_faces[<span class="dv">5</span>:]</span>
-<span id="cb8-14"><a href=""></a><span class="bu">print</span>(<span class="st">"Typical face and anomaly:"</span>)</span>
-<span id="cb8-15"><a href=""></a>show(np.array([typical_data[<span class="dv">0</span>], anomalies[<span class="dv">0</span>]]).reshape(<span class="dv">128</span>, <span class="dv">64</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-
-</section>
-<section id="anomaly-detection-2-output" class="slide level2 output-location-slide"><h2>Anomaly detection</h2><div class="cell output-location-slide" data-execution_count="5">
-<div class="cell-output cell-output-stdout">
-<pre><code>Typical face and anomaly:</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="01_singular_value_decomposition_files/figure-revealjs/cell-6-output-2.png"></p>
-</figure>
-</div>
-</div>
-</div></section><section id="anomaly-detection-3" class="slide level2">
-<h2>Anomaly detection</h2>
-<div id="096dc896" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
-<span id="cb10-2"><a href=""></a></span>
-<span id="cb10-3"><a href=""></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">64</span>, random_state<span class="op">=</span><span class="dv">34</span>)</span>
-<span id="cb10-4"><a href=""></a>typical_compressed <span class="op">=</span> pca.fit_transform(typical_data.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">64</span><span class="op">*</span><span class="dv">64</span>))</span>
-<span id="cb10-5"><a href=""></a>typical_uncompressed <span class="op">=</span> pca.inverse_transform(typical_compressed)</span>
-<span id="cb10-6"><a href=""></a></span>
-<span id="cb10-7"><a href=""></a>anomalies_compressed <span class="op">=</span> pca.transform(anomalies.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">64</span><span class="op">*</span><span class="dv">64</span>))</span>
-<span id="cb10-8"><a href=""></a>anomalies_uncompressed <span class="op">=</span> pca.inverse_transform(anomalies_compressed)</span>
-<span id="cb10-9"><a href=""></a></span>
-<span id="cb10-10"><a href=""></a>average_typical_reconstruction_error <span class="op">=</span> np.mean(np.mean((typical_data.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">64</span><span class="op">*</span><span class="dv">64</span>)<span class="op">-</span>typical_uncompressed)<span class="op">**</span><span class="dv">2</span>, axis<span class="op">=</span><span class="dv">1</span>))</span>
-<span id="cb10-11"><a href=""></a>anomaly_reconstruction_errors <span class="op">=</span> np.mean((anomalies.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">64</span><span class="op">*</span><span class="dv">64</span>)<span class="op">-</span>anomalies_uncompressed)<span class="op">**</span><span class="dv">2</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb10-12"><a href=""></a></span>
-<span id="cb10-13"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Average reconstruction error of typical data: </span><span class="sc">{</span>average_typical_reconstruction_error<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb10-14"><a href=""></a><span class="bu">print</span>(<span class="ss">F"Anomaly reconstruction errors: </span><span class="sc">{</span>anomaly_reconstruction_errors<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Average reconstruction error of typical data: 0.0019756590481847525
-Anomaly reconstruction errors: [0.00977079 0.00913271 0.0105074  0.00883756 0.01041554]</code></pre>
-</div>
-</div>
-</section>
-<section id="recommender-system" class="slide level2">
-<h2>Recommender System</h2>
-<p>PCA can be used in recommender systems.</p>
-<p>Suppose we have a table that contains scores given to movies by users. Using this data we would like to group similar movies together for purposes of generating recommendations.</p>
-<p>Let users be in rows, and movies in columns and values represent a rating that a user gave to a movie. If a user has not reviewed a movie set their rating to a middle value to reflect the fact that we do not know how the user feels about the movie.</p>
-</section>
-<section id="recommender-system-1" class="slide level2">
-<h2>Recommender System</h2>
-<p>Now perform PCA on this matrix by computing the SVD and getting the truncated matrices <span class="math inline">\(U_r M_r V_r^T\)</span>. The matrix <span class="math inline">\(V_r^T\)</span> stores information on original matrix’s columns, in this case movies.</p>
-<p>The columns of <span class="math inline">\(V_r^T\)</span> give an embedding of the movies to <span class="math inline">\(\mathbb{R}^r\)</span>. I.e. the column that represents a movie gives the coordinates of the movie in <span class="math inline">\(\mathbb{R}^r\)</span>. If we assume that similar people rate similar movies similarly we then get that similar movies should be close to each other in this space.</p>
+<section id="principal-component-analysis-18" class="slide level2">
+<h2>Principal Component Analysis</h2>
+<p>Since the means of <span class="math inline">\(X_1, \dots, X_n\)</span> are zero we get that <span class="math display">\[
+u_1 X_1 + \dots + u_n X_n \approx 0,
+\]</span> that is this is a linear relationship that your random variables have.</p>
+<p>For instance, this idea can be used to guess physical laws from experimental data.</p>
 </section>
 <section id="practice-task" class="slide level2">
-<h2>Practice Task</h2>
-<p>Use this idea to generate some recommendations for movies (code for loading the data below).</p>
-<p>The goal is to write a script that given a movie name returns similar movies.</p>
-<p>Also, truncate the dataset to top 1000 movies in terms of review count. This should give more robust results.</p>
-<div id="a319410a-05ea-4ca4-b4b8-a65cc5bad887" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb12-2"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb12-3"><a href=""></a></span>
-<span id="cb12-4"><a href=""></a>ratings <span class="op">=</span> pd.read_csv(<span class="st">'https://raw.githubusercontent.com/jputrius/ml_intro/refs/heads/main/data/movielens/ratings.csv'</span>)</span>
-<span id="cb12-5"><a href=""></a>movies <span class="op">=</span> pd.read_csv(<span class="st">'http://raw.githubusercontent.com/jputrius/ml_intro/refs/heads/main/data/movielens/movies.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<h2>Practice task</h2>
+<p>Try to apply the above idea to verify Kepler’s second law using orbital data of planets in the solar system.</p>
+<p>Kepler’s second law says that if you connect the sun with a planet using an imaginary line, then the area that is swept out by said line as the planet orbits is the same over the same lengths of time.</p>
+</section>
+<section id="practice-task-1" class="slide level2">
+<h2>Practice task</h2>
+<p>This is equivalent to saying that angular momentum of the planet is constant. Suppose we are using a reference frame where the sun is at the origin. Then the angular momentum of a planet is a vector equal to <span class="math display">\[
+m(r \times v)
+\]</span> where <span class="math inline">\(m\)</span> is the mass of the planet <span class="math inline">\(r = (x, y, z)^T\)</span> is the position vector, <span class="math inline">\(v = (v_x, v_y, v_z)^T\)</span> is the velocity vector and <span class="math inline">\(\times\)</span> is vector multiplication.</p>
+</section>
+<section id="practice-task-2" class="slide level2">
+<h2>Practice task</h2>
+<p>That is <span class="math display">\[
+r \times v = (xv_y-y v_x, -(xv_z-zv_x), xv_y-yv_x)^T.
+\]</span> So this vector is constant for planets.</p>
+</section>
+<section id="practice-task-3" class="slide level2">
+<h2>Practice task</h2>
+<p>So, what you need to do is:</p>
+<ol type="1">
+<li>Load this <a href="https://github.com/jputrius/ml_intro/tree/main/data/planets">data</a>.</li>
+<li>Filter out the data for one planet (the method doesn’t work that well for Saturn and planets that are further than Saturn for some reason).</li>
+<li>Create the variables <span class="math inline">\(xv_y, xv_z, yv_x, yv_z, zv_x, zv_y.\)</span></li>
+<li>Centralize these new variables and put them in a matrix.</li>
+<li>Compute a SVD of this matrix.</li>
+<li>See if Kepler’s second law is reflected in the SVD you computed.</li>
+</ol>
+</section>
+<section id="practice-task-4" class="slide level2">
+<h2>Practice task</h2>
+<p>I did step 1 for you.</p>
+<div id="31cc94e2-e3d9-4767-a585-5e2bade198ea" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-3"><a href=""></a></span>
+<span id="cb8-4"><a href=""></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/jputrius/ml_intro/refs/heads/main/data/planets/solar_system_positions_with_velocity.csv"</span>)</span>
+<span id="cb8-5"><a href=""></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table class="dataframe caption-top" data-border="1">
+<thead>
+<tr class="header" style="text-align: right;">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">naif_id</th>
+<th data-quarto-table-cell-role="th">x_au</th>
+<th data-quarto-table-cell-role="th">y_au</th>
+<th data-quarto-table-cell-role="th">z_au</th>
+<th data-quarto-table-cell-role="th">vx_au_per_day</th>
+<th data-quarto-table-cell-role="th">vy_au_per_day</th>
+<th data-quarto-table-cell-role="th">vz_au_per_day</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2020-01-01</td>
+<td>1 MERCURY BARYCENTER</td>
+<td>1</td>
+<td>-0.063377</td>
+<td>-0.460841</td>
+<td>-0.031843</td>
+<td>0.022228</td>
+<td>-0.002402</td>
+<td>-0.002235</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2020-01-02</td>
+<td>1 MERCURY BARYCENTER</td>
+<td>1</td>
+<td>-0.041067</td>
+<td>-0.462569</td>
+<td>-0.034031</td>
+<td>0.022381</td>
+<td>-0.001052</td>
+<td>-0.002139</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2020-01-03</td>
+<td>1 MERCURY BARYCENTER</td>
+<td>1</td>
+<td>-0.018637</td>
+<td>-0.462941</td>
+<td>-0.036119</td>
+<td>0.022468</td>
+<td>0.000309</td>
+<td>-0.002036</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2020-01-04</td>
+<td>1 MERCURY BARYCENTER</td>
+<td>1</td>
+<td>0.003848</td>
+<td>-0.461948</td>
+<td>-0.038101</td>
+<td>0.022490</td>
+<td>0.001678</td>
+<td>-0.001926</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2020-01-05</td>
+<td>1 MERCURY BARYCENTER</td>
+<td>1</td>
+<td>0.026321</td>
+<td>-0.459583</td>
+<td>-0.039969</td>
+<td>0.022445</td>
+<td>0.003053</td>
+<td>-0.001810</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">63940</th>
+<td>2024-12-27</td>
+<td>905 STYX</td>
+<td>905</td>
+<td>18.214357</td>
+<td>-30.012843</td>
+<td>-2.054877</td>
+<td>0.002816</td>
+<td>0.001006</td>
+<td>-0.000889</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">63941</th>
+<td>2024-12-28</td>
+<td>905 STYX</td>
+<td>905</td>
+<td>18.217177</td>
+<td>-30.011840</td>
+<td>-2.055779</td>
+<td>0.002824</td>
+<td>0.000999</td>
+<td>-0.000915</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">63942</th>
+<td>2024-12-29</td>
+<td>905 STYX</td>
+<td>905</td>
+<td>18.220003</td>
+<td>-30.010848</td>
+<td>-2.056706</td>
+<td>0.002826</td>
+<td>0.000986</td>
+<td>-0.000939</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">63943</th>
+<td>2024-12-30</td>
+<td>905 STYX</td>
+<td>905</td>
+<td>18.222827</td>
+<td>-30.009870</td>
+<td>-2.057655</td>
+<td>0.002821</td>
+<td>0.000969</td>
+<td>-0.000959</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">63944</th>
+<td>2024-12-31</td>
+<td>905 STYX</td>
+<td>905</td>
+<td>18.225643</td>
+<td>-30.008911</td>
+<td>-2.058621</td>
+<td>0.002810</td>
+<td>0.000948</td>
+<td>-0.000972</td>
+</tr>
+</tbody>
+</table>
+
+<p>63945 rows × 9 columns</p>
+</div>
+</div>
 </div>
 
 </section>
