@@ -1,0 +1,1 @@
+Planet data taken from [kaggle](https://www.kaggle.com/datasets/nikitamanaenkov/solar-system-bodies-positions-2020-2024).
