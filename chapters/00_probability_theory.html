@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="00_intro_files/libs/clipboard/clipboard.min.js"></script>
-<script src="00_intro_files/libs/quarto-html/tabby.min.js"></script>
-<script src="00_intro_files/libs/quarto-html/popper.min.js"></script>
-<script src="00_intro_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="00_intro_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="00_intro_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="00_intro_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="00_probability_theory_files/libs/clipboard/clipboard.min.js"></script>
+<script src="00_probability_theory_files/libs/quarto-html/tabby.min.js"></script>
+<script src="00_probability_theory_files/libs/quarto-html/popper.min.js"></script>
+<script src="00_probability_theory_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="00_probability_theory_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="00_probability_theory_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="00_probability_theory_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.37">
 
-  <title>Course Introduction</title>
+  <title>Review of Probability Theory</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="00_intro_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="00_intro_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="00_probability_theory_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="00_probability_theory_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -31,11 +31,11 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="00_intro_files/libs/revealjs/dist/theme/quarto-be1dd51e35b708bfe8d09eef73f8da7b.css">
-  <link href="00_intro_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="00_intro_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="00_intro_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="00_intro_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="00_probability_theory_files/libs/revealjs/dist/theme/quarto-be1dd51e35b708bfe8d09eef73f8da7b.css">
+  <link href="00_probability_theory_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="00_probability_theory_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="00_probability_theory_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="00_probability_theory_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -129,7 +129,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Course Introduction</h1>
+  <h1 class="title">Review of Probability Theory</h1>
 
 <div class="quarto-title-authors">
 </div>
@@ -137,74 +137,127 @@
 </section>
 <section id="introduction" class="slide level2">
 <h2>Introduction</h2>
-<p>This is an introductory course on machine learning (ML).</p>
-<p>The goal is to start from 0 and get to transformers, which is the neural network architecture that large language models use. We will investigate all the required mathematics as well as see how to implement your own models using Python packages.</p>
+<p>These slides contain a quick review of the formalism of probability theory. We will avoid using probability theory terms in this course as much as possible but sometimes it will be unavoidable.</p>
+<p>If you know what a random variable is then you do not need to read these slides.</p>
 </section>
-<section id="course-prerequisites" class="slide level2">
-<h2>Course Prerequisites</h2>
+<section id="probability-space" class="slide level2">
+<h2>Probability Space</h2>
+<p>A probability space is a triple <span class="math inline">\((\Omega, \mathcal{A}, \mathbb{P})\)</span>, where:</p>
 <ol type="1">
-<li>Knowing a bit of the Python programming language</li>
-<li>Linear algebra</li>
-<li>Multivariable calculus (only partial derivatives)</li>
-<li>Probability theory</li>
-</ol>
-<p>None of these are hard requirements. We will review everything along the way. For example, if you do not know Python then you will pick it up along the way through osmosis.</p>
-</section>
-<section id="python-packages" class="slide level2">
-<h2>Python Packages</h2>
-<p>We’ll use these standard python packages throughout the course (and some others):</p>
+<li><span class="math inline">\(\Omega\)</span> is just some abstract set called the sample space.</li>
+<li><span class="math inline">\(\mathcal{A}\)</span> - the event space, which is a <span class="math inline">\(\sigma\)</span>-algebra of subsets of <span class="math inline">\(\Omega\)</span>. That is <span class="math inline">\(\mathcal{A}\)</span> is a set of some of the subsets of <span class="math inline">\(\Omega\)</span> such that:
 <ol type="1">
-<li><a href="">Numpy</a> - package for scientific computing</li>
-<li><a href="">Pandas</a> - implements dataframes</li>
-<li><a href="">Sklearn</a> - implements classical ML algorithms</li>
-<li><a href="">PyTorch</a> - framework for building artificial neural networks</li>
+<li><span class="math inline">\(\emptyset, \Omega \in \mathcal{A}\)</span></li>
+<li>If <span class="math inline">\(A \in \mathcal{A}\)</span> then <span class="math inline">\(\Omega \backslash A \in \mathcal{A}\)</span></li>
+<li>If <span class="math inline">\((A_i)_{i=1}^\infty \subset \mathcal{A}\)</span> then <span class="math inline">\(\bigcup_{i=1}^\infty A_i, \bigcap_{i=1}^\infty A_i \in \mathcal{A}\)</span></li>
+</ol></li>
 </ol>
 </section>
-<section id="evaluation-criteria" class="slide level2">
-<h2>Evaluation Criteria</h2>
-<p>The final mark for this course will be assigned as follows:</p>
+<section id="probability-space-1" class="slide level2">
+<h2>Probability Space</h2>
+<ol start="3" type="1">
+<li><span class="math inline">\(\mathbb{P}: \mathcal{A} \rightarrow [0, 1]\)</span> is the probability measure, it must satisfy:
 <ol type="1">
-<li>Homework Project - 60%</li>
-<li>Other work - 40%</li>
+<li>If <span class="math inline">\((A_i)_{i=1}^\infty \subset \mathcal{A}\)</span> are pairwise disjoint then <span class="math inline">\(\mathbb{P}(\bigcup_{i=1}^\infty A_i) = \sum_{i=1}^\infty \mathbb{P}(A_i)\)</span></li>
+<li><span class="math inline">\(\mathbb{P}(\Omega) = 1\)</span></li>
+</ol></li>
 </ol>
 </section>
-<section id="homework-project" class="slide level2">
-<h2>Homework project</h2>
-<p>You will have to prepare a homework project.</p>
-<p>You can choose from the three example topics you can find on <a href="https://jputrius.github.io/ml_intro/">course’s webpage</a> or you can come up with your own topic. If you choose your own topic please discuss the topic with me first before beginning work.</p>
-<p>The deadline is the last week of the semester.</p>
-<p><strong>You are required to turn in the homework project to pass this course.</strong></p>
+<section id="probability-space-2" class="slide level2">
+<h2>Probability Space</h2>
+<p>This definition might seem rather abstract so let’s look at an intuitive interpretation.</p>
+<p>Suppose we were running some sort of a stochastic experiment, such as throwing a regular playing die. Then the sample space <span class="math inline">\(\Omega\)</span> represents all the possible outcomes of the experiment. In the playing die case we could take <span class="math inline">\(\Omega = \{1, 2, 3, 4, 5, 6\}\)</span>.</p>
 </section>
-<section id="other-work" class="slide level2">
-<h2>Other work</h2>
-<p>For the other 40% of the final mark you can choose one of three options:</p>
-<ol type="1">
-<li>Take the exam during the session</li>
-<li>Come up with your own topic for the homework project and then give a presentation on your project at the end of the semester</li>
-<li>Do the practice tasks given at the end of (almost) all lectures</li>
-</ol>
-<p>Each of these options is worth 40%, however the maximum you can get from these is 40%.</p>
+<section id="probability-space-3" class="slide level2">
+<h2>Probability Space</h2>
+<p>The event space <span class="math inline">\(\mathcal{A}\)</span> represents all the possible compound events that might occur, such as throwing a 3, throwing an even number etc. In our example we would take <span class="math inline">\(\mathcal{A}\)</span> to be all the subsets of <span class="math inline">\(\Omega.\)</span></p>
+<p>The probability measure <span class="math inline">\(\mathbb{P}\)</span> is a (magical) device that measures the probability of events. In our concrete example, <span class="math display">\[
+\mathbb{P}(\text{An odd number was thrown}) = \frac{1}{2}.
+\]</span></p>
 </section>
-<section id="literature" class="slide level2">
-<h2>Literature</h2>
-<p>The slides used to give these lectures can be found <a href="https://jputrius.github.io/ml_intro/">here</a>.</p>
+<section id="independent-events" class="slide level2">
+<h2>Independent Events</h2>
+<p>Two events <span class="math inline">\(A, B \in \mathcal{A}\)</span> are called independent if <span class="math display">\[
+\mathbb{P}(A \text{ and } B) = \mathbb{P}(A) \mathbb{P}{B}
+\]</span></p>
+<p>For example if we were throwing a coin twice, then events “first throw lands heads” and “second throw lands tails” are independent, so <span class="math display">\[
+\mathbb{P}(\text{first throw lands heads and second throw lands tails}) = \\
+\mathbb{P}(\text{first throw lands heads}) \mathbb{P}(\text{second throw lands tails}) = \frac{1}{2} \frac{1}{2}.
+\]</span></p>
 </section>
-<section id="literature-1" class="slide level2">
-<h2>Literature</h2>
-<p>Here are some optional books I recommend:</p>
-<ol type="1">
-<li><a href="https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/">Hands-On Machine Learning</a> - good introduction to ML.</li>
-<li><a href="https://hastie.su.domains/ElemStatLearn/">Elements of Statistical Learning</a> - goes deeper into the mathematics of ML.</li>
-<li><a href="https://www.amazon.com/Machine-Learning-Design-Patterns-Preparation/dp/1098115783">Machine Learning Design Patterns</a> - a very useful read if you are looking to get a job as a data scientist / ML engineer.</li>
-<li><a href="https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf">Reinforcement Learning: An Introduction</a> - intro to the math of reinforcement learning. Reinforcement learning is usually not covered in books that focus on general machine learning.</li>
-</ol>
+<section id="conditional-probability" class="slide level2">
+<h2>Conditional probability</h2>
+<p>Suppose <span class="math inline">\(A, B \in \mathcal{A}\)</span> and <span class="math inline">\(B\)</span> has non-zero probability. Then conditional probability is defined as <span class="math display">\[
+\mathbb{P}(A | B) = \frac{\mathbb{P}(A \text{ and } B)}{\mathbb{P}(B)}.
+\]</span> This is interpreted as the probability of <span class="math inline">\(A\)</span> happening if <span class="math inline">\(B\)</span> has already happened or we know will happen in the future.</p>
 </section>
-<section id="extras" class="slide level2">
-<h2>Extras</h2>
-<p>These slides were made using <a href="https://quarto.org/">quarto</a>. You can find the source code <a href="https://github.com/jputrius/ml_intro/tree/main">here</a>.</p>
-<p>We will not cover <a href="https://en.wikipedia.org/wiki/Git">git</a> in this course, but I suggest that you learn it.</p>
-<p>I use <a href="https://python-poetry.org/">poetry</a> for managing python packages and environments.</p>
-<p>If you are on linux or mac you can use <a href="https://github.com/pyenv/pyenv">pyenv</a> to manage different python versions.</p>
+<section id="bayes-theorem" class="slide level2">
+<h2>Bayes theorem</h2>
+<p>Suppose <span class="math inline">\(A, B \in \mathcal{A}\)</span> and <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> both have non-zero probability. Then we have the Bayes formula <span class="math display">\[
+\mathbb{P}(A | B) = \frac{\mathbb{P}(B | A)\mathbb{P}(A)}{\mathbb{P}(B)}.
+\]</span></p>
+<p>Also, <span class="math display">\[
+\mathbb{P}(A \text{ and } B) = \mathbb{P}(A | B)\mathbb{P}(B).
+\]</span></p>
+</section>
+<section id="random-variables" class="slide level2">
+<h2>Random variables</h2>
+<p>A random variable is a measurable function <span class="math inline">\(X: \Omega \rightarrow \mathbb{R}\)</span>, that is for any interval <span class="math inline">\((a, b)\)</span> we have <span class="math inline">\(X^{-1}((a, b)) \in \mathcal{A}.\)</span></p>
+<p>For example, if we were throwing two dice, then the sum of the throws would be a random variable.</p>
+</section>
+<section id="discrete-random-variables" class="slide level2">
+<h2>Discrete random variables</h2>
+<p>A random variable <span class="math inline">\(X\)</span> is called discrete if it takes only finite or countable number of values. For discrete random variables the point mass function (pmf) is defined <span class="math display">\[
+p_X(x) = \mathbb{P}(X=x).
+\]</span> It is non-zero for at most a countable number of values.</p>
+</section>
+<section id="mean" class="slide level2">
+<h2>Mean</h2>
+<p>The mean or expectation of a discrete random variable is defined to be <span class="math display">\[
+\mathbb{E}[X] = \sum_x x p_X(x),
+\]</span> where we sum over those <span class="math inline">\(x'\)</span>s, where <span class="math inline">\(p_X(x) &gt; 0.\)</span> The brackets [] don’t indicate anything special, its just tradition to use them.</p>
+<p>The expectation is linear, that is if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are random variables and <span class="math inline">\(a, b \in \mathbb{R}\)</span> then <span class="math display">\[
+\mathbb{E}[aX+bY] = a\mathbb{E}[X] + b \mathbb{E}[Y].
+\]</span></p>
+</section>
+<section id="variance" class="slide level2">
+<h2>Variance</h2>
+<p>The variance of the random variable <span class="math inline">\(X\)</span> is defined to be <span class="math display">\[
+\text{Var}(X) = \mathbb{E}[(X - \mathbb{E}[X])^2] = \mathbb{E}[X^2] - \mathbb{E}[X]^2.
+\]</span> The standard deviation is the square root of variance <span class="math display">\[
+\sigma = \sqrt{\text{Var}(X)}.
+\]</span></p>
+</section>
+<section id="variance-1" class="slide level2">
+<h2>Variance</h2>
+<p>Variance is not linear. If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are random variables and <span class="math inline">\(a, b \in \mathbb{R}\)</span> then <span class="math display">\[
+\text{Var}(aX+bY) = a^2\text{Var}(X)+b^2\text{Var}(Y) + 2ab \text{Cov}(X, Y),
+\]</span> where <span class="math display">\[
+\text{Cov}(X, Y) = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])].
+\]</span></p>
+</section>
+<section id="law-of-large-numbers" class="slide level2">
+<h2>Law of Large Numbers</h2>
+<p>We will use random variables to model datapoints. For example we have some observations <span class="math inline">\(x_1, \dots, x_n\)</span> of, let’s say, heights of penguins. Then we will imagine that these numbers <span class="math inline">\(x_1, \dots, x_n\)</span> are separate instantiations of a random variable <span class="math inline">\(X,\)</span> which represents the heights of penguins.</p>
+<p>If <span class="math inline">\(\mathbb{E}[X]\)</span> is finite then the law of large numbers holds, that is <span class="math display">\[
+  \frac{\sum_{i=1}^n x_n}{n} \approx \mathbb{E}[X].
+\]</span></p>
+</section>
+<section id="law-of-large-numbers-1" class="slide level2">
+<h2>Law of Large Numbers</h2>
+<p>How good the approximation is depends on <span class="math inline">\(\text{Var}(X)\)</span>. If <span class="math inline">\(\text{Var}(X)\)</span> is infinite then the approximation is really really bad and you shouldn’t use law of large numbers in practice in such a case (but people still do).</p>
+</section>
+<section id="continuous-random-variables" class="slide level2">
+<h2>Continuous Random Variables</h2>
+<p>A random variable <span class="math inline">\(X\)</span> is called absolutely continuous if there exists a function <span class="math inline">\(f_X: \mathbb{R} \rightarrow \mathbb{R}\)</span> such that for any two real numbers <span class="math inline">\(a &lt; b\)</span> we can compute the probability as <span class="math display">\[
+\mathbb{P}(a \le X \le b) = \int_a^b f_X(x) dx.
+\]</span> The function <span class="math inline">\(f_X\)</span> is then called the point density function (pdf) of <span class="math inline">\(X\)</span>.</p>
+</section>
+<section id="continuous-random-variables-1" class="slide level2">
+<h2>Continuous Random Variables</h2>
+<p>The mean for absolutely continuous random variables is defined as <span class="math display">\[
+\mathbb{E}[X] = \int_{-\infty}^{\infty} x f_X(x) dx.
+\]</span></p>
 
 </section>
     </div>
@@ -215,19 +268,19 @@
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="00_intro_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="00_probability_theory_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="00_intro_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="00_intro_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="00_intro_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="00_intro_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="00_intro_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="00_probability_theory_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="00_probability_theory_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="00_probability_theory_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="00_probability_theory_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="00_probability_theory_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="00_intro_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="00_intro_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="00_intro_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="00_intro_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="00_probability_theory_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="00_probability_theory_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="00_probability_theory_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="00_probability_theory_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

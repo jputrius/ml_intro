@@ -354,23 +354,67 @@ H(X, Y) \ne H(Y, X)
 </section>
 <section id="stochastic-gradient-descent-4" class="slide level2">
 <h2>Stochastic Gradient Descent</h2>
+<p>Why is cross entropy used as a loss function in classification problems?</p>
+<p>Suppose you have a training set <span class="math inline">\((x_i, y_i)_{i=1}^n,\)</span> where <span class="math inline">\(x_i\)</span> is a vector of numbers representing our features and <span class="math inline">\(y_i\)</span> is a vector one-hot encoding the class of the sample. Suppose there are <span class="math inline">\(m\)</span> different classes, so <span class="math inline">\(y_i\)</span> has <span class="math inline">\(m\)</span> components.</p>
+<p>Let <span class="math inline">\(p(x; w)\)</span> be our model that we will be training, <span class="math inline">\(x\)</span> is the model input, <span class="math inline">\(w\)</span> are the weights. The model outputs a vector with <span class="math inline">\(m\)</span> confidences (probabilities), where the <span class="math inline">\(j\)</span>-th confidence is the probability that the input <span class="math inline">\(x_i\)</span> is of class <span class="math inline">\(j\)</span>.</p>
+</section>
+<section id="stochastic-gradient-descent-5" class="slide level2">
+<h2>Stochastic Gradient Descent</h2>
+<p>Assume that we sampled our training data independently, that is we can compute probabilities as <span class="math display">\[\begin{equation*}
+\begin{split}
+&amp;\mathbb{P}(Y = y_k \text{ given } X=x_k \text{ and } Y=y_l \text{ given } X=x_l) = \\
+&amp;\mathbb{P}(Y = y_k \text{ given } X=x_k) \mathbb{P}(Y=y_l \text{ given } X=x_l),
+\end{split}
+\end{equation*}\]</span> when <span class="math inline">\(l \ne k\)</span>.</p>
+</section>
+<section id="stochastic-gradient-descent-6" class="slide level2">
+<h2>Stochastic Gradient Descent</h2>
+<p>We would like the probability that our model is correct on the <strong>whole</strong> training set to be as large as possible, so we need to find <span class="math display">\[
+  \underset{w}{\text{argmax}} \prod_{i=1}^n (y_i)^Tp(x_i; w).
+\]</span></p>
+</section>
+<section id="stochastic-gradient-descent-7" class="slide level2">
+<h2>Stochastic Gradient Descent</h2>
+<p>This technique of fitting weights is called maximum likelihood estimation.</p>
+<p>We can compute the probability as a product because we assumed independent sampling. Also, the expression <span class="math display">\[
+(y_i)^Tp(x_i; w)
+\]</span> is equal to the confidence that the model assigned to the class represented by <span class="math inline">\(y_i\)</span>, because <span class="math inline">\(y_i\)</span> is one-hot encoded (make sure you understand why this is true), which is exactly what we want.</p>
+</section>
+<section id="stochastic-gradient-descent-8" class="slide level2">
+<h2>Stochastic Gradient Descent</h2>
+<p>Now, dealing with products is annoying so we apply the usual <span class="math inline">\(\exp\)</span> <span class="math inline">\(\log\)</span> trick <span class="math display">\[
+\underset{w}{\text{argmax}} \prod_{i=1}^n (y_i)^Tp(x_i; w) = \underset{w}{\text{argmax}} \exp\left(\sum_{i=1}^n \log((y_i)^Tp(x_i; w)) \right)
+\]</span></p>
+<p>Since <span class="math inline">\(\exp\)</span> is strictly increasing this is equal to <span class="math display">\[
+\underset{w}{\text{argmax}} \sum_{i=1}^n \log((y_i)^Tp(x_i; w)).
+\]</span></p>
+</section>
+<section id="stochastic-gradient-descent-9" class="slide level2">
+<h2>Stochastic Gradient Descent</h2>
+<p>Writing a minus sign changes argmax to argmin so we get <span class="math display">\[
+\underset{w}{\text{argmax}} \sum_{i=1}^n \log((y_i)^Tp(x_i; w)) = \underset{w}{\text{argmin}} -\sum_{i=1}^n \log((y_i)^Tp(x_i; w)).
+\]</span></p>
+<p>This last expression is the cross entropy of our training set. So when we minimize cross entropy what we are doing is performing the maximum likelihood estimation of our model’s weights.</p>
+</section>
+<section id="stochastic-gradient-descent-10" class="slide level2">
+<h2>Stochastic Gradient Descent</h2>
 <p>Getting back on topic, suppose our loss function has the following form <span class="math display">\[
   L(w) = \frac{1}{n}\sum_{j=1}^nL_j(w).
 \]</span></p>
 <p>If there are a lot of training samples or the model has a lot of weights, then computing the full gradient <span class="math inline">\(\nabla L\)</span> becomes very computationally expensive.</p>
 </section>
-<section id="stochastic-gradient-descent-5" class="slide level2">
+<section id="stochastic-gradient-descent-11" class="slide level2">
 <h2>Stochastic Gradient Descent</h2>
 <p>It would instead be much nicer if we could compute the gradient only on a batch of our training data and use that to update the weights. Mathematically we would like our minimization step to look like <span class="math display">\[
   w_{i+1}=w_i -\eta \nabla L_j(w)
 \]</span> where now we only compute the gradient of the <span class="math inline">\(j\)</span>-th component of our loss function. When making subsequent minimization steps we then iterate over the <span class="math inline">\(L_j\)</span>.</p>
 </section>
-<section id="stochastic-gradient-descent-6" class="slide level2">
+<section id="stochastic-gradient-descent-12" class="slide level2">
 <h2>Stochastic Gradient Descent</h2>
 <p>This algorithm indeed works and is called <strong>Stochastic Gradient Descent</strong> (SGD).</p>
 <p>When applying SGD we loop over our training set, usually in small batches. One loop over the full training set is called an <strong>epoch</strong>.</p>
 </section>
-<section id="stochastic-gradient-descent-7" class="slide level2">
+<section id="stochastic-gradient-descent-13" class="slide level2">
 <h2>Stochastic Gradient Descent</h2>
 <p>There is one simple improvement we can make, that is adding <strong>momentum</strong>.</p>
 <p>Define the momentum parameter <span class="math inline">\(\alpha,\)</span> it has to be a smaller than 1 positive number.</p>
@@ -378,26 +422,26 @@ H(X, Y) \ne H(Y, X)
   w^{i+1} = w^i + \Delta w^{i+1}.
 \]</span></p>
 </section>
-<section id="stochastic-gradient-descent-8" class="slide level2">
+<section id="stochastic-gradient-descent-14" class="slide level2">
 <h2>Stochastic Gradient Descent</h2>
 <p>The idea is that if we stepped in the <span class="math inline">\(\Delta w^{i}\)</span> direction in the previous step we should continue going in that direction in the current step since the minimum is probably still that way. Hence the name momentum.</p>
 <p>Since <span class="math inline">\(\alpha &lt; 1\)</span> the influence of the <span class="math inline">\(i\)</span>-th step will eventually decay to nothing and we won’t overshoot the minimum.</p>
 </section>
-<section id="stochastic-gradient-descent-9" class="slide level2">
+<section id="stochastic-gradient-descent-15" class="slide level2">
 <h2>Stochastic Gradient Descent</h2>
 <p>One last thing, GD has a drawback that it is only able to find local minimums instead of global ones.</p>
 <p>When doing SGD, it is best practice to shuffle your training set after each epoch, because doing this minimizes this problem. Shuffling the dataset also reduces overfitting.</p>
 </section>
-<section id="stochastic-gradient-descent-10" class="slide level2">
+<section id="stochastic-gradient-descent-16" class="slide level2">
 <h2>Stochastic Gradient Descent</h2>
 <p>To understand why SGD is called “stochastic” we need to look at how it is analyzed mathematically. The formulation of the problem is as follows.</p>
 <p>Suppose we have a function <span class="math inline">\(L: \mathbb{R}^n \rightarrow \mathbb{R}\)</span> that is a random variable, for example <span class="math inline">\(L\)</span> depends on a parameter that is a random variable (in our case the random variable is the batch of data we show to the function). Also suppose we have a sequence <span class="math inline">\(L_1, L_2, L_3, \dots\)</span> of realizations of <span class="math inline">\(L\)</span>.</p>
 </section>
-<section id="stochastic-gradient-descent-11" class="slide level2">
+<section id="stochastic-gradient-descent-17" class="slide level2">
 <h2>Stochastic Gradient Descent</h2>
 <p>The question is how do we come up with an algorithm to find a <span class="math inline">\(w \in \mathbb{R}^n\)</span> such that it would be a minimum of <span class="math inline">\(\mathbb{E}[L(w)]\)</span> if we have a restriction where at the <span class="math inline">\(T\)</span>-th timestep of optimization we only know the realizations <span class="math inline">\(L_1, L_2, \dots, L_T\)</span>?</p>
 </section>
-<section id="stochastic-gradient-descent-12" class="slide level2">
+<section id="stochastic-gradient-descent-18" class="slide level2">
 <h2>Stochastic Gradient Descent</h2>
 <p>The main shortcoming of SGD is that the learning rate is fixed. Ideally we would like the learning rate to vary a bit, because when we are far away from the minimum we could take bigger steps to train more efficiently and when we are near the minimum we would like to take smaller steps to not overshoot.</p>
 <p>So one easy way to improve SGD is to add a mechanism for adjusting the learning rate automatically during training. Probably the most popular algorithm that implements this is <a href="https://arxiv.org/abs/1412.6980">Adam</a>.</p>

@@ -206,7 +206,7 @@
 </section>
 <section id="introduction" class="slide level2">
 <h2>Introduction</h2>
-<p>In the last chapter we looked at singular value decomposition and its applications like recommender systems. This was an example of <strong>unsupervised</strong> learning. Unsupervised learning is a collection of techniques in machine learning (ML) the goal of which is to extract information from unlabelled data.</p>
+<p>In the last chapter we looked at singular value decomposition and its applications like PCA. PCA is a technique used in <strong>unsupervised</strong> learning. Unsupervised learning is a collection of techniques in machine learning the goal of which is to extract information from unlabelled data.</p>
 </section>
 <section id="introduction-1" class="slide level2">
 <h2>Introduction</h2>
@@ -1980,6 +1980,14 @@ weighted avg       0.85      0.85      0.85       179
 </ul>
 <p><code>sklearn</code> by default adds a <span class="math inline">\(l_2\)</span> regularization term.</p>
 </section>
+<section id="extra-tools" class="slide level2">
+<h2>Extra tools</h2>
+<p>There are specialized tools available for checking data quality. Some examples:</p>
+<ol type="1">
+<li><a href="https://github.com/Data-Centric-AI-Community/fg-data-profiling">fg-data-profiling</a> - Python package that generates data quality reports for Pandas dataframes.</li>
+<li><a href="https://greatexpectations.io/gx-core/">Great Expectations</a> - a tool for ensuring data quality in production code.</li>
+</ol>
+</section>
 <section id="practice-task" class="slide level2">
 <h2>Practice task</h2>
 <p>For practice, you could try building a logistic regression model for the <code>Iris dataset</code>. This dataset ships with <code>sklearn</code>. The goal is to predict the type of plant given some measurements.</p>
@@ -2052,7 +2060,11 @@ weighted avg       0.85      0.85      0.85       179
 </section>
 <section id="practice-task-1" class="slide level2">
 <h2>Practice task</h2>
-<p>This is a very simple dataset so it should not be difficult to get good results. Afterwards, try improving the model for the Titanic dataset. You can find it <a href="https://github.com/jputrius/ml_intro/tree/main/data/titanic">here</a>.</p>
+<p>This is a very simple dataset so it should not be difficult to get good results.</p>
+<p>Afterwards, check out <a href="https://github.com/Data-Centric-AI-Community/fg-data-profiling">fg-data-profiling</a> by running it on the <a href="https://github.com/jputrius/ml_intro/tree/main/data/titanic">Titanic dataset</a>. Also try to improve the model this dataset.</p>
+<p>Your can install <code>fg-data-profiling</code> on google colab by running</p>
+<pre><code>!pip install fg-data-profiling</code></pre>
+<p>in a cell.</p>
 
 </section>
     </div>

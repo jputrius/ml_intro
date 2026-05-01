@@ -211,7 +211,7 @@
 </section>
 <section id="entropy" class="slide level2">
 <h2>Entropy</h2>
-<p>The <strong>surprisal</strong> of a random event <span class="math inline">\(E\)</span> is defined to be equal to <span class="math display">\[
+<p>The <strong>surprisal</strong> of a random event <span class="math inline">\(E\)</span> (with non zero probability) is defined to be equal to <span class="math display">\[
 -\log_2(\mathbb{P}(E)),
 \]</span> where <span class="math inline">\(\mathbb{P}(E)\)</span> is the probability that <span class="math inline">\(E\)</span> occurs.</p>
 <p>So the less likely the event is to occur the bigger its surprisal.</p>
@@ -244,18 +244,24 @@
 </section>
 <section id="entropy-5" class="slide level2">
 <h2>Entropy</h2>
-<p>Also last time we used cross-entropy to train logistic regression.</p>
-<p>Suppose we have two finite discrete random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> taking the same values <span class="math inline">\(x_1, \dots, x_n\)</span>. Let’s say that the pmf of <span class="math inline">\(X\)</span> is <span class="math inline">\(p\)</span> and pmf of <span class="math inline">\(Y\)</span> is <span class="math inline">\(q\)</span>. Then cross-entropy is defined to be <span class="math display">\[
-  H(X, Y) = -\sum_{i=1}^n p(x_i) \log(q(x_i)).
+<p>Why is suprisal defined to be <span class="math display">\[
+-\log_2(\mathbb{P}(E))?
 \]</span></p>
-<p>When <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have the same distribution cross-entropy is equal to regular entropy, if they do not have the same distribution then cross-entropy is strictly larger.</p>
+<p>Basically, any function <span class="math inline">\(I: (0, 1] \rightarrow \mathbb{R}\)</span> is called suprisal of an event with probability <span class="math inline">\(p &gt; 0\)</span> if it has these properties:</p>
+<ol type="1">
+<li><span class="math inline">\(I\)</span> is monotonically decreasing - the more likely the event the less suprising it is;</li>
+<li><span class="math inline">\(I(1) = 0\)</span> - events that always occur are not suprising;</li>
+</ol>
 </section>
 <section id="entropy-6" class="slide level2">
 <h2>Entropy</h2>
-<p>Cross entropy measures how similar Y is to X. This is not the fully correct interpretation, but it is sufficient. The correct interpretation is a bit more subtle, you can read it <a href="https://en.wikipedia.org/wiki/Cross-entropy">here</a>.</p>
-<p>Also note that it is not symmetric, that is <span class="math display">\[
-H(X, Y) \ne H(Y, X)
-\]</span> in general.</p>
+<ol start="3" type="1">
+<li><span class="math inline">\(I(p_1p_2) = I(p_1) + I(p_2)\)</span> - the suprisal of the product of two independent events is equal to the sum of the suprisals of the events;</li>
+<li><span class="math inline">\(I\)</span> is smooth (infinitely differentiable) - we don’t want weird functions.</li>
+</ol>
+<p>The only functions that satisfy these 4 properties have form <span class="math display">\[
+I(p) = - \log_a p,
+\]</span> where <span class="math inline">\(a &gt; 1\)</span>. So, you can choose the logarithm base that you prefer the most.</p>
 </section>
 <section id="decision-trees" class="slide level2">
 <h2>Decision Trees</h2>
@@ -371,7 +377,7 @@ weighted avg       0.94      0.94      0.94       171
 </div></section><section id="random-forest" class="slide level2">
 <h2>Random Forest</h2>
 <p>Different model types have different techniques for dealing with overfitting.</p>
-<p>One general idea is that instead of training one big model we train a bunch of small models and combine their results somehow.</p>
+<p>One general idea is that instead of training one big model we train a bunch of small models and combine their results somehow. These are the so called ensamble methods.</p>
 </section>
 <section id="random-forest-1" class="slide level2">
 <h2>Random Forest</h2>
