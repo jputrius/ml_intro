@@ -490,7 +490,7 @@ A = U \text{diag}(\lambda_1, \dots, \lambda_n) U^T,
 0 &amp; \lambda_2 &amp; \cdots &amp; 0 \\
 \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
 0 &amp; 0 &amp; \cdots &amp; \lambda_n \end{pmatrix}.
-\]</span> So a symmetric matrix is always diagonalizable.</p>
+\]</span> So a symmetric matrix is always diagonalizable. Also, the columns of <span class="math inline">\(U\)</span> consist of an orthonormal basis of eigenvectors of <span class="math inline">\(A\)</span>.</p>
 </section>
 <section id="singular-value-decomposition" class="slide level2">
 <h2>Singular Value Decomposition</h2>
@@ -648,13 +648,13 @@ MSE between our fit and sklearn: 6.325051042998488e-27</code></pre>
 <h2>Principal Component Analysis</h2>
 <p>Suppose you have <span class="math inline">\(m\)</span> random variables <span class="math inline">\(X_1, X_2, \dots X_m\)</span> that have mean zero. If the random variables are correlated then the variance of their linear combination <span class="math display">\[
 \text{Var}(\sum_{i=1}^m u_i X_i) = \sum_{i=1}^m u_i^2 \text{Var} ( X_i ) + \sum_{i \ne j} u_i u_j \text{Cov}(X_1, X_j)
-\]</span> is a non trivial function of the coefficient vector <span class="math inline">\(u = (u_1, \dots, u_n)^T.\)</span></p>
+\]</span> is a non trivial function of the coefficient vector <span class="math inline">\(u = (u_1, \dots, u_m)^T.\)</span></p>
 </section>
 <section id="principal-component-analysis-2" class="slide level2">
 <h2>Principal Component Analysis</h2>
-<p>The idea of PCA is to find a unit length vector <span class="math inline">\(u_1 = (u_{11}, \dots, u_{1n})^T\)</span> such that the variance of <span class="math inline">\(u_1^T X\)</span> would be the largest possible. Here <span class="math inline">\(X = (X_1, X_2, \dots, X_n)^T\)</span> is a random vector.</p>
-<p>Next, you find a second unit vector <span class="math inline">\(u_2 = (u_{21}, \dots, u_{2n})^T\)</span> such that <span class="math inline">\(u_2\)</span> would be orthogonal to <span class="math inline">\(u_1\)</span> and the variance of <span class="math inline">\(u_2^T X\)</span> would be the largest possible among such vectors.</p>
-<p>Then you continue finding <span class="math inline">\(u_3, \dots, u_n\)</span> iteratively the same way. That is PCA finds orthogonal “directions” in your data along which the variances are the largest.</p>
+<p>The idea of PCA is to find a unit length vector <span class="math inline">\(u_1 = (u_{11}, \dots, u_{1m})^T\)</span> such that the variance of <span class="math inline">\(u_1^T X\)</span> would be the largest possible. Here <span class="math inline">\(X = (X_1, X_2, \dots, X_m)^T\)</span> is a random vector.</p>
+<p>Next, you find a second unit vector <span class="math inline">\(u_2 = (u_{21}, \dots, u_{2m})^T\)</span> such that <span class="math inline">\(u_2\)</span> would be orthogonal to <span class="math inline">\(u_1\)</span> and the variance of <span class="math inline">\(u_2^T X\)</span> would be the largest possible among such vectors.</p>
+<p>Then you continue finding <span class="math inline">\(u_3, \dots, u_m\)</span> iteratively the same way. That is PCA finds orthogonal “directions” in your data along which the variances are the largest.</p>
 </section>
 <section id="principal-component-analysis-3" class="slide level2">
 <h2>Principal Component Analysis</h2>
@@ -666,7 +666,7 @@ MSE between our fit and sklearn: 6.325051042998488e-27</code></pre>
 <h2>Principal Component Analysis</h2>
 <p>Let <span class="math inline">\(u\)</span> be a unit vector. Then the sample variance in the direction of <span class="math inline">\(u\)</span> is proportional to <span class="math display">\[
 u^TA^TAu,
-\]</span> that is if <span class="math inline">\(u = (u_1, \dots, u_n)^T\)</span>, then the sample variance of <span class="math display">\[
+\]</span> that is if <span class="math inline">\(u = (u_1, \dots, u_m)^T\)</span>, then the sample variance of <span class="math display">\[
 \sum_{i=1}^m u_i X_i
 \]</span> is proportional to the above.</p>
 </section>
@@ -681,17 +681,30 @@ u^TA^TAu,
 <section id="principal-component-analysis-6" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>The largest value of the above expression is the square of the largest entry of <span class="math inline">\(\Sigma\)</span>, if we assume this to be first entry, then <span class="math inline">\(v = (1, 0, \dots, 0)^T\)</span> and <span class="math inline">\(u = Vv\)</span> is equal to the first column of <span class="math inline">\(V\)</span>.</p>
-<p>Similarly, the other directions will correspond to other singular values of <span class="math inline">\(A\)</span> and will be the other columns of <span class="math inline">\(V\)</span>. To transform our variables to the new variables that maximize variances we need to compute <span class="math display">\[
+<p>Similarly, the other directions will correspond to other singular values of <span class="math inline">\(A\)</span> and will be the other columns of <span class="math inline">\(V\)</span>. Also, the columns of <span class="math inline">\(V\)</span> are eigenvectors for the matrix <span class="math inline">\(A^TA\)</span>.</p>
+<p>To transform our variables to the new variables that maximize variances we need to compute <span class="math display">\[
 AV = U \Sigma V^T V = U \Sigma.
 \]</span></p>
 </section>
 <section id="principal-component-analysis-7" class="slide level2">
 <h2>Principal Component Analysis</h2>
+<p>These new variables that we get from PCA will also be uncorrelated! Indeed, suppose <span class="math inline">\(v_1 = (v_{11}, \dots, v_{1m})^T\)</span> and <span class="math inline">\(v_2 = (v_{21}, \dots, v_{2m})^T\)</span> be two orthogonal vectors such that <span class="math inline">\(\sum_{i=1}^m v_{1i} X_i\)</span> and <span class="math inline">\(\sum_{i=1}^m v_{2i}X_i\)</span> would be the new variables that we get from PCA. Then the sample covariance of these two variables is proportional to <span class="math display">\[
+v_{1}^TA^TAv_2.
+\]</span></p>
+</section>
+<section id="principal-component-analysis-8" class="slide level2">
+<h2>Principal Component Analysis</h2>
+<p>But <span class="math inline">\(v_2\)</span> (and <span class="math inline">\(v_1\)</span>) are eigenvectors of <span class="math inline">\(A^TA,\)</span> therefore <span class="math display">\[
+v_{1}^TA^TAv_2 = v_1^T \lambda v_2 = 0,
+\]</span> because <span class="math inline">\(v_1\)</span> is orthogonal to <span class="math inline">\(v_2\)</span>.</p>
+</section>
+<section id="principal-component-analysis-9" class="slide level2">
+<h2>Principal Component Analysis</h2>
 <p>To perform data compression we do not keep all of the directions. We keep only first <span class="math inline">\(k &lt; m\)</span> ones that correspond to the largest singular values of <span class="math inline">\(A\)</span>. To do this we keep only first <span class="math inline">\(k\)</span> singular values and keep only the first <span class="math inline">\(k\)</span> columns of <span class="math inline">\(U\)</span>. That is we truncate <span class="math inline">\(U\)</span> and <span class="math inline">\(\Sigma\)</span> to get <span class="math inline">\(U_k\)</span> and <span class="math inline">\(\Sigma_k\)</span>. Then our new compressed variables will be in the matrix <span class="math display">\[
   U_k \Sigma_k.
 \]</span></p>
 </section>
-<section id="principal-component-analysis-8" class="slide level2">
+<section id="principal-component-analysis-10" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>To summarize, suppose you have <span class="math inline">\(n\)</span> samples of <span class="math inline">\(m\)</span> variables.</p>
 <p>Then, you can perform PCA as follows:</p>
@@ -701,24 +714,24 @@ AV = U \Sigma V^T V = U \Sigma.
 <li>Compute SVD of <span class="math inline">\(A = U \Sigma V^T.\)</span></li>
 </ol>
 </section>
-<section id="principal-component-analysis-9" class="slide level2">
+<section id="principal-component-analysis-11" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <ol start="4" type="1">
 <li>Keep only first <span class="math inline">\(k\)</span> singular values and truncate <span class="math inline">\(U\)</span> keeping only the first <span class="math inline">\(k\)</span> columns. In this way you get <span class="math inline">\(U_k\)</span> and <span class="math inline">\(\Sigma_k\)</span>.</li>
 <li>Multiply <span class="math inline">\(U_k\)</span> and <span class="math inline">\(\Sigma_k\)</span> together, you will get a matrix with <span class="math inline">\(n\)</span> rows and <span class="math inline">\(k\)</span> columns. The rows still represent samples and columns represent the compressed variables.</li>
 </ol>
 </section>
-<section id="principal-component-analysis-10" class="slide level2">
+<section id="principal-component-analysis-12" class="slide level2">
 <h2>Principal Component Analysis</h2>
 
 <img data-src="../images/svd-and-rank-k-approximations-l.jpg" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="principal-component-analysis-11" class="slide level2">
+<section id="principal-component-analysis-13" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>One typical use of PCA is to visualize high dimensional data. Reduce the dimension of your samples to 2 and then you can visualize your dataset using a scatter plot.</p>
 <p><code>sklearn</code> has an implementation of PCA, which also performs step 1 automatically, i.e.&nbsp;you do not have to provide centralized data.</p>
 <p>Let’s visualize the iris dataset using PCA. Iris dataset contains measurement samples of three types of flowers.</p>
 </section>
-<section id="principal-component-analysis-12" class="slide level2">
+<section id="principal-component-analysis-14" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <div id="dd821493" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
@@ -736,35 +749,35 @@ AV = U \Sigma V^T V = U \Sigma.
 
 </div>
 <img data-src="01_singular_value_decomposition_files/figure-revealjs/cell-5-output-1.png" class="r-stretch"></section>
-<section id="principal-component-analysis-13" class="slide level2">
+<section id="principal-component-analysis-15" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>There is another similar way to compute PCA.</p>
 <p>Let’s say that our data is placed in a matrix <span class="math inline">\(A\)</span> (rows represent samples, columns represent variables). For simplicities sake, let’s assume that our variables are centered (so the mean of each column of <span class="math inline">\(A\)</span> is <span class="math inline">\(0\)</span>).</p>
 <p>Now compute a singular value decomposition of <span class="math inline">\(A = U \Sigma V^T,\)</span> where the regular space saving truncation is applied. Now truncate <span class="math inline">\(V\)</span> by keeping only the first <span class="math inline">\(k\)</span> columns (so you are keeping the first <span class="math inline">\(k\)</span> rows of <span class="math inline">\(V^T\)</span>). Denote the truncated matrix by <span class="math inline">\(V_k.\)</span></p>
 </section>
-<section id="principal-component-analysis-14" class="slide level2">
+<section id="principal-component-analysis-16" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>Now multiplying <span class="math inline">\(A\)</span> by <span class="math inline">\(V_k\)</span> you will get the same result as the previous procedure of computing PCA.</p>
 <p>This is how PCA is implemented in <code>sklearn</code>.</p>
 <p>The advantage of this approach is that the truncated matrix <span class="math inline">\(V_k\)</span> defines a map from the full space <span class="math inline">\(\mathbb{R}^m\)</span> to the compressed space <span class="math inline">\(\mathbb{R}^k.\)</span> You can use this map to compress samples of data that were not used when fitting the PCA model (“fitting” here means computing <span class="math inline">\(V_k\)</span>). You do this by forming a row vector out of your sample and multiplying it with <span class="math inline">\(V_k\)</span>.</p>
 </section>
-<section id="principal-component-analysis-15" class="slide level2">
+<section id="principal-component-analysis-17" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>You can also decompress a sample of data by multiplying with <span class="math inline">\(V_k^T\)</span>.</p>
 <p>Note that this compression is lossy. That is, if you compress and then decompress you will get a vector that is different from the original.</p>
 </section>
-<section id="principal-component-analysis-16" class="slide level2">
+<section id="principal-component-analysis-18" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>To reiterate, directions corresponding to largest singular values are used for data compression.</p>
 <p>For example, suppose that in your model you would like to use some of the variables <span class="math inline">\(X_1, \dots, X_m.\)</span> Also, suppose that they are highly correlated, so using all of them might be a waste of effort. How do you choose which ones to use? Well perform PCA on them and use the compressed variables instead, then you will not have to choose.</p>
 </section>
-<section id="principal-component-analysis-17" class="slide level2">
+<section id="principal-component-analysis-19" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>Directions that correspond to small singular values are also useful. Suppose that you have some direction <span class="math inline">\(u = (u_1, \dots, u_n)^T\)</span> that corresponds to an almost zero principal value. Then the variance of <span class="math display">\[
 u_1 X_1 + \dots + u_n X_n
 \]</span> will be almost zero. That is, the expression is an almost constant random variable.</p>
 </section>
-<section id="principal-component-analysis-18" class="slide level2">
+<section id="principal-component-analysis-20" class="slide level2">
 <h2>Principal Component Analysis</h2>
 <p>Since the means of <span class="math inline">\(X_1, \dots, X_n\)</span> are zero we get that <span class="math display">\[
 u_1 X_1 + \dots + u_n X_n \approx 0,

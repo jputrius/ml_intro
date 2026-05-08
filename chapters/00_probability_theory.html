@@ -247,6 +247,22 @@ p_X(x) = \mathbb{P}(X=x).
 <h2>Law of Large Numbers</h2>
 <p>How good the approximation is depends on <span class="math inline">\(\text{Var}(X)\)</span>. If <span class="math inline">\(\text{Var}(X)\)</span> is infinite then the approximation is really really bad and you shouldn’t use law of large numbers in practice in such a case (but people still do).</p>
 </section>
+<section id="correlation" class="slide level2">
+<h2>Correlation</h2>
+<p>Suppose <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are random variables, then their correlation coefficient is defined to be <span class="math display">\[
+  \text{corr}(X, Y) = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)}\sqrt{\text{Var}(Y)}}.
+\]</span> It is a number between <span class="math inline">\(-1\)</span> and <span class="math inline">\(1\)</span> (if it exists).</p>
+<p>If the correlation coefficient is 0 then the random variables are said to be uncorrelated or linearly independent.</p>
+</section>
+<section id="correlation-1" class="slide level2">
+<h2>Correlation</h2>
+<p>To help interpret correlation let’s look at the following example. Suppose we have two uncorrelated random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Now take numbers <span class="math inline">\(a, b \in \mathbb{R}\)</span> such that <span class="math inline">\(a^2+b^2=1\)</span> and <span class="math inline">\(aX+bY\)</span> would have the smallest possible variance out of all choices of <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> with the specified condition. Then if <span class="math inline">\(\text{Var}(X) \le \text{Var}(Y)\)</span>, we have <span class="math inline">\(a=1\)</span> (or <span class="math inline">\(a=-1\)</span>) and <span class="math inline">\(b=0\)</span>.</p>
+<p>That is, if two variables are uncorrelated then there does not exist a linear model between the variables that would be at all viable.</p>
+</section>
+<section id="correlation-2" class="slide level2">
+<h2>Correlation</h2>
+<p>Caution: Being uncorrelated does not imply that the variables are independent. For example <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> might be uncorrelated, but <span class="math inline">\(X^2\)</span> and <span class="math inline">\(Y\)</span> can possibly be strongly correlated.</p>
+</section>
 <section id="continuous-random-variables" class="slide level2">
 <h2>Continuous Random Variables</h2>
 <p>A random variable <span class="math inline">\(X\)</span> is called absolutely continuous if there exists a function <span class="math inline">\(f_X: \mathbb{R} \rightarrow \mathbb{R}\)</span> such that for any two real numbers <span class="math inline">\(a &lt; b\)</span> we can compute the probability as <span class="math display">\[
