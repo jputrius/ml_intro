@@ -6,8 +6,8 @@
 <script src="07_transformers_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="07_transformers_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="07_transformers_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="07_transformers_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="07_transformers_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <title>Transformers</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,10 +19,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -325,31 +328,31 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <section id="transformers-1" class="slide level2">
 <h2>Transformers</h2>
 <div id="f699773d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="cc145697-b698-4afd-98a9-2c141f4670b6" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> torch</span>
-<span id="cb1-2"><a href=""></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
-<span id="cb1-3"><a href=""></a></span>
-<span id="cb1-4"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
-<span id="cb1-5"><a href=""></a></span>
-<span id="cb1-6"><a href=""></a><span class="kw">class</span> TransformerBlock(nn.Module):</span>
-<span id="cb1-7"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, embed_dim, no_heads, seq_length, fc_dim<span class="op">=</span><span class="dv">2048</span>):</span>
-<span id="cb1-8"><a href=""></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb1-9"><a href=""></a>    <span class="va">self</span>.mask <span class="op">=</span> nn.Transformer.generate_square_subsequent_mask(seq_length).to(device)</span>
-<span id="cb1-10"><a href=""></a>    <span class="va">self</span>.attention <span class="op">=</span> nn.MultiheadAttention(embed_dim<span class="op">=</span>embed_dim, num_heads<span class="op">=</span>no_heads, batch_first<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-11"><a href=""></a>    <span class="va">self</span>.norm1 <span class="op">=</span> nn.LayerNorm(embed_dim)</span>
-<span id="cb1-12"><a href=""></a>    <span class="va">self</span>.fc <span class="op">=</span> nn.Sequential(</span>
-<span id="cb1-13"><a href=""></a>      nn.Linear(embed_dim, fc_dim),</span>
-<span id="cb1-14"><a href=""></a>      nn.ReLU(),</span>
-<span id="cb1-15"><a href=""></a>      nn.Linear(fc_dim, embed_dim)</span>
-<span id="cb1-16"><a href=""></a>    )</span>
-<span id="cb1-17"><a href=""></a>    <span class="va">self</span>.norm2 <span class="op">=</span> nn.LayerNorm(embed_dim)</span>
-<span id="cb1-18"><a href=""></a></span>
-<span id="cb1-19"><a href=""></a>  <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
-<span id="cb1-20"><a href=""></a>    att, _ <span class="op">=</span> <span class="va">self</span>.attention(x, x, x, is_causal<span class="op">=</span><span class="va">True</span>, attn_mask<span class="op">=</span><span class="va">self</span>.mask)</span>
-<span id="cb1-21"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.norm1(x <span class="op">+</span> att)</span>
-<span id="cb1-22"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.norm2(x <span class="op">+</span> <span class="va">self</span>.fc(x))</span>
-<span id="cb1-23"><a href=""></a>    <span class="cf">return</span> x</span>
-<span id="cb1-24"><a href=""></a></span>
-<span id="cb1-25"><a href=""></a><span class="bu">print</span>(TransformerBlock(<span class="dv">256</span>, <span class="dv">4</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="" aria-label="2"></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
+<span id="cb1-3"><a href="" aria-label="3"></a></span>
+<span id="cb1-4"><a href="" aria-label="4"></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb1-5"><a href="" aria-label="5"></a></span>
+<span id="cb1-6"><a href="" aria-label="6"></a><span class="kw">class</span> TransformerBlock(nn.Module):</span>
+<span id="cb1-7"><a href="" aria-label="7"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, embed_dim, no_heads, seq_length, fc_dim<span class="op">=</span><span class="dv">2048</span>):</span>
+<span id="cb1-8"><a href="" aria-label="8"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb1-9"><a href="" aria-label="9"></a>    <span class="va">self</span>.mask <span class="op">=</span> nn.Transformer.generate_square_subsequent_mask(seq_length).to(device)</span>
+<span id="cb1-10"><a href="" aria-label="10"></a>    <span class="va">self</span>.attention <span class="op">=</span> nn.MultiheadAttention(embed_dim<span class="op">=</span>embed_dim, num_heads<span class="op">=</span>no_heads, batch_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-11"><a href="" aria-label="11"></a>    <span class="va">self</span>.norm1 <span class="op">=</span> nn.LayerNorm(embed_dim)</span>
+<span id="cb1-12"><a href="" aria-label="12"></a>    <span class="va">self</span>.fc <span class="op">=</span> nn.Sequential(</span>
+<span id="cb1-13"><a href="" aria-label="13"></a>      nn.Linear(embed_dim, fc_dim),</span>
+<span id="cb1-14"><a href="" aria-label="14"></a>      nn.ReLU(),</span>
+<span id="cb1-15"><a href="" aria-label="15"></a>      nn.Linear(fc_dim, embed_dim)</span>
+<span id="cb1-16"><a href="" aria-label="16"></a>    )</span>
+<span id="cb1-17"><a href="" aria-label="17"></a>    <span class="va">self</span>.norm2 <span class="op">=</span> nn.LayerNorm(embed_dim)</span>
+<span id="cb1-18"><a href="" aria-label="18"></a></span>
+<span id="cb1-19"><a href="" aria-label="19"></a>  <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb1-20"><a href="" aria-label="20"></a>    att, _ <span class="op">=</span> <span class="va">self</span>.attention(x, x, x, is_causal<span class="op">=</span><span class="va">True</span>, attn_mask<span class="op">=</span><span class="va">self</span>.mask)</span>
+<span id="cb1-21"><a href="" aria-label="21"></a>    x <span class="op">=</span> <span class="va">self</span>.norm1(x <span class="op">+</span> att)</span>
+<span id="cb1-22"><a href="" aria-label="22"></a>    x <span class="op">=</span> <span class="va">self</span>.norm2(x <span class="op">+</span> <span class="va">self</span>.fc(x))</span>
+<span id="cb1-23"><a href="" aria-label="23"></a>    <span class="cf">return</span> x</span>
+<span id="cb1-24"><a href="" aria-label="24"></a></span>
+<span id="cb1-25"><a href="" aria-label="25"></a><span class="bu">print</span>(TransformerBlock(<span class="dv">256</span>, <span class="dv">4</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -393,28 +396,28 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <section id="transformers-6" class="slide level2">
 <h2>Transformers</h2>
 <div id="f0ca1f39" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="4c7efb04-1596-4089-cac6-679ce2b15f29" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">class</span> Transformer(nn.Module):</span>
-<span id="cb3-2"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, no_tokens, seq_length, pad_idx, embed_dim, no_heads, depth):</span>
-<span id="cb3-3"><a href=""></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb3-4"><a href=""></a></span>
-<span id="cb3-5"><a href=""></a>    <span class="va">self</span>.token_embedding <span class="op">=</span> nn.Embedding(embedding_dim<span class="op">=</span>embed_dim, num_embeddings<span class="op">=</span>no_tokens)</span>
-<span id="cb3-6"><a href=""></a>    <span class="va">self</span>.pos_embedding <span class="op">=</span> nn.Embedding(embedding_dim<span class="op">=</span>embed_dim, num_embeddings<span class="op">=</span>seq_length)</span>
-<span id="cb3-7"><a href=""></a></span>
-<span id="cb3-8"><a href=""></a>    <span class="va">self</span>.tblocks <span class="op">=</span> nn.Sequential(<span class="op">*</span>[</span>
-<span id="cb3-9"><a href=""></a>      TransformerBlock(embed_dim<span class="op">=</span>embed_dim, no_heads<span class="op">=</span>no_heads, seq_length<span class="op">=</span>seq_length) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(depth)</span>
-<span id="cb3-10"><a href=""></a>    ])</span>
-<span id="cb3-11"><a href=""></a></span>
-<span id="cb3-12"><a href=""></a>    <span class="va">self</span>.toprobs <span class="op">=</span> nn.Linear(embed_dim, no_tokens)</span>
-<span id="cb3-13"><a href=""></a></span>
-<span id="cb3-14"><a href=""></a>  <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
-<span id="cb3-15"><a href=""></a>    tokens <span class="op">=</span> <span class="va">self</span>.token_embedding(x)</span>
-<span id="cb3-16"><a href=""></a>    b, n, e <span class="op">=</span> tokens.size()</span>
-<span id="cb3-17"><a href=""></a>    positions <span class="op">=</span> <span class="va">self</span>.pos_embedding(torch.arange(n, device<span class="op">=</span>tokens.device)).unsqueeze(<span class="dv">0</span>).expand(b, n, e)</span>
-<span id="cb3-18"><a href=""></a>    x <span class="op">=</span> tokens <span class="op">+</span> positions</span>
-<span id="cb3-19"><a href=""></a>    x <span class="op">=</span> <span class="va">self</span>.tblocks(x)</span>
-<span id="cb3-20"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.toprobs(x)</span>
-<span id="cb3-21"><a href=""></a></span>
-<span id="cb3-22"><a href=""></a><span class="bu">print</span>(Transformer(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="kw">class</span> Transformer(nn.Module):</span>
+<span id="cb3-2"><a href="" aria-label="2"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, no_tokens, seq_length, pad_idx, embed_dim, no_heads, depth):</span>
+<span id="cb3-3"><a href="" aria-label="3"></a>    <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb3-4"><a href="" aria-label="4"></a></span>
+<span id="cb3-5"><a href="" aria-label="5"></a>    <span class="va">self</span>.token_embedding <span class="op">=</span> nn.Embedding(embedding_dim<span class="op">=</span>embed_dim, num_embeddings<span class="op">=</span>no_tokens)</span>
+<span id="cb3-6"><a href="" aria-label="6"></a>    <span class="va">self</span>.pos_embedding <span class="op">=</span> nn.Embedding(embedding_dim<span class="op">=</span>embed_dim, num_embeddings<span class="op">=</span>seq_length)</span>
+<span id="cb3-7"><a href="" aria-label="7"></a></span>
+<span id="cb3-8"><a href="" aria-label="8"></a>    <span class="va">self</span>.tblocks <span class="op">=</span> nn.Sequential(<span class="op">*</span>[</span>
+<span id="cb3-9"><a href="" aria-label="9"></a>      TransformerBlock(embed_dim<span class="op">=</span>embed_dim, no_heads<span class="op">=</span>no_heads, seq_length<span class="op">=</span>seq_length) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(depth)</span>
+<span id="cb3-10"><a href="" aria-label="10"></a>    ])</span>
+<span id="cb3-11"><a href="" aria-label="11"></a></span>
+<span id="cb3-12"><a href="" aria-label="12"></a>    <span class="va">self</span>.toprobs <span class="op">=</span> nn.Linear(embed_dim, no_tokens)</span>
+<span id="cb3-13"><a href="" aria-label="13"></a></span>
+<span id="cb3-14"><a href="" aria-label="14"></a>  <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb3-15"><a href="" aria-label="15"></a>    tokens <span class="op">=</span> <span class="va">self</span>.token_embedding(x)</span>
+<span id="cb3-16"><a href="" aria-label="16"></a>    b, n, e <span class="op">=</span> tokens.size()</span>
+<span id="cb3-17"><a href="" aria-label="17"></a>    positions <span class="op">=</span> <span class="va">self</span>.pos_embedding(torch.arange(n, device<span class="op">=</span>tokens.device)).unsqueeze(<span class="dv">0</span>).expand(b, n, e)</span>
+<span id="cb3-18"><a href="" aria-label="18"></a>    x <span class="op">=</span> tokens <span class="op">+</span> positions</span>
+<span id="cb3-19"><a href="" aria-label="19"></a>    x <span class="op">=</span> <span class="va">self</span>.tblocks(x)</span>
+<span id="cb3-20"><a href="" aria-label="20"></a>    <span class="cf">return</span> <span class="va">self</span>.toprobs(x)</span>
+<span id="cb3-21"><a href="" aria-label="21"></a></span>
+<span id="cb3-22"><a href="" aria-label="22"></a><span class="bu">print</span>(Transformer(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -491,145 +494,145 @@ w'_{ij} = \frac{q_ik_i^T}{\sqrt{n}},
 <section id="transformers-12" class="slide level2">
 <h2>Transformers</h2>
 <div id="c8b85dcc" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb5-2"><a href=""></a><span class="im">import</span> torch</span>
-<span id="cb5-3"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb5-4"><a href=""></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset, DataLoader</span>
-<span id="cb5-5"><a href=""></a></span>
-<span id="cb5-6"><a href=""></a><span class="kw">class</span> CharLevelTokenizerLt:</span>
-<span id="cb5-7"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb5-8"><a href=""></a>    <span class="va">self</span>.i2t <span class="op">=</span> [</span>
-<span id="cb5-9"><a href=""></a>      <span class="st">'&lt;pad&gt;'</span>, <span class="st">'&lt;eos&gt;'</span>,</span>
-<span id="cb5-10"><a href=""></a>      <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'e'</span>, <span class="st">'f'</span>, <span class="st">'g'</span>, <span class="st">'h'</span>,</span>
-<span id="cb5-11"><a href=""></a>      <span class="st">'i'</span>, <span class="st">'j'</span>, <span class="st">'k'</span>, <span class="st">'l'</span>, <span class="st">'m'</span>, <span class="st">'n'</span>, <span class="st">'o'</span>, <span class="st">'p'</span>,</span>
-<span id="cb5-12"><a href=""></a>      <span class="st">'r'</span>, <span class="st">'s'</span>, <span class="st">'t'</span>, <span class="st">'u'</span>, <span class="st">'v'</span>, <span class="st">'y'</span>, <span class="st">'z'</span>, <span class="st">'č'</span>,</span>
-<span id="cb5-13"><a href=""></a>      <span class="st">'ė'</span>, <span class="st">'š'</span>, <span class="st">'ū'</span>, <span class="st">'ž'</span></span>
-<span id="cb5-14"><a href=""></a>    ]</span>
-<span id="cb5-15"><a href=""></a>    <span class="va">self</span>.t2i <span class="op">=</span> {token:index <span class="cf">for</span> index, token <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="va">self</span>.i2t)}</span>
-<span id="cb5-16"><a href=""></a>    <span class="va">self</span>.no_tokens <span class="op">=</span> <span class="bu">len</span>(<span class="va">self</span>.i2t)</span>
-<span id="cb5-17"><a href=""></a>    <span class="va">self</span>.pad_idx <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb5-18"><a href=""></a>    <span class="va">self</span>.eos_idx <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb5-19"><a href=""></a></span>
-<span id="cb5-20"><a href=""></a>  <span class="kw">def</span> string_to_idx(<span class="va">self</span>, string, seq_length<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb5-21"><a href=""></a>    tokens <span class="op">=</span> [token <span class="cf">for</span> token <span class="kw">in</span> string]</span>
-<span id="cb5-22"><a href=""></a>    <span class="cf">return</span> <span class="va">self</span>.tokens_to_idx(tokens, seq_length)</span>
-<span id="cb5-23"><a href=""></a></span>
-<span id="cb5-24"><a href=""></a>  <span class="kw">def</span> tokens_to_idx(<span class="va">self</span>, tokens, seq_length<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb5-25"><a href=""></a>    idxs <span class="op">=</span> [<span class="va">self</span>.t2i[token] <span class="cf">if</span> token <span class="kw">in</span> <span class="va">self</span>.t2i <span class="cf">else</span> <span class="va">self</span>.unk_idx <span class="cf">for</span> token <span class="kw">in</span> tokens]</span>
-<span id="cb5-26"><a href=""></a>    idxs <span class="op">=</span> [<span class="op">*</span>idxs, <span class="va">self</span>.eos_idx]</span>
-<span id="cb5-27"><a href=""></a>    <span class="cf">if</span> seq_length <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb5-28"><a href=""></a>      idxs <span class="op">=</span> idxs <span class="op">+</span> [<span class="va">self</span>.pad_idx] <span class="op">*</span> (seq_length <span class="op">-</span> <span class="bu">len</span>(idxs))</span>
-<span id="cb5-29"><a href=""></a>      idxs <span class="op">=</span> idxs[:seq_length]</span>
-<span id="cb5-30"><a href=""></a>    <span class="cf">return</span> idxs</span>
-<span id="cb5-31"><a href=""></a></span>
-<span id="cb5-32"><a href=""></a>  <span class="kw">def</span> idx_to_string(<span class="va">self</span>, indices):</span>
-<span id="cb5-33"><a href=""></a>    tokens <span class="op">=</span> <span class="va">self</span>.idx_to_tokens(indices)</span>
-<span id="cb5-34"><a href=""></a>    <span class="cf">return</span> <span class="st">' '</span>.join(tokens)</span>
-<span id="cb5-35"><a href=""></a></span>
-<span id="cb5-36"><a href=""></a>  <span class="kw">def</span> idx_to_tokens(<span class="va">self</span>, indices):</span>
-<span id="cb5-37"><a href=""></a>    <span class="cf">return</span> [<span class="va">self</span>.i2t[idx] <span class="cf">for</span> idx <span class="kw">in</span> indices <span class="cf">if</span> idx <span class="op">!=</span> <span class="va">self</span>.pad_idx <span class="kw">or</span> idx <span class="op">!=</span> <span class="va">self</span>.eos_idx]</span>
-<span id="cb5-38"><a href=""></a></span>
-<span id="cb5-39"><a href=""></a><span class="kw">class</span> NameData(Dataset):</span>
-<span id="cb5-40"><a href=""></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, seq_length):</span>
-<span id="cb5-41"><a href=""></a>    <span class="va">self</span>.tokenizer <span class="op">=</span> CharLevelTokenizerLt()</span>
-<span id="cb5-42"><a href=""></a>    <span class="va">self</span>.data <span class="op">=</span> pd.read_csv(<span class="st">"../data/names/vardai.csv"</span>)</span>
-<span id="cb5-43"><a href=""></a></span>
-<span id="cb5-44"><a href=""></a>    <span class="va">self</span>.no_tokens <span class="op">=</span> <span class="va">self</span>.tokenizer.no_tokens</span>
-<span id="cb5-45"><a href=""></a>    <span class="va">self</span>.pad_idx <span class="op">=</span> <span class="va">self</span>.tokenizer.pad_idx</span>
-<span id="cb5-46"><a href=""></a>    <span class="va">self</span>.eos_idx <span class="op">=</span> <span class="va">self</span>.tokenizer.eos_idx</span>
-<span id="cb5-47"><a href=""></a>    <span class="va">self</span>.seq_length <span class="op">=</span> seq_length</span>
-<span id="cb5-48"><a href=""></a></span>
-<span id="cb5-49"><a href=""></a>  <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
-<span id="cb5-50"><a href=""></a>    <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.data)</span>
-<span id="cb5-51"><a href=""></a></span>
-<span id="cb5-52"><a href=""></a>  <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
-<span id="cb5-53"><a href=""></a>    name <span class="op">=</span> <span class="va">self</span>.data.loc[idx][<span class="st">"name"</span>]</span>
-<span id="cb5-54"><a href=""></a></span>
-<span id="cb5-55"><a href=""></a>    inp  <span class="op">=</span> <span class="va">self</span>.tokenizer.tokens_to_idx(name[:], <span class="va">self</span>.seq_length)</span>
-<span id="cb5-56"><a href=""></a>    target <span class="op">=</span> <span class="va">self</span>.tokenizer.tokens_to_idx(name[<span class="dv">1</span>:], <span class="va">self</span>.seq_length)</span>
-<span id="cb5-57"><a href=""></a></span>
-<span id="cb5-58"><a href=""></a>    inp <span class="op">=</span> torch.IntTensor(inp)</span>
-<span id="cb5-59"><a href=""></a>    target <span class="op">=</span> torch.LongTensor(target)</span>
-<span id="cb5-60"><a href=""></a>    target <span class="op">=</span> torch.zeros(<span class="va">self</span>.no_tokens<span class="op">*</span><span class="va">self</span>.seq_length, dtype<span class="op">=</span>torch.<span class="bu">float</span>).view(<span class="va">self</span>.seq_length, <span class="va">self</span>.no_tokens).scatter(<span class="dv">1</span>, target.view(<span class="va">self</span>.seq_length, <span class="dv">1</span>), value<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb5-61"><a href=""></a></span>
-<span id="cb5-62"><a href=""></a>    <span class="cf">return</span> inp, target</span>
-<span id="cb5-63"><a href=""></a></span>
-<span id="cb5-64"><a href=""></a>seq_length <span class="op">=</span> <span class="dv">15</span></span>
-<span id="cb5-65"><a href=""></a>batch_size <span class="op">=</span> <span class="dv">32</span></span>
-<span id="cb5-66"><a href=""></a></span>
-<span id="cb5-67"><a href=""></a>data <span class="op">=</span> NameData(seq_length<span class="op">=</span>seq_length)</span>
-<span id="cb5-68"><a href=""></a></span>
-<span id="cb5-69"><a href=""></a>dataloader <span class="op">=</span> DataLoader(</span>
-<span id="cb5-70"><a href=""></a>  data,</span>
-<span id="cb5-71"><a href=""></a>  batch_size<span class="op">=</span>batch_size,</span>
-<span id="cb5-72"><a href=""></a>  shuffle<span class="op">=</span><span class="va">True</span></span>
-<span id="cb5-73"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="" aria-label="2"></a><span class="im">import</span> torch</span>
+<span id="cb5-3"><a href="" aria-label="3"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-4"><a href="" aria-label="4"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset, DataLoader</span>
+<span id="cb5-5"><a href="" aria-label="5"></a></span>
+<span id="cb5-6"><a href="" aria-label="6"></a><span class="kw">class</span> CharLevelTokenizerLt:</span>
+<span id="cb5-7"><a href="" aria-label="7"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb5-8"><a href="" aria-label="8"></a>    <span class="va">self</span>.i2t <span class="op">=</span> [</span>
+<span id="cb5-9"><a href="" aria-label="9"></a>      <span class="st">'&lt;pad&gt;'</span>, <span class="st">'&lt;eos&gt;'</span>,</span>
+<span id="cb5-10"><a href="" aria-label="10"></a>      <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'e'</span>, <span class="st">'f'</span>, <span class="st">'g'</span>, <span class="st">'h'</span>,</span>
+<span id="cb5-11"><a href="" aria-label="11"></a>      <span class="st">'i'</span>, <span class="st">'j'</span>, <span class="st">'k'</span>, <span class="st">'l'</span>, <span class="st">'m'</span>, <span class="st">'n'</span>, <span class="st">'o'</span>, <span class="st">'p'</span>,</span>
+<span id="cb5-12"><a href="" aria-label="12"></a>      <span class="st">'r'</span>, <span class="st">'s'</span>, <span class="st">'t'</span>, <span class="st">'u'</span>, <span class="st">'v'</span>, <span class="st">'y'</span>, <span class="st">'z'</span>, <span class="st">'č'</span>,</span>
+<span id="cb5-13"><a href="" aria-label="13"></a>      <span class="st">'ė'</span>, <span class="st">'š'</span>, <span class="st">'ū'</span>, <span class="st">'ž'</span></span>
+<span id="cb5-14"><a href="" aria-label="14"></a>    ]</span>
+<span id="cb5-15"><a href="" aria-label="15"></a>    <span class="va">self</span>.t2i <span class="op">=</span> {token:index <span class="cf">for</span> index, token <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="va">self</span>.i2t)}</span>
+<span id="cb5-16"><a href="" aria-label="16"></a>    <span class="va">self</span>.no_tokens <span class="op">=</span> <span class="bu">len</span>(<span class="va">self</span>.i2t)</span>
+<span id="cb5-17"><a href="" aria-label="17"></a>    <span class="va">self</span>.pad_idx <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb5-18"><a href="" aria-label="18"></a>    <span class="va">self</span>.eos_idx <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb5-19"><a href="" aria-label="19"></a></span>
+<span id="cb5-20"><a href="" aria-label="20"></a>  <span class="kw">def</span> string_to_idx(<span class="va">self</span>, string, seq_length<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb5-21"><a href="" aria-label="21"></a>    tokens <span class="op">=</span> [token <span class="cf">for</span> token <span class="kw">in</span> string]</span>
+<span id="cb5-22"><a href="" aria-label="22"></a>    <span class="cf">return</span> <span class="va">self</span>.tokens_to_idx(tokens, seq_length)</span>
+<span id="cb5-23"><a href="" aria-label="23"></a></span>
+<span id="cb5-24"><a href="" aria-label="24"></a>  <span class="kw">def</span> tokens_to_idx(<span class="va">self</span>, tokens, seq_length<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb5-25"><a href="" aria-label="25"></a>    idxs <span class="op">=</span> [<span class="va">self</span>.t2i[token] <span class="cf">if</span> token <span class="kw">in</span> <span class="va">self</span>.t2i <span class="cf">else</span> <span class="va">self</span>.unk_idx <span class="cf">for</span> token <span class="kw">in</span> tokens]</span>
+<span id="cb5-26"><a href="" aria-label="26"></a>    idxs <span class="op">=</span> [<span class="op">*</span>idxs, <span class="va">self</span>.eos_idx]</span>
+<span id="cb5-27"><a href="" aria-label="27"></a>    <span class="cf">if</span> seq_length <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb5-28"><a href="" aria-label="28"></a>      idxs <span class="op">=</span> idxs <span class="op">+</span> [<span class="va">self</span>.pad_idx] <span class="op">*</span> (seq_length <span class="op">-</span> <span class="bu">len</span>(idxs))</span>
+<span id="cb5-29"><a href="" aria-label="29"></a>      idxs <span class="op">=</span> idxs[:seq_length]</span>
+<span id="cb5-30"><a href="" aria-label="30"></a>    <span class="cf">return</span> idxs</span>
+<span id="cb5-31"><a href="" aria-label="31"></a></span>
+<span id="cb5-32"><a href="" aria-label="32"></a>  <span class="kw">def</span> idx_to_string(<span class="va">self</span>, indices):</span>
+<span id="cb5-33"><a href="" aria-label="33"></a>    tokens <span class="op">=</span> <span class="va">self</span>.idx_to_tokens(indices)</span>
+<span id="cb5-34"><a href="" aria-label="34"></a>    <span class="cf">return</span> <span class="st">' '</span>.join(tokens)</span>
+<span id="cb5-35"><a href="" aria-label="35"></a></span>
+<span id="cb5-36"><a href="" aria-label="36"></a>  <span class="kw">def</span> idx_to_tokens(<span class="va">self</span>, indices):</span>
+<span id="cb5-37"><a href="" aria-label="37"></a>    <span class="cf">return</span> [<span class="va">self</span>.i2t[idx] <span class="cf">for</span> idx <span class="kw">in</span> indices <span class="cf">if</span> idx <span class="op">!=</span> <span class="va">self</span>.pad_idx <span class="kw">or</span> idx <span class="op">!=</span> <span class="va">self</span>.eos_idx]</span>
+<span id="cb5-38"><a href="" aria-label="38"></a></span>
+<span id="cb5-39"><a href="" aria-label="39"></a><span class="kw">class</span> NameData(Dataset):</span>
+<span id="cb5-40"><a href="" aria-label="40"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, seq_length):</span>
+<span id="cb5-41"><a href="" aria-label="41"></a>    <span class="va">self</span>.tokenizer <span class="op">=</span> CharLevelTokenizerLt()</span>
+<span id="cb5-42"><a href="" aria-label="42"></a>    <span class="va">self</span>.data <span class="op">=</span> pd.read_csv(<span class="st">"../data/names/vardai.csv"</span>)</span>
+<span id="cb5-43"><a href="" aria-label="43"></a></span>
+<span id="cb5-44"><a href="" aria-label="44"></a>    <span class="va">self</span>.no_tokens <span class="op">=</span> <span class="va">self</span>.tokenizer.no_tokens</span>
+<span id="cb5-45"><a href="" aria-label="45"></a>    <span class="va">self</span>.pad_idx <span class="op">=</span> <span class="va">self</span>.tokenizer.pad_idx</span>
+<span id="cb5-46"><a href="" aria-label="46"></a>    <span class="va">self</span>.eos_idx <span class="op">=</span> <span class="va">self</span>.tokenizer.eos_idx</span>
+<span id="cb5-47"><a href="" aria-label="47"></a>    <span class="va">self</span>.seq_length <span class="op">=</span> seq_length</span>
+<span id="cb5-48"><a href="" aria-label="48"></a></span>
+<span id="cb5-49"><a href="" aria-label="49"></a>  <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
+<span id="cb5-50"><a href="" aria-label="50"></a>    <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.data)</span>
+<span id="cb5-51"><a href="" aria-label="51"></a></span>
+<span id="cb5-52"><a href="" aria-label="52"></a>  <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
+<span id="cb5-53"><a href="" aria-label="53"></a>    name <span class="op">=</span> <span class="va">self</span>.data.loc[idx][<span class="st">"name"</span>]</span>
+<span id="cb5-54"><a href="" aria-label="54"></a></span>
+<span id="cb5-55"><a href="" aria-label="55"></a>    inp  <span class="op">=</span> <span class="va">self</span>.tokenizer.tokens_to_idx(name[:], <span class="va">self</span>.seq_length)</span>
+<span id="cb5-56"><a href="" aria-label="56"></a>    target <span class="op">=</span> <span class="va">self</span>.tokenizer.tokens_to_idx(name[<span class="dv">1</span>:], <span class="va">self</span>.seq_length)</span>
+<span id="cb5-57"><a href="" aria-label="57"></a></span>
+<span id="cb5-58"><a href="" aria-label="58"></a>    inp <span class="op">=</span> torch.IntTensor(inp)</span>
+<span id="cb5-59"><a href="" aria-label="59"></a>    target <span class="op">=</span> torch.LongTensor(target)</span>
+<span id="cb5-60"><a href="" aria-label="60"></a>    target <span class="op">=</span> torch.zeros(<span class="va">self</span>.no_tokens<span class="op">*</span><span class="va">self</span>.seq_length, dtype<span class="op">=</span>torch.<span class="bu">float</span>).view(<span class="va">self</span>.seq_length, <span class="va">self</span>.no_tokens).scatter(<span class="dv">1</span>, target.view(<span class="va">self</span>.seq_length, <span class="dv">1</span>), value<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-61"><a href="" aria-label="61"></a></span>
+<span id="cb5-62"><a href="" aria-label="62"></a>    <span class="cf">return</span> inp, target</span>
+<span id="cb5-63"><a href="" aria-label="63"></a></span>
+<span id="cb5-64"><a href="" aria-label="64"></a>seq_length <span class="op">=</span> <span class="dv">15</span></span>
+<span id="cb5-65"><a href="" aria-label="65"></a>batch_size <span class="op">=</span> <span class="dv">32</span></span>
+<span id="cb5-66"><a href="" aria-label="66"></a></span>
+<span id="cb5-67"><a href="" aria-label="67"></a>data <span class="op">=</span> NameData(seq_length<span class="op">=</span>seq_length)</span>
+<span id="cb5-68"><a href="" aria-label="68"></a></span>
+<span id="cb5-69"><a href="" aria-label="69"></a>dataloader <span class="op">=</span> DataLoader(</span>
+<span id="cb5-70"><a href="" aria-label="70"></a>  data,</span>
+<span id="cb5-71"><a href="" aria-label="71"></a>  batch_size<span class="op">=</span>batch_size,</span>
+<span id="cb5-72"><a href="" aria-label="72"></a>  shuffle<span class="op">=</span><span class="va">True</span></span>
+<span id="cb5-73"><a href="" aria-label="73"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="transformers-13" class="slide level2">
 <h2>Transformers</h2>
 <p>Let’s create a function for training one epoch.</p>
 <div id="e578bf1d" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm <span class="co"># This is a library that implements loading bars</span></span>
-<span id="cb6-2"><a href=""></a><span class="im">import</span> sys</span>
-<span id="cb6-3"><a href=""></a></span>
-<span id="cb6-4"><a href=""></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
-<span id="cb6-5"><a href=""></a>  model.train() <span class="co"># Set model to training mode</span></span>
-<span id="cb6-6"><a href=""></a></span>
-<span id="cb6-7"><a href=""></a>  total_loss <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb6-8"><a href=""></a>  total_batches <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb6-9"><a href=""></a></span>
-<span id="cb6-10"><a href=""></a>  <span class="cf">with</span> tqdm(dataloader, unit<span class="op">=</span><span class="st">"batch"</span>, <span class="bu">file</span><span class="op">=</span>sys.stdout) <span class="im">as</span> ep_tqdm:</span>
-<span id="cb6-11"><a href=""></a>    ep_tqdm.set_description(<span class="st">"Train"</span>)</span>
-<span id="cb6-12"><a href=""></a>    <span class="cf">for</span> X, y <span class="kw">in</span> ep_tqdm:</span>
-<span id="cb6-13"><a href=""></a>      X, y <span class="op">=</span> X.to(device), y.to(device)</span>
-<span id="cb6-14"><a href=""></a></span>
-<span id="cb6-15"><a href=""></a>      <span class="co"># Forward pass</span></span>
-<span id="cb6-16"><a href=""></a>      pred <span class="op">=</span> model(X)</span>
-<span id="cb6-17"><a href=""></a>      loss <span class="op">=</span> loss_fn(pred, y)</span>
-<span id="cb6-18"><a href=""></a>        </span>
-<span id="cb6-19"><a href=""></a>      <span class="co"># Backward pass</span></span>
-<span id="cb6-20"><a href=""></a>      loss.backward()</span>
-<span id="cb6-21"><a href=""></a>      optimizer.step()</span>
-<span id="cb6-22"><a href=""></a></span>
-<span id="cb6-23"><a href=""></a>      <span class="co"># Reset the computed gradients back to zero</span></span>
-<span id="cb6-24"><a href=""></a>      optimizer.zero_grad()</span>
-<span id="cb6-25"><a href=""></a></span>
-<span id="cb6-26"><a href=""></a>      <span class="co"># Output stats</span></span>
-<span id="cb6-27"><a href=""></a>      total_loss <span class="op">+=</span> loss</span>
-<span id="cb6-28"><a href=""></a>      total_batches <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb6-29"><a href=""></a>      ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm <span class="co"># This is a library that implements loading bars</span></span>
+<span id="cb6-2"><a href="" aria-label="2"></a><span class="im">import</span> sys</span>
+<span id="cb6-3"><a href="" aria-label="3"></a></span>
+<span id="cb6-4"><a href="" aria-label="4"></a><span class="kw">def</span> train_epoch(dataloader, model, loss_fn, optimizer):</span>
+<span id="cb6-5"><a href="" aria-label="5"></a>  model.train() <span class="co"># Set model to training mode</span></span>
+<span id="cb6-6"><a href="" aria-label="6"></a></span>
+<span id="cb6-7"><a href="" aria-label="7"></a>  total_loss <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-8"><a href="" aria-label="8"></a>  total_batches <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-9"><a href="" aria-label="9"></a></span>
+<span id="cb6-10"><a href="" aria-label="10"></a>  <span class="cf">with</span> tqdm(dataloader, unit<span class="op">=</span><span class="st">"batch"</span>, <span class="bu">file</span><span class="op">=</span>sys.stdout) <span class="im">as</span> ep_tqdm:</span>
+<span id="cb6-11"><a href="" aria-label="11"></a>    ep_tqdm.set_description(<span class="st">"Train"</span>)</span>
+<span id="cb6-12"><a href="" aria-label="12"></a>    <span class="cf">for</span> X, y <span class="kw">in</span> ep_tqdm:</span>
+<span id="cb6-13"><a href="" aria-label="13"></a>      X, y <span class="op">=</span> X.to(device), y.to(device)</span>
+<span id="cb6-14"><a href="" aria-label="14"></a></span>
+<span id="cb6-15"><a href="" aria-label="15"></a>      <span class="co"># Forward pass</span></span>
+<span id="cb6-16"><a href="" aria-label="16"></a>      pred <span class="op">=</span> model(X)</span>
+<span id="cb6-17"><a href="" aria-label="17"></a>      loss <span class="op">=</span> loss_fn(pred, y)</span>
+<span id="cb6-18"><a href="" aria-label="18"></a>        </span>
+<span id="cb6-19"><a href="" aria-label="19"></a>      <span class="co"># Backward pass</span></span>
+<span id="cb6-20"><a href="" aria-label="20"></a>      loss.backward()</span>
+<span id="cb6-21"><a href="" aria-label="21"></a>      optimizer.step()</span>
+<span id="cb6-22"><a href="" aria-label="22"></a></span>
+<span id="cb6-23"><a href="" aria-label="23"></a>      <span class="co"># Reset the computed gradients back to zero</span></span>
+<span id="cb6-24"><a href="" aria-label="24"></a>      optimizer.zero_grad()</span>
+<span id="cb6-25"><a href="" aria-label="25"></a></span>
+<span id="cb6-26"><a href="" aria-label="26"></a>      <span class="co"># Output stats</span></span>
+<span id="cb6-27"><a href="" aria-label="27"></a>      total_loss <span class="op">+=</span> loss</span>
+<span id="cb6-28"><a href="" aria-label="28"></a>      total_batches <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb6-29"><a href="" aria-label="29"></a>      ep_tqdm.set_postfix(average_batch_loss<span class="op">=</span>(total_loss<span class="op">/</span>total_batches).item())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="transformers-14" class="slide level2">
 <h2>Transformers</h2>
 <p>Now we can train the model.</p>
 <div id="7fd62212" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="a5085495-289c-40c2-abc5-5ce8b0a80756" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="co"># Hyperparameters</span></span>
-<span id="cb7-2"><a href=""></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
-<span id="cb7-3"><a href=""></a>epochs <span class="op">=</span> <span class="dv">15</span></span>
-<span id="cb7-4"><a href=""></a></span>
-<span id="cb7-5"><a href=""></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
-<span id="cb7-6"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
-<span id="cb7-7"><a href=""></a></span>
-<span id="cb7-8"><a href=""></a>model <span class="op">=</span> Transformer(</span>
-<span id="cb7-9"><a href=""></a>  no_tokens<span class="op">=</span>data.no_tokens,</span>
-<span id="cb7-10"><a href=""></a>  seq_length<span class="op">=</span>data.seq_length,</span>
-<span id="cb7-11"><a href=""></a>  pad_idx<span class="op">=</span>data.pad_idx,</span>
-<span id="cb7-12"><a href=""></a>  embed_dim<span class="op">=</span><span class="dv">128</span>,</span>
-<span id="cb7-13"><a href=""></a>  no_heads<span class="op">=</span><span class="dv">8</span>,</span>
-<span id="cb7-14"><a href=""></a>  depth<span class="op">=</span><span class="dv">4</span></span>
-<span id="cb7-15"><a href=""></a>).to(device)</span>
-<span id="cb7-16"><a href=""></a></span>
-<span id="cb7-17"><a href=""></a>loss_fn <span class="op">=</span> nn.CrossEntropyLoss().to(device)</span>
-<span id="cb7-18"><a href=""></a>optimizer <span class="op">=</span> torch.optim.Adam(params<span class="op">=</span>model.parameters(), lr<span class="op">=</span>learning_rate)</span>
-<span id="cb7-19"><a href=""></a></span>
-<span id="cb7-20"><a href=""></a><span class="co"># Organize the training loop</span></span>
-<span id="cb7-21"><a href=""></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
-<span id="cb7-22"><a href=""></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
-<span id="cb7-23"><a href=""></a>  train_epoch(dataloader, model, loss_fn, optimizer)</span>
-<span id="cb7-24"><a href=""></a></span>
-<span id="cb7-25"><a href=""></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="co"># Hyperparameters</span></span>
+<span id="cb7-2"><a href="" aria-label="2"></a>learning_rate <span class="op">=</span> <span class="fl">0.0001</span></span>
+<span id="cb7-3"><a href="" aria-label="3"></a>epochs <span class="op">=</span> <span class="dv">15</span></span>
+<span id="cb7-4"><a href="" aria-label="4"></a></span>
+<span id="cb7-5"><a href="" aria-label="5"></a>device <span class="op">=</span> torch.accelerator.current_accelerator().<span class="bu">type</span> <span class="cf">if</span> torch.accelerator.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb7-6"><a href="" aria-label="6"></a><span class="bu">print</span>(<span class="ss">f"Using </span><span class="sc">{</span>device<span class="sc">}</span><span class="ss"> device"</span>)</span>
+<span id="cb7-7"><a href="" aria-label="7"></a></span>
+<span id="cb7-8"><a href="" aria-label="8"></a>model <span class="op">=</span> Transformer(</span>
+<span id="cb7-9"><a href="" aria-label="9"></a>  no_tokens<span class="op">=</span>data.no_tokens,</span>
+<span id="cb7-10"><a href="" aria-label="10"></a>  seq_length<span class="op">=</span>data.seq_length,</span>
+<span id="cb7-11"><a href="" aria-label="11"></a>  pad_idx<span class="op">=</span>data.pad_idx,</span>
+<span id="cb7-12"><a href="" aria-label="12"></a>  embed_dim<span class="op">=</span><span class="dv">128</span>,</span>
+<span id="cb7-13"><a href="" aria-label="13"></a>  no_heads<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb7-14"><a href="" aria-label="14"></a>  depth<span class="op">=</span><span class="dv">4</span></span>
+<span id="cb7-15"><a href="" aria-label="15"></a>).to(device)</span>
+<span id="cb7-16"><a href="" aria-label="16"></a></span>
+<span id="cb7-17"><a href="" aria-label="17"></a>loss_fn <span class="op">=</span> nn.CrossEntropyLoss().to(device)</span>
+<span id="cb7-18"><a href="" aria-label="18"></a>optimizer <span class="op">=</span> torch.optim.Adam(params<span class="op">=</span>model.parameters(), lr<span class="op">=</span>learning_rate)</span>
+<span id="cb7-19"><a href="" aria-label="19"></a></span>
+<span id="cb7-20"><a href="" aria-label="20"></a><span class="co"># Organize the training loop</span></span>
+<span id="cb7-21"><a href="" aria-label="21"></a><span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb7-22"><a href="" aria-label="22"></a>  <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>t<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="ss">-------------------------------"</span>)</span>
+<span id="cb7-23"><a href="" aria-label="23"></a>  train_epoch(dataloader, model, loss_fn, optimizer)</span>
+<span id="cb7-24"><a href="" aria-label="24"></a></span>
+<span id="cb7-25"><a href="" aria-label="25"></a><span class="bu">print</span>(<span class="st">"Done!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -691,35 +694,35 @@ Done!</code></pre>
 <section id="transformers-16" class="slide level2">
 <h2>Transformers</h2>
 <div id="3dc1f120" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="18283844-6bdf-4808-8aaf-44b4327d841d" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="kw">def</span> sample(model, seed, temperature<span class="op">=</span><span class="fl">1.0</span>):</span>
-<span id="cb9-2"><a href=""></a>  <span class="cf">assert</span> <span class="bu">len</span>(seed) <span class="op">&gt;</span> <span class="dv">0</span></span>
-<span id="cb9-3"><a href=""></a>  model.<span class="bu">eval</span>()</span>
-<span id="cb9-4"><a href=""></a>  <span class="cf">with</span> torch.no_grad():</span>
-<span id="cb9-5"><a href=""></a>    idx_to_sample <span class="op">=</span> <span class="bu">len</span>(seed) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb9-6"><a href=""></a></span>
-<span id="cb9-7"><a href=""></a>    tokenizer <span class="op">=</span> CharLevelTokenizerLt()</span>
-<span id="cb9-8"><a href=""></a></span>
-<span id="cb9-9"><a href=""></a>    result <span class="op">=</span> <span class="st">''</span> <span class="op">+</span> seed</span>
-<span id="cb9-10"><a href=""></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">15</span> <span class="op">-</span> <span class="bu">len</span>(seed)):</span>
-<span id="cb9-11"><a href=""></a>      inp <span class="op">=</span> torch.LongTensor(tokenizer.string_to_idx(result, <span class="dv">15</span>)).view(<span class="dv">1</span>, <span class="dv">15</span>).to(device)</span>
-<span id="cb9-12"><a href=""></a>      inp <span class="op">=</span> model(inp)<span class="op">/</span>temperature</span>
-<span id="cb9-13"><a href=""></a>      inp <span class="op">=</span> inp[<span class="dv">0</span>, idx_to_sample, :]</span>
-<span id="cb9-14"><a href=""></a>      p <span class="op">=</span> nn.functional.softmax(inp, dim<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb9-15"><a href=""></a>      cd <span class="op">=</span> torch.distributions.Categorical(p)</span>
-<span id="cb9-16"><a href=""></a>      next_char <span class="op">=</span> cd.sample()</span>
-<span id="cb9-17"><a href=""></a>      <span class="cf">if</span> next_char <span class="op">==</span> tokenizer.eos_idx <span class="kw">or</span> next_char <span class="op">==</span> tokenizer.pad_idx:</span>
-<span id="cb9-18"><a href=""></a>        <span class="cf">break</span></span>
-<span id="cb9-19"><a href=""></a>      result <span class="op">+=</span> tokenizer.idx_to_string([next_char])</span>
-<span id="cb9-20"><a href=""></a>      idx_to_sample <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb9-21"><a href=""></a></span>
-<span id="cb9-22"><a href=""></a>    <span class="cf">return</span> result</span>
-<span id="cb9-23"><a href=""></a></span>
-<span id="cb9-24"><a href=""></a><span class="bu">print</span>(</span>
-<span id="cb9-25"><a href=""></a>  <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'jo'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
-<span id="cb9-26"><a href=""></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'jū'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
-<span id="cb9-27"><a href=""></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'ja'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
-<span id="cb9-28"><a href=""></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'je'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
-<span id="cb9-29"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="kw">def</span> sample(model, seed, temperature<span class="op">=</span><span class="fl">1.0</span>):</span>
+<span id="cb9-2"><a href="" aria-label="2"></a>  <span class="cf">assert</span> <span class="bu">len</span>(seed) <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb9-3"><a href="" aria-label="3"></a>  model.<span class="bu">eval</span>()</span>
+<span id="cb9-4"><a href="" aria-label="4"></a>  <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb9-5"><a href="" aria-label="5"></a>    idx_to_sample <span class="op">=</span> <span class="bu">len</span>(seed) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb9-6"><a href="" aria-label="6"></a></span>
+<span id="cb9-7"><a href="" aria-label="7"></a>    tokenizer <span class="op">=</span> CharLevelTokenizerLt()</span>
+<span id="cb9-8"><a href="" aria-label="8"></a></span>
+<span id="cb9-9"><a href="" aria-label="9"></a>    result <span class="op">=</span> <span class="st">''</span> <span class="op">+</span> seed</span>
+<span id="cb9-10"><a href="" aria-label="10"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">15</span> <span class="op">-</span> <span class="bu">len</span>(seed)):</span>
+<span id="cb9-11"><a href="" aria-label="11"></a>      inp <span class="op">=</span> torch.LongTensor(tokenizer.string_to_idx(result, <span class="dv">15</span>)).view(<span class="dv">1</span>, <span class="dv">15</span>).to(device)</span>
+<span id="cb9-12"><a href="" aria-label="12"></a>      inp <span class="op">=</span> model(inp)<span class="op">/</span>temperature</span>
+<span id="cb9-13"><a href="" aria-label="13"></a>      inp <span class="op">=</span> inp[<span class="dv">0</span>, idx_to_sample, :]</span>
+<span id="cb9-14"><a href="" aria-label="14"></a>      p <span class="op">=</span> nn.functional.softmax(inp, dim<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb9-15"><a href="" aria-label="15"></a>      cd <span class="op">=</span> torch.distributions.Categorical(p)</span>
+<span id="cb9-16"><a href="" aria-label="16"></a>      next_char <span class="op">=</span> cd.sample()</span>
+<span id="cb9-17"><a href="" aria-label="17"></a>      <span class="cf">if</span> next_char <span class="op">==</span> tokenizer.eos_idx <span class="kw">or</span> next_char <span class="op">==</span> tokenizer.pad_idx:</span>
+<span id="cb9-18"><a href="" aria-label="18"></a>        <span class="cf">break</span></span>
+<span id="cb9-19"><a href="" aria-label="19"></a>      result <span class="op">+=</span> tokenizer.idx_to_string([next_char])</span>
+<span id="cb9-20"><a href="" aria-label="20"></a>      idx_to_sample <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb9-21"><a href="" aria-label="21"></a></span>
+<span id="cb9-22"><a href="" aria-label="22"></a>    <span class="cf">return</span> result</span>
+<span id="cb9-23"><a href="" aria-label="23"></a></span>
+<span id="cb9-24"><a href="" aria-label="24"></a><span class="bu">print</span>(</span>
+<span id="cb9-25"><a href="" aria-label="25"></a>  <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'jo'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
+<span id="cb9-26"><a href="" aria-label="26"></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'jū'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
+<span id="cb9-27"><a href="" aria-label="27"></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'ja'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
+<span id="cb9-28"><a href="" aria-label="28"></a>  <span class="op">+</span> <span class="st">' '</span>.join([sample(model<span class="op">=</span>model, seed<span class="op">=</span><span class="st">'je'</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span></span>
+<span id="cb9-29"><a href="" aria-label="29"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>

@@ -6,8 +6,8 @@
 <script src="02_decision_trees_and_random_forest_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="02_decision_trees_and_random_forest_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="02_decision_trees_and_random_forest_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="02_decision_trees_and_random_forest_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="02_decision_trees_and_random_forest_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <title>Decision Trees and Random Forest</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,10 +19,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -309,22 +312,22 @@ I(p) = - \log_a p,
 <h2>Decision Trees</h2>
 <p>We can train a decision tree using sklearn. We’ll use this <a href="https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic">dataset</a>.</p>
 <div id="a8ad0e42" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_breast_cancer</span>
-<span id="cb1-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb1-3"><a href=""></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
-<span id="cb1-4"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
-<span id="cb1-5"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-6"><a href=""></a></span>
-<span id="cb1-7"><a href=""></a>dataset <span class="op">=</span> load_breast_cancer()</span>
-<span id="cb1-8"><a href=""></a>X <span class="op">=</span> pd.DataFrame(dataset.data, columns<span class="op">=</span>dataset.feature_names)</span>
-<span id="cb1-9"><a href=""></a>y <span class="op">=</span> dataset.target_names[dataset.target]</span>
-<span id="cb1-10"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">34</span>)</span>
-<span id="cb1-11"><a href=""></a></span>
-<span id="cb1-12"><a href=""></a>model <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">3</span>, criterion<span class="op">=</span><span class="st">"entropy"</span>, random_state<span class="op">=</span><span class="dv">34</span>)</span>
-<span id="cb1-13"><a href=""></a>model.fit(X_train, y_train)</span>
-<span id="cb1-14"><a href=""></a>y_pred <span class="op">=</span> model.predict(X_test)</span>
-<span id="cb1-15"><a href=""></a></span>
-<span id="cb1-16"><a href=""></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_breast_cancer</span>
+<span id="cb1-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-3"><a href="" aria-label="3"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb1-4"><a href="" aria-label="4"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
+<span id="cb1-5"><a href="" aria-label="5"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-6"><a href="" aria-label="6"></a></span>
+<span id="cb1-7"><a href="" aria-label="7"></a>dataset <span class="op">=</span> load_breast_cancer()</span>
+<span id="cb1-8"><a href="" aria-label="8"></a>X <span class="op">=</span> pd.DataFrame(dataset.data, columns<span class="op">=</span>dataset.feature_names)</span>
+<span id="cb1-9"><a href="" aria-label="9"></a>y <span class="op">=</span> dataset.target_names[dataset.target]</span>
+<span id="cb1-10"><a href="" aria-label="10"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">34</span>)</span>
+<span id="cb1-11"><a href="" aria-label="11"></a></span>
+<span id="cb1-12"><a href="" aria-label="12"></a>model <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span><span class="dv">3</span>, criterion<span class="op">=</span><span class="st">"entropy"</span>, random_state<span class="op">=</span><span class="dv">34</span>)</span>
+<span id="cb1-13"><a href="" aria-label="13"></a>model.fit(X_train, y_train)</span>
+<span id="cb1-14"><a href="" aria-label="14"></a>y_pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb1-15"><a href="" aria-label="15"></a></span>
+<span id="cb1-16"><a href="" aria-label="16"></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -350,19 +353,19 @@ weighted avg       0.94      0.94      0.94       171
 <h2>Overfitting</h2>
 <p>Let’s illustrate overfitting.</p>
 <div id="d45de911" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
-<span id="cb3-2"><a href=""></a></span>
-<span id="cb3-3"><a href=""></a>losses <span class="op">=</span> []</span>
-<span id="cb3-4"><a href=""></a></span>
-<span id="cb3-5"><a href=""></a><span class="cf">for</span> depth <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">10</span>):</span>
-<span id="cb3-6"><a href=""></a>  model <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span>depth, criterion<span class="op">=</span><span class="st">"entropy"</span>, random_state<span class="op">=</span><span class="dv">34</span>)</span>
-<span id="cb3-7"><a href=""></a>  model.fit(X_train, y_train)</span>
-<span id="cb3-8"><a href=""></a>  losses.append([</span>
-<span id="cb3-9"><a href=""></a>    accuracy_score(y_train, model.predict(X_train)),</span>
-<span id="cb3-10"><a href=""></a>    accuracy_score(y_test, model.predict(X_test))</span>
-<span id="cb3-11"><a href=""></a>  ])</span>
-<span id="cb3-12"><a href=""></a></span>
-<span id="cb3-13"><a href=""></a>pd.DataFrame(losses, columns<span class="op">=</span>[<span class="st">'train'</span>, <span class="st">'test'</span>]).plot(title<span class="op">=</span><span class="st">'Accuracy for different max_depth values'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
+<span id="cb3-2"><a href="" aria-label="2"></a></span>
+<span id="cb3-3"><a href="" aria-label="3"></a>losses <span class="op">=</span> []</span>
+<span id="cb3-4"><a href="" aria-label="4"></a></span>
+<span id="cb3-5"><a href="" aria-label="5"></a><span class="cf">for</span> depth <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">10</span>):</span>
+<span id="cb3-6"><a href="" aria-label="6"></a>  model <span class="op">=</span> DecisionTreeClassifier(max_depth<span class="op">=</span>depth, criterion<span class="op">=</span><span class="st">"entropy"</span>, random_state<span class="op">=</span><span class="dv">34</span>)</span>
+<span id="cb3-7"><a href="" aria-label="7"></a>  model.fit(X_train, y_train)</span>
+<span id="cb3-8"><a href="" aria-label="8"></a>  losses.append([</span>
+<span id="cb3-9"><a href="" aria-label="9"></a>    accuracy_score(y_train, model.predict(X_train)),</span>
+<span id="cb3-10"><a href="" aria-label="10"></a>    accuracy_score(y_test, model.predict(X_test))</span>
+<span id="cb3-11"><a href="" aria-label="11"></a>  ])</span>
+<span id="cb3-12"><a href="" aria-label="12"></a></span>
+<span id="cb3-13"><a href="" aria-label="13"></a>pd.DataFrame(losses, columns<span class="op">=</span>[<span class="st">'train'</span>, <span class="st">'test'</span>]).plot(title<span class="op">=</span><span class="st">'Accuracy for different max_depth values'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -435,14 +438,14 @@ e^j = \sum_i w_i^j \mathbb{1}_{y_i \ne T^j(x_i)}.
 <h2>Random Forest</h2>
 <p>Let’s train a Random Forest Regression model on California housing dataset that ships with sklearn.</p>
 <div id="261271dd" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_california_housing</span>
-<span id="cb4-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb4-3"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb4-4"><a href=""></a></span>
-<span id="cb4-5"><a href=""></a>data <span class="op">=</span> fetch_california_housing()</span>
-<span id="cb4-6"><a href=""></a>df <span class="op">=</span> pd.DataFrame(data[<span class="st">"data"</span>], columns<span class="op">=</span>data[<span class="st">"feature_names"</span>])</span>
-<span id="cb4-7"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(df, data[<span class="st">"target"</span>], test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">34</span>)</span>
-<span id="cb4-8"><a href=""></a>X_train.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_california_housing</span>
+<span id="cb4-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb4-3"><a href="" aria-label="3"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-4"><a href="" aria-label="4"></a></span>
+<span id="cb4-5"><a href="" aria-label="5"></a>data <span class="op">=</span> fetch_california_housing()</span>
+<span id="cb4-6"><a href="" aria-label="6"></a>df <span class="op">=</span> pd.DataFrame(data[<span class="st">"data"</span>], columns<span class="op">=</span>data[<span class="st">"feature_names"</span>])</span>
+<span id="cb4-7"><a href="" aria-label="7"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(df, data[<span class="st">"target"</span>], test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">34</span>)</span>
+<span id="cb4-8"><a href="" aria-label="8"></a>X_train.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -601,30 +604,30 @@ e^j = \sum_i w_i^j \mathbb{1}_{y_i \ne T^j(x_i)}.
 <section id="random-forest-11" class="slide level2">
 <h2>Random Forest</h2>
 <div id="d26a7b57" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
-<span id="cb5-2"><a href=""></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
-<span id="cb5-3"><a href=""></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
-<span id="cb5-4"><a href=""></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb5-5"><a href=""></a></span>
-<span id="cb5-6"><a href=""></a><span class="kw">def</span> make_pipeline():</span>
-<span id="cb5-7"><a href=""></a>  model <span class="op">=</span> RandomForestRegressor(</span>
-<span id="cb5-8"><a href=""></a>    n_estimators<span class="op">=</span><span class="dv">100</span>,</span>
-<span id="cb5-9"><a href=""></a>    max_depth<span class="op">=</span><span class="dv">3</span>,</span>
-<span id="cb5-10"><a href=""></a>    max_features<span class="op">=</span><span class="st">"sqrt"</span></span>
-<span id="cb5-11"><a href=""></a>  )</span>
-<span id="cb5-12"><a href=""></a></span>
-<span id="cb5-13"><a href=""></a>  pipeline <span class="op">=</span> Pipeline(</span>
-<span id="cb5-14"><a href=""></a>    steps<span class="op">=</span>[</span>
-<span id="cb5-15"><a href=""></a>      (<span class="st">"imputer"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)),</span>
-<span id="cb5-16"><a href=""></a>      (<span class="st">"scaler"</span>, StandardScaler()),</span>
-<span id="cb5-17"><a href=""></a>      (<span class="st">"model"</span>, model),</span>
-<span id="cb5-18"><a href=""></a>    ],</span>
-<span id="cb5-19"><a href=""></a>  )</span>
-<span id="cb5-20"><a href=""></a></span>
-<span id="cb5-21"><a href=""></a>  <span class="cf">return</span> pipeline</span>
-<span id="cb5-22"><a href=""></a></span>
-<span id="cb5-23"><a href=""></a>pipeline <span class="op">=</span> make_pipeline()</span>
-<span id="cb5-24"><a href=""></a>pipeline</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb5-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
+<span id="cb5-3"><a href="" aria-label="3"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
+<span id="cb5-4"><a href="" aria-label="4"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb5-5"><a href="" aria-label="5"></a></span>
+<span id="cb5-6"><a href="" aria-label="6"></a><span class="kw">def</span> make_pipeline():</span>
+<span id="cb5-7"><a href="" aria-label="7"></a>  model <span class="op">=</span> RandomForestRegressor(</span>
+<span id="cb5-8"><a href="" aria-label="8"></a>    n_estimators<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb5-9"><a href="" aria-label="9"></a>    max_depth<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb5-10"><a href="" aria-label="10"></a>    max_features<span class="op">=</span><span class="st">"sqrt"</span></span>
+<span id="cb5-11"><a href="" aria-label="11"></a>  )</span>
+<span id="cb5-12"><a href="" aria-label="12"></a></span>
+<span id="cb5-13"><a href="" aria-label="13"></a>  pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb5-14"><a href="" aria-label="14"></a>    steps<span class="op">=</span>[</span>
+<span id="cb5-15"><a href="" aria-label="15"></a>      (<span class="st">"imputer"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)),</span>
+<span id="cb5-16"><a href="" aria-label="16"></a>      (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb5-17"><a href="" aria-label="17"></a>      (<span class="st">"model"</span>, model),</span>
+<span id="cb5-18"><a href="" aria-label="18"></a>    ],</span>
+<span id="cb5-19"><a href="" aria-label="19"></a>  )</span>
+<span id="cb5-20"><a href="" aria-label="20"></a></span>
+<span id="cb5-21"><a href="" aria-label="21"></a>  <span class="cf">return</span> pipeline</span>
+<span id="cb5-22"><a href="" aria-label="22"></a></span>
+<span id="cb5-23"><a href="" aria-label="23"></a>pipeline <span class="op">=</span> make_pipeline()</span>
+<span id="cb5-24"><a href="" aria-label="24"></a>pipeline</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -1059,11 +1062,11 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 \text{MSE} = \frac{1}{n} \sum_{i=1}^n (y_i^{\text{true}}-y_i^{\text{pred}})^2
 \]</span></p>
 <div id="afd32a5b" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
-<span id="cb6-2"><a href=""></a></span>
-<span id="cb6-3"><a href=""></a>pipeline.fit(X_train, y_train)</span>
-<span id="cb6-4"><a href=""></a>y_pred <span class="op">=</span> pipeline.predict(X_test)</span>
-<span id="cb6-5"><a href=""></a><span class="bu">print</span>(<span class="ss">f"MSE on test set: </span><span class="sc">{</span>mean_squared_error(y_test, y_pred)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
+<span id="cb6-2"><a href="" aria-label="2"></a></span>
+<span id="cb6-3"><a href="" aria-label="3"></a>pipeline.fit(X_train, y_train)</span>
+<span id="cb6-4"><a href="" aria-label="4"></a>y_pred <span class="op">=</span> pipeline.predict(X_test)</span>
+<span id="cb6-5"><a href="" aria-label="5"></a><span class="bu">print</span>(<span class="ss">f"MSE on test set: </span><span class="sc">{</span>mean_squared_error(y_test, y_pred)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>MSE on test set: 0.7042428595732597</code></pre>
 </div>
@@ -1096,45 +1099,45 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <h2>Grid Search</h2>
 <p>To implement a grid search we first need to unhardcode the hyperparameters in our pipeline.</p>
 <div id="79f79662" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="kw">def</span> make_pipeline(n_estimators<span class="op">=</span><span class="dv">100</span>, max_depth<span class="op">=</span><span class="dv">3</span>):</span>
-<span id="cb8-2"><a href=""></a>  model <span class="op">=</span> RandomForestRegressor(</span>
-<span id="cb8-3"><a href=""></a>    n_estimators<span class="op">=</span>n_estimators,</span>
-<span id="cb8-4"><a href=""></a>    max_depth<span class="op">=</span>max_depth,</span>
-<span id="cb8-5"><a href=""></a>    max_features<span class="op">=</span><span class="st">"sqrt"</span>,</span>
-<span id="cb8-6"><a href=""></a>    n_jobs<span class="op">=-</span><span class="dv">1</span> <span class="co"># Use max available processors for training and inference</span></span>
-<span id="cb8-7"><a href=""></a>  )</span>
-<span id="cb8-8"><a href=""></a></span>
-<span id="cb8-9"><a href=""></a>  pipeline <span class="op">=</span> Pipeline(</span>
-<span id="cb8-10"><a href=""></a>    steps<span class="op">=</span>[</span>
-<span id="cb8-11"><a href=""></a>      (<span class="st">"imputer"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)),</span>
-<span id="cb8-12"><a href=""></a>      (<span class="st">"scaler"</span>, StandardScaler()),</span>
-<span id="cb8-13"><a href=""></a>      (<span class="st">"model"</span>, model),</span>
-<span id="cb8-14"><a href=""></a>    ],</span>
-<span id="cb8-15"><a href=""></a>  )</span>
-<span id="cb8-16"><a href=""></a></span>
-<span id="cb8-17"><a href=""></a>  <span class="cf">return</span> pipeline</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="kw">def</span> make_pipeline(n_estimators<span class="op">=</span><span class="dv">100</span>, max_depth<span class="op">=</span><span class="dv">3</span>):</span>
+<span id="cb8-2"><a href="" aria-label="2"></a>  model <span class="op">=</span> RandomForestRegressor(</span>
+<span id="cb8-3"><a href="" aria-label="3"></a>    n_estimators<span class="op">=</span>n_estimators,</span>
+<span id="cb8-4"><a href="" aria-label="4"></a>    max_depth<span class="op">=</span>max_depth,</span>
+<span id="cb8-5"><a href="" aria-label="5"></a>    max_features<span class="op">=</span><span class="st">"sqrt"</span>,</span>
+<span id="cb8-6"><a href="" aria-label="6"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span> <span class="co"># Use max available processors for training and inference</span></span>
+<span id="cb8-7"><a href="" aria-label="7"></a>  )</span>
+<span id="cb8-8"><a href="" aria-label="8"></a></span>
+<span id="cb8-9"><a href="" aria-label="9"></a>  pipeline <span class="op">=</span> Pipeline(</span>
+<span id="cb8-10"><a href="" aria-label="10"></a>    steps<span class="op">=</span>[</span>
+<span id="cb8-11"><a href="" aria-label="11"></a>      (<span class="st">"imputer"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)),</span>
+<span id="cb8-12"><a href="" aria-label="12"></a>      (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb8-13"><a href="" aria-label="13"></a>      (<span class="st">"model"</span>, model),</span>
+<span id="cb8-14"><a href="" aria-label="14"></a>    ],</span>
+<span id="cb8-15"><a href="" aria-label="15"></a>  )</span>
+<span id="cb8-16"><a href="" aria-label="16"></a></span>
+<span id="cb8-17"><a href="" aria-label="17"></a>  <span class="cf">return</span> pipeline</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="grid-search-1" class="slide level2">
 <h2>Grid Search</h2>
 <p>Now implementing a grid search from scratch is not difficult.</p>
 <div id="951b5357" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a>best_n_estimators <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
-<span id="cb9-2"><a href=""></a>best_max_depth <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
-<span id="cb9-3"><a href=""></a>best_mse <span class="op">=</span> <span class="dv">1000</span></span>
-<span id="cb9-4"><a href=""></a></span>
-<span id="cb9-5"><a href=""></a><span class="cf">for</span> n_estimators <span class="kw">in</span> [<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">500</span>]:</span>
-<span id="cb9-6"><a href=""></a>  <span class="cf">for</span> max_depth <span class="kw">in</span> [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]:</span>
-<span id="cb9-7"><a href=""></a>    pipeline <span class="op">=</span> make_pipeline(n_estimators<span class="op">=</span>n_estimators, max_depth<span class="op">=</span>max_depth)</span>
-<span id="cb9-8"><a href=""></a>    pipeline.fit(X_train, y_train)</span>
-<span id="cb9-9"><a href=""></a>    y_pred <span class="op">=</span> pipeline.predict(X_test)</span>
-<span id="cb9-10"><a href=""></a>    mse <span class="op">=</span> mean_squared_error(y_test, y_pred)</span>
-<span id="cb9-11"><a href=""></a>    <span class="cf">if</span> mse <span class="op">&lt;</span> best_mse:</span>
-<span id="cb9-12"><a href=""></a>      best_mse <span class="op">=</span> mse</span>
-<span id="cb9-13"><a href=""></a>      best_n_estimators <span class="op">=</span> n_estimators</span>
-<span id="cb9-14"><a href=""></a>      best_max_depth <span class="op">=</span> max_depth</span>
-<span id="cb9-15"><a href=""></a></span>
-<span id="cb9-16"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Best combination n_estimators=</span><span class="sc">{</span>best_n_estimators<span class="sc">}</span><span class="ss">, max_depth=</span><span class="sc">{</span>best_max_depth<span class="sc">}</span><span class="ss"> with MSE=</span><span class="sc">{</span>best_mse<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>best_n_estimators <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb9-2"><a href="" aria-label="2"></a>best_max_depth <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb9-3"><a href="" aria-label="3"></a>best_mse <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb9-4"><a href="" aria-label="4"></a></span>
+<span id="cb9-5"><a href="" aria-label="5"></a><span class="cf">for</span> n_estimators <span class="kw">in</span> [<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">500</span>]:</span>
+<span id="cb9-6"><a href="" aria-label="6"></a>  <span class="cf">for</span> max_depth <span class="kw">in</span> [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]:</span>
+<span id="cb9-7"><a href="" aria-label="7"></a>    pipeline <span class="op">=</span> make_pipeline(n_estimators<span class="op">=</span>n_estimators, max_depth<span class="op">=</span>max_depth)</span>
+<span id="cb9-8"><a href="" aria-label="8"></a>    pipeline.fit(X_train, y_train)</span>
+<span id="cb9-9"><a href="" aria-label="9"></a>    y_pred <span class="op">=</span> pipeline.predict(X_test)</span>
+<span id="cb9-10"><a href="" aria-label="10"></a>    mse <span class="op">=</span> mean_squared_error(y_test, y_pred)</span>
+<span id="cb9-11"><a href="" aria-label="11"></a>    <span class="cf">if</span> mse <span class="op">&lt;</span> best_mse:</span>
+<span id="cb9-12"><a href="" aria-label="12"></a>      best_mse <span class="op">=</span> mse</span>
+<span id="cb9-13"><a href="" aria-label="13"></a>      best_n_estimators <span class="op">=</span> n_estimators</span>
+<span id="cb9-14"><a href="" aria-label="14"></a>      best_max_depth <span class="op">=</span> max_depth</span>
+<span id="cb9-15"><a href="" aria-label="15"></a></span>
+<span id="cb9-16"><a href="" aria-label="16"></a><span class="bu">print</span>(<span class="ss">f"Best combination n_estimators=</span><span class="sc">{</span>best_n_estimators<span class="sc">}</span><span class="ss">, max_depth=</span><span class="sc">{</span>best_max_depth<span class="sc">}</span><span class="ss"> with MSE=</span><span class="sc">{</span>best_mse<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Best combination n_estimators=100, max_depth=5 with MSE=0.4985365734911642</code></pre>
 </div>
@@ -1165,13 +1168,13 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <h2>Cross-validation</h2>
 <p>Here is how to perform cross validation in sklearn.</p>
 <div id="a02cf9c4" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
-<span id="cb11-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb11-3"><a href=""></a></span>
-<span id="cb11-4"><a href=""></a>pipeline <span class="op">=</span> make_pipeline(n_estimators<span class="op">=</span><span class="dv">50</span>, max_depth<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb11-5"><a href=""></a>scores <span class="op">=</span> cross_val_score(pipeline, X_train, y_train, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">"neg_mean_squared_error"</span>)</span>
-<span id="cb11-6"><a href=""></a></span>
-<span id="cb11-7"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Cross validation result MSE=</span><span class="sc">{</span>np<span class="sc">.</span>mean(<span class="op">-</span><span class="dv">1</span><span class="op">*</span>scores)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb11-2"><a href="" aria-label="2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-3"><a href="" aria-label="3"></a></span>
+<span id="cb11-4"><a href="" aria-label="4"></a>pipeline <span class="op">=</span> make_pipeline(n_estimators<span class="op">=</span><span class="dv">50</span>, max_depth<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb11-5"><a href="" aria-label="5"></a>scores <span class="op">=</span> cross_val_score(pipeline, X_train, y_train, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">"neg_mean_squared_error"</span>)</span>
+<span id="cb11-6"><a href="" aria-label="6"></a></span>
+<span id="cb11-7"><a href="" aria-label="7"></a><span class="bu">print</span>(<span class="ss">f"Cross validation result MSE=</span><span class="sc">{</span>np<span class="sc">.</span>mean(<span class="op">-</span><span class="dv">1</span><span class="op">*</span>scores)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Cross validation result MSE=0.5037206177056912</code></pre>
 </div>
@@ -1187,12 +1190,12 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <p>If you want to use Random Forest, you will need to use the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier">RandomForestClassifier</a> class from sklearn.</p>
 <p>Here is how to load the data:</p>
 <div id="d368cce8" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_covtype</span>
-<span id="cb13-2"><a href=""></a></span>
-<span id="cb13-3"><a href=""></a>data <span class="op">=</span> fetch_covtype()</span>
-<span id="cb13-4"><a href=""></a>df <span class="op">=</span> pd.DataFrame(data[<span class="st">"data"</span>], columns<span class="op">=</span>data[<span class="st">"feature_names"</span>])</span>
-<span id="cb13-5"><a href=""></a>df[<span class="st">"target"</span>] <span class="op">=</span> data[<span class="st">"target"</span>]</span>
-<span id="cb13-6"><a href=""></a>df.head(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_covtype</span>
+<span id="cb13-2"><a href="" aria-label="2"></a></span>
+<span id="cb13-3"><a href="" aria-label="3"></a>data <span class="op">=</span> fetch_covtype()</span>
+<span id="cb13-4"><a href="" aria-label="4"></a>df <span class="op">=</span> pd.DataFrame(data[<span class="st">"data"</span>], columns<span class="op">=</span>data[<span class="st">"feature_names"</span>])</span>
+<span id="cb13-5"><a href="" aria-label="5"></a>df[<span class="st">"target"</span>] <span class="op">=</span> data[<span class="st">"target"</span>]</span>
+<span id="cb13-6"><a href="" aria-label="6"></a>df.head(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 <style scoped="">

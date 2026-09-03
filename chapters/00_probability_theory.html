@@ -6,8 +6,8 @@
 <script src="00_probability_theory_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="00_probability_theory_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="00_probability_theory_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="00_probability_theory_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="00_probability_theory_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <title>Review of Probability Theory</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,10 +19,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -178,11 +181,11 @@
 <section id="independent-events" class="slide level2">
 <h2>Independent Events</h2>
 <p>Two events <span class="math inline">\(A, B \in \mathcal{A}\)</span> are called independent if <span class="math display">\[
-\mathbb{P}(A \text{ and } B) = \mathbb{P}(A) \mathbb{P}{B}
+\mathbb{P}(A \text{ and } B) = \mathbb{P}(A) \mathbb{P}(B)
 \]</span></p>
 <p>For example if we were throwing a coin twice, then events “first throw lands heads” and “second throw lands tails” are independent, so <span class="math display">\[
 \mathbb{P}(\text{first throw lands heads and second throw lands tails}) = \\
-\mathbb{P}(\text{first throw lands heads}) \mathbb{P}(\text{second throw lands tails}) = \frac{1}{2} \frac{1}{2}.
+\mathbb{P}(\text{first throw lands heads}) \mathbb{P}(\text{second throw lands tails}) = \frac{1}{2} \frac{1}{2} = \frac{1}{4}.
 \]</span></p>
 </section>
 <section id="conditional-probability" class="slide level2">
@@ -204,6 +207,7 @@
 <h2>Random variables</h2>
 <p>A random variable is a measurable function <span class="math inline">\(X: \Omega \rightarrow \mathbb{R}\)</span>, that is for any interval <span class="math inline">\((a, b)\)</span> we have <span class="math inline">\(X^{-1}((a, b)) \in \mathcal{A}.\)</span></p>
 <p>For example, if we were throwing two dice, then the sum of the throws would be a random variable.</p>
+<p>We will use random variables to model datapoints. For example, if we have some observations <span class="math inline">\(x_1, \dots, x_n\)</span> of empirical data, then we will sometimes interpret them as being drawn from the distribution of some random variable <span class="math inline">\(X\)</span>.</p>
 </section>
 <section id="discrete-random-variables" class="slide level2">
 <h2>Discrete random variables</h2>
@@ -213,9 +217,14 @@ p_X(x) = \mathbb{P}(X=x).
 </section>
 <section id="mean" class="slide level2">
 <h2>Mean</h2>
-<p>The mean or expectation of a discrete random variable is defined to be <span class="math display">\[
-\mathbb{E}[X] = \sum_x x p_X(x),
-\]</span> where we sum over those <span class="math inline">\(x'\)</span>s, where <span class="math inline">\(p_X(x) &gt; 0.\)</span> The brackets [] don’t indicate anything special, its just tradition to use them.</p>
+<p>If <span class="math display">\[
+\sum_x |x| p_X(x) &lt; \infty,
+\]</span> where we sum over those <span class="math inline">\(x'\)</span>s for which <span class="math inline">\(p_X(x) &gt; 0,\)</span> then the mean or expectation of a discrete random variable is defined to be <span class="math display">\[
+\mathbb{E}[X] = \sum_x x p_X(x).
+\]</span></p>
+</section>
+<section id="mean-1" class="slide level2">
+<h2>Mean</h2>
 <p>The expectation is linear, that is if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are random variables and <span class="math inline">\(a, b \in \mathbb{R}\)</span> then <span class="math display">\[
 \mathbb{E}[aX+bY] = a\mathbb{E}[X] + b \mathbb{E}[Y].
 \]</span></p>
@@ -227,6 +236,7 @@ p_X(x) = \mathbb{P}(X=x).
 \]</span> The standard deviation is the square root of variance <span class="math display">\[
 \sigma = \sqrt{\text{Var}(X)}.
 \]</span></p>
+<p>Note that the variance can be infinite.</p>
 </section>
 <section id="variance-1" class="slide level2">
 <h2>Variance</h2>
@@ -235,17 +245,6 @@ p_X(x) = \mathbb{P}(X=x).
 \]</span> where <span class="math display">\[
 \text{Cov}(X, Y) = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])].
 \]</span></p>
-</section>
-<section id="law-of-large-numbers" class="slide level2">
-<h2>Law of Large Numbers</h2>
-<p>We will use random variables to model datapoints. For example we have some observations <span class="math inline">\(x_1, \dots, x_n\)</span> of, let’s say, heights of penguins. Then we will imagine that these numbers <span class="math inline">\(x_1, \dots, x_n\)</span> are separate instantiations of a random variable <span class="math inline">\(X,\)</span> which represents the heights of penguins.</p>
-<p>If <span class="math inline">\(\mathbb{E}[X]\)</span> is finite then the law of large numbers holds, that is <span class="math display">\[
-  \frac{\sum_{i=1}^n x_n}{n} \approx \mathbb{E}[X].
-\]</span></p>
-</section>
-<section id="law-of-large-numbers-1" class="slide level2">
-<h2>Law of Large Numbers</h2>
-<p>How good the approximation is depends on <span class="math inline">\(\text{Var}(X)\)</span>. If <span class="math inline">\(\text{Var}(X)\)</span> is infinite then the approximation is really really bad and you shouldn’t use law of large numbers in practice in such a case (but people still do).</p>
 </section>
 <section id="correlation" class="slide level2">
 <h2>Correlation</h2>
